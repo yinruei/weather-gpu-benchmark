@@ -2,6 +2,8 @@
 
 Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by real NetCDF and Zarr cases, including NOAA GFS and ECMWF IFS ENS control forecasts. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
 
+**Current scope: performance engineering of weather-data processing and metric computation.** Evaluate CPU/GPU latency, throughput, memory, data movement, storage/chunk access, batching, reuse and numerical precision. Bias/MAE/RMSE provide representative calculations and correctness checks against a numerical reference. Forecast quality, model skill/ranking, ensemble-skill assessment and validation against independent observations are outside this task. Dataset changes must serve a stated performance or numerical-correctness experiment.
+
 NetCDF real-data result: [GFS 2-m forecasts vs matching GFS f000 analysis near Taiwan](results/rtx3050_gfs_pair_run01/analysis.md), with checked initialization/lead/valid-time matching and no manufactured perturbations.
 
 Zarr case: [ECMWF IFS ENS control from a pinned public Icechunk/Zarr snapshot](results/rtx3050_ecmwf_zarr_run01/analysis.md), evaluated directly from local Zarr stores against matching GFS analysis. ENS control is not HRES.
@@ -243,7 +245,7 @@ python scripts/analyze_weather.py results/my_gfs_pair01 --forecast data/gfs_taiw
 
 Use `--backend numpy` without CUDA. To recreate the pair from the original NOAA archive, install `requirements-gfs.txt` and run `python scripts/prepare_gfs_pair.py --output data/gfs_pair_recreated`. Only eight indexed TMP/2-m messages are downloaded (about 4.06 MB plus indexes), with HTTP range/framing/hash checks. Acquisition/decoding are excluded from the NetCDF pipeline timings.
 
-Next: validate more dates and genuine forecasts against a suitable independent reference, distinguish land/ocean or station sampling, and measure larger batches to locate any practical CPU/GPU crossover.
+Further work uses controlled shapes, batch sizes, missing-value fractions and storage layouts to measure CPU/GPU crossover, memory and complete-workflow latency while preserving input identity and numerical checks. Forecast-quality assessment is outside scope.
 
 ## ECMWF Zarr acquisition and native Zarr evaluation
 
@@ -383,7 +385,7 @@ python weather_dispatch.py --output results/my_dispatch02 --schedules interleave
 python scripts/analyze_dispatch.py results/my_dispatch01 results/my_dispatch02 --output results/my_dispatch_comparison
 ```
 
-Each run includes a compressed Chrome trace, per-call summaries and raw primary timings. The analyzer can independently reconcile saved GPU traces using CPU-only dependencies; CI performs that validation without claiming to execute GPU work. This diagnosis narrows one actionable source of overhead but does not identify a single cause of all latency tails. Forecast-verification work can now build on the measured pipeline while retaining per-region/member metrics and numerical checks.
+Each run includes a compressed Chrome trace, per-call summaries and raw primary timings. The analyzer can independently reconcile saved GPU traces using CPU-only dependencies; CI performs that validation without claiming to execute GPU work. This diagnosis narrows one actionable source of overhead but does not identify a single cause of all latency tails. Subsequent work remains focused on processing efficiency, memory and numerical correctness under explicitly defined workloads.
 
 ## Reproduce the reports and figures
 
@@ -409,8 +411,8 @@ The five original rows from the shared conversation remain unchanged in [legacy_
 ## Roadmap
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
-2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Next establish real-data accuracy requirements; investigate fused or chunked mixed arithmetic only if the workflow warrants it.
-3. **v4: controlled, genuine GFS and ECMWF Zarr cases completed.** Preserve run/member/lead identity, exact-grid alignment and CPU/CUDA agreement across NetCDF and local Zarr. Remote acquisition and chunk costs are separate from compute. Next add more cases, land/station handling and an appropriate independent reference before generalizing skill; batch larger workloads while retaining per-lead/member statistics. ERA5 can be a reanalysis reference, not automatically station truth.
-4. **Weather AI ecosystem.** Explore Earth-2 / PhysicsNeMo after the real-data verification workflow is established. Consider profiling, pinned memory and compiled/fused kernels against that workflow.
+2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Further precision experiments must specify numerical-error tolerances for the benchmark outputs and measure the resulting time/memory tradeoff.
+3. **v4: controlled, genuine GFS and ECMWF Zarr cases completed.** Preserve run/member/lead identity, exact-grid alignment and CPU/CUDA numerical agreement across NetCDF and local Zarr. Batch scaling, shared inputs, phase profiling and result-return traces are recorded. Remote acquisition and chunk costs are separate from compute. Additional data cases are for performance/correctness coverage, not forecast-skill evaluation.
+4. **Current performance work.** Investigate remaining host preprocessing, allocation, synchronization and latency tails in the existing PyTorch workflow. Compare complete-workflow P50/P95, throughput and peak memory under equivalent input reuse and numerical tolerances. Framework migration and Weather AI integrations require a separately defined performance task; JAX implementation remains deferred.
 
 Learning goal: explain how data movement, numerical precision and measurement boundaries affect a useful weather-verification pipeline.
