@@ -1,6 +1,6 @@
 # Weather GPU Benchmark
 
-Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE** on synthetic FP32 arrays. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
+Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by a first real-NetCDF pipeline using reanalysis temperatures and a manufactured forecast. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
 
 ## Three key findings
 
@@ -56,7 +56,7 @@ Outputs: `summary.csv` contains medians, quartiles and speedups; `samples.csv` p
 
 ## Benchmark method
 
-All backends receive identical, finite synthetic FP32 forecast and observation arrays. Error is forecast minus observation. Bias = mean(error), MAE = mean(abs(error)), RMSE = sqrt(mean(error squared)). The validated entry point rejects empty, mismatched or non-finite inputs.
+In the original synthetic benchmark, all backends receive identical, finite FP32 forecast and observation arrays. Error is forecast minus observation. Bias = mean(error), MAE = mean(abs(error)), RMSE = sqrt(mean(error squared)). The validated entry point rejects empty, mismatched or non-finite inputs. The later NetCDF pipeline defines joint masking and weighted reductions separately.
 
 | Measurement | Timed boundary |
 |---|---|
@@ -148,6 +148,54 @@ python scripts/analyze_precision.py results/my_precision01
 
 The precision runner requires CUDA and refuses an existing output directory. Its CSV schema is separate from the original benchmark; use `analyze_precision.py` for validation and figures.
 
+## v4: first real-NetCDF pipeline
+
+The first case reads **real NCEP reanalysis air temperatures** from the [xarray tutorial dataset](https://docs.xarray.dev/en/stable/examples/area_weighted_temperature.html), selecting 2013-01-01 at 00/06/12/18 UTC over 30–50 N, 130–90 W. This is **sigma-level 0.995 air temperature**, not 2-m temperature or Taiwan station data. [Data and provenance](data/weather_demo/README.md) document the pinned source, checksum, selection and original metadata. Reanalysis data provided by NOAA PSL, Boulder, Colorado, USA; see the [source documentation](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html).
+
+The paired forecast is a deterministic **manufactured perturbation**. Ten deliberately missing time/grid values test joint masking. These are artificial errors and missing cells, not operational forecast skill or measured data availability.
+
+The implemented flow is:
+
+```text
+NetCDF decode -> temperature units/coordinates -> exact valid-time/grid check
+-> joint finite mask -> cosine-latitude weights -> CPU/CUDA metrics -> report/plots
+```
+
+`weather_verify.py` accepts canonical `time/lat/lon` dimensions or their supported aliases. It converts K/degC to FP32 kelvin, sorts coordinates, wraps longitude to [-180,180), rejects duplicate/mismatched coordinates, and normalizes weights over joint finite cells. Cosine-latitude weighting is restricted to regular latitude/longitude grids. All-missing or zero-weight inputs fail explicitly. Empty individual times produce blank metrics and zero coverage rather than a fabricated zero error.
+
+**Caller responsibilities:** select the same physical variable and vertical level; supply UTC **valid time**, resolving initialization plus lead time beforehand. Matching coordinate arrays do not establish matching scientific meaning. No regridding, curvilinear grids or calendar conversion is implemented. The committed files use NetCDF3; reading NetCDF4/HDF5 needs an additional compatible xarray engine.
+
+Two WSL / RTX 3050 sessions each preserve 15 per-backend/per-time metric rows and 80 timing samples. There are **602 joint finite values out of 612 (98.37%)**, with 98.41% of the total area-time weight retained. FP32 CPU/CUDA values agree with FP64 arithmetic on the same packed FP32 inputs and weights at `rtol=atol=1e-5`.
+
+| Pooled metric | FP64 reference | NumPy FP32 | CUDA FP32 |
+|---|---:|---:|---:|
+| Bias K | 0.685742374 | 0.685742438 | 0.685742438 |
+| MAE K | 0.770504044 | 0.770504117 | 0.770504057 |
+| RMSE K | 0.934485432 | 0.934485435 | 0.934485435 |
+
+These pool valid weighted cells over four sampled times. Pooled RMSE is calculated from pooled squared errors; it is not the mean of the four RMSEs and is not a continuous-day average.
+
+| Measured boundary | NumPy median ms, run01 / run02 | CUDA median ms, run01 / run02 |
+|---|---:|---:|
+| Packed resident inputs -> metrics | 0.0071 / 0.0091 | 0.3022 / 0.2393 |
+| Warm-cache NetCDF read -> checks/mask/weights -> packing -> upload if CUDA -> metrics | 8.8929 / 8.7880 | 9.9870 / 10.0710 |
+
+**CUDA is slower for this small correctness case.** The workload has only 602 valid values; these measurements do not establish a GPU benefit. The actual warm-cache file pipeline also exposes the cost of reading/decoding and preprocessing. Context initialization, downloads and writing output files are excluded. Timings use 5 warmups and 20 repeats in fixed method blocks; this is not a cold-disk or order-balanced experiment.
+
+![Real reference, manufactured forecast, errors, coverage and timing](results/rtx3050_weather_run02/weather.png)
+
+See the [first NetCDF report](results/rtx3050_weather_run01/analysis.md) and [repeat report](results/rtx3050_weather_run02/analysis.md). Eighteen tests pass in the WSL environment, including the earlier precision tests and checks for known weighted answers, coordinate/time mismatch, units, duplicate coordinates, radians, irregular grids, missing values and NetCDF fill-value decoding. GitHub CPU CI installs the weather dependencies and exercises the committed NetCDF case without downloading data; PyTorch tests still skip when PyTorch is not installed.
+
+```bash
+python -m pip install -r requirements-weather.txt
+python weather_verify.py --forecast data/weather_demo/manufactured_forecast.nc --reference data/weather_demo/reference.nc --backend both --output results/my_weather01
+python scripts/analyze_weather.py results/my_weather01
+```
+
+For a CPU-only run, use `--backend numpy`. Outputs are `metrics.csv`, `timing_summary.csv`, `timing_samples.csv` and `environment.json`; the analysis script validates input hashes, coverage, backend agreement and raw timing summaries before generating `analysis.md` and `weather.png`. With other input files, pass their paths again using `analyze_weather.py --forecast ... --reference ...`.
+
+Next: replace the manufactured forecast with a genuine forecast/reference pair for a matched variable, level, valid time and region. Then evaluate a larger domain and define an application error budget before revisiting FP16.
+
 ## Reproduce the reports and figures
 
 ```bash
@@ -157,6 +205,8 @@ python plot_results.py results/rtx3050_run02/summary.csv --output results/rtx305
 python plot_results.py results/rtx3050_resident_run01/summary.csv --output results/rtx3050_resident_run01/overview.png
 python scripts/analyze_precision.py results/rtx3050_precision_run01
 python scripts/analyze_precision.py results/rtx3050_precision_run02
+python scripts/analyze_weather.py results/rtx3050_weather_run01
+python scripts/analyze_weather.py results/rtx3050_weather_run02
 ```
 
 `analyze_run.py` is the original run01 report generator with run01-specific narrative. `compare_runs.py` compares the original five-method runs. `plot_results.py` supports CPU-only, original GPU, resident and historical CSVs.
@@ -169,7 +219,7 @@ The five original rows from the shared conversation remain unchanged in [legacy_
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
 2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Next establish real-data accuracy requirements; investigate fused or chunked mixed arithmetic only if the workflow warrants it.
-3. **v4: real weather verification.** Read public NetCDF/ERA5 data with xarray; align valid times, grids and units; define NaN/mask policy and area weighting; validate Bias/MAE/RMSE before timing.
+3. **v4: first NetCDF correctness case completed.** Real NCEP reference, explicitly manufactured forecast/missing cells, unit/coordinate checks, joint masks, area-weighted metrics, actual warm-file pipeline timing and CPU/CUDA agreement. Next obtain a genuine forecast/reference pair and validate its variable, level, units, valid times and grid before making skill claims. ERA5 can be a reanalysis reference, not automatically station truth.
 4. **Weather AI ecosystem.** Explore Earth-2 / PhysicsNeMo after the real-data verification workflow is established. Consider profiling, pinned memory and compiled/fused kernels against that workflow.
 
 Learning goal: explain how data movement, numerical precision and measurement boundaries affect a useful weather-verification pipeline.

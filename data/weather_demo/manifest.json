@@ -1,0 +1,52 @@
+{
+  "source_url": "https://raw.githubusercontent.com/pydata/xarray-data/2baf0c22d9671a2058415f17e71b3fe06239a3dd/air_temperature.nc",
+  "source_sha256": "c606b89c35970a2983b914b76df4adbb409003ef34aa7cfd7f582e41f307482b",
+  "source_documentation": "https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html",
+  "xarray_example": "https://docs.xarray.dev/en/stable/examples/area_weighted_temperature.html",
+  "source_dataset_attributes": {
+    "Conventions": "COARDS",
+    "title": "4x daily NMC reanalysis (1948)",
+    "description": "Data is from NMC initialized reanalysis\n(4x/day).  These are the 0.9950 sigma level values.",
+    "platform": "Model",
+    "references": "http://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.html"
+  },
+  "selection": {
+    "date_utc": "2013-01-01",
+    "lat_bounds": [
+      30,
+      50
+    ],
+    "lon_bounds_0_360": [
+      230,
+      270
+    ],
+    "canonical_lon_bounds": [
+      -130,
+      -90
+    ],
+    "shape": [
+      4,
+      9,
+      17
+    ]
+  },
+  "variable": "air",
+  "level": "sigma 0.995 (not 2 m)",
+  "prepared_dtype": "float32",
+  "forecast": "Manufactured; source temperatures plus 0.5 + 0.8*sin(lon_phase) + 0.4*cos(lat_phase) + 0.1*time_index K; phases span 0..2*pi across the selected grid.",
+  "injected_missing_cells": {
+    "forecast": [
+      "[time=0,lat=0,lon=0]",
+      "[:,lat=2,lon=3]"
+    ],
+    "reference": [
+      "[time=1,lat=-1,lon=-1]",
+      "[:,lat=4,lon=5]"
+    ]
+  },
+  "interpretation": "Real reference values with artificial forecast errors and missingness; validates software and timing boundaries, not model skill.",
+  "files": {
+    "manufactured_forecast.nc": "027ffc99d8dc97fcca0bc48df8c535b628edb0333a42646b07652103b51d6dff",
+    "reference.nc": "12f9be3fba584d402c759bae0cc270845b19b975b9f0c3501af0e0e19830959c"
+  }
+}
