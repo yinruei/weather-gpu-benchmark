@@ -6,11 +6,11 @@ Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and 
 
 1. **Fast GPU compute does not imply the same end-to-end speedup.** At 10M grid points in run02, CUDA compute takes 2.055 ms versus NumPy's 30.368 ms (14.78x). Including input transfer and scalar return takes 13.533 ms (2.24x). At 1M, this GPU E2E path is slower than NumPy in both baseline runs.
 2. **Reusing inputs on GPU removes substantial transfer cost.** In the resident experiment at 10M, repeatedly uploading inputs takes 14.086 ms per iteration; keeping inputs on GPU and returning all three metrics takes 2.194 ms (6.42x faster). This excludes the initial upload and reuses the same arrays; it is not a whole weather-model speedup.
-3. **A speedup ratio can rise because the CPU baseline slows down.** Between run01 and run02 at 10M, NumPy takes 16.12% longer while CUDA compute takes 0.81% longer. The compute speedup nevertheless rises from 12.83x to 14.78x. Inspect absolute times and timing spread alongside speedup.
+3. **Lower precision trades accuracy for speed and memory.** Two precision runs show native FP16 about 1.81x faster than FP32 at 10M, with peak allocated memory 80.002 vs 152.590 MiB. Its RMSE error against the FP64 source reference is 0.001254, versus roughly 7.1e-8 for FP32. Casting FP16 inputs back to FP32 improves arithmetic accuracy but cannot undo input quantization; this eager mixed implementation is slower and has no peak-memory advantage.
 
 ## Hardware and software
 
-Observed on 2026-11-01 in the existing WSL environment. The [hardware inventory](results/hardware_inventory.json) was captured **after the experiments**. It identifies the current machine, but does not establish driver version, clocks, thermals or background load during earlier runs.
+Observed on 2026-11-01 in the existing WSL environment. The [hardware inventory](results/hardware_inventory.json) was captured **after the FP32 baseline experiments**. It identifies the current machine, but does not establish driver version, clocks, thermals or background load during earlier runs. The later precision experiments also save their own pre/post GPU state snapshots.
 
 | Item | Observed value |
 |---|---|
@@ -89,6 +89,8 @@ The memory panel uses `gpu_peak_allocated_mb`, calculated as bytes / 2^20, so th
 
 See [run01 analysis](results/rtx3050_run01/analysis.md) and the [run01/run02 comparison](results/rtx3050_run02/comparison.md). At 1M/5M/10M, PyTorch CPU medians change by -56.40%/+45.10%/+10.35% across runs. Two sessions do not establish long-term stability; scheduling, clocks and load are possible factors, not diagnosed causes.
 
+At 10M, the NumPy baseline slows down 16.12% between runs while CUDA compute slows down 0.81%. The compute speedup nevertheless rises from 12.83x to 14.78x. Compare absolute times alongside ratios.
+
 ## Results: GPU-resident inputs
 
 Executed directly through the existing WSL / RTX 3050 setup. All **360 timing samples** reconcile. Saved resident GPU Bias/MAE/RMSE values agree with NumPy at the specified tolerance.
@@ -103,6 +105,49 @@ Executed directly through the existing WSL / RTX 3050 setup. All **360 timing sa
 
 Initial uploads including input allocation take 3.778 / 7.659 / 15.521 ms at 1M / 5M / 10M. These are single observations, not medians. The table excludes them from steady-state speedups. Only one resident session has been measured; this does not establish a universal acceleration factor. See the [full resident report](results/rtx3050_resident_run01/analysis.md).
 
+## v3: FP32 vs FP16 precision tradeoff
+
+`precision_benchmark.py` compares three GPU-resident variants on exactly the same FP32 source arrays. Every timed call returns all three metrics as host scalars:
+
+| Mode | Stored inputs | Arithmetic |
+|---|---|---|
+| `fp32` | FP32 | FP32 intermediates and outputs |
+| `fp16_native` | FP16 | Native FP16 intermediate/output tensors; internal reduction accumulation is backend-defined |
+| `fp16_fp32_math` | FP16 | Cast to FP32 before subtraction inside each call; FP32 intermediates and reductions |
+
+Input conversion to FP16 and initial upload are excluded from timing. Only one mode's input tensors reside on GPU at a time. Each mode has 5 warmups and 20 measured repeats. Mode order is seeded per size and repeats across sessions; this is not an order-balanced experiment.
+
+Two measured sessions preserve **360 timings with per-repeat Bias/MAE/RMSE values**. References are calculated in FP64 on (a) the original FP32 input values and (b) the quantized FP16 input values, separating input quantization from arithmetic error. Results at **10M** points:
+
+| Mode | Median ms run01 / run02 | FP32 / mode runtime run01 / run02 | Input MiB | Peak allocated MiB |
+|---|---:|---:|---:|---:|
+| FP32 | 2.179 / 2.149 | 1.00x / 1.00x | 76.294 | 152.590 |
+| FP16 native | 1.207 / 1.188 | 1.81x / 1.81x | 38.147 | 80.002 |
+| FP16 inputs / FP32 math | 3.364 / 2.774 | 0.65x / 0.77x | 38.147 | 154.441 |
+
+Maximum absolute metric errors across measured repeats against the original-source FP64 reference are identical in the two sessions at 10M:
+
+| Mode | Bias error | MAE error | RMSE error |
+|---|---:|---:|---:|
+| FP32 | 2.29446e-8 | 6.55823e-8 | 7.10578e-8 |
+| FP16 native | 8.99801e-5 | 4.34095e-4 | 1.25368e-3 |
+| FP16 inputs / FP32 math | 1.05432e-5 | 2.15113e-5 | 2.48368e-3 |
+
+![Precision runtime, memory and accuracy tradeoff](results/rtx3050_precision_run02/precision.png)
+
+The mixed mode closely matches the FP64 reference **for quantized inputs**, but cannot recover the original input information. At 10M, quantization increases the reference RMSE by about 0.002484. Native FP16 arithmetic then changes RMSE by about -0.001230, partially cancelling that input error. Its smaller total RMSE error in this example does not make it a more reliable algorithm.
+
+All benchmark outputs are finite, and all FP32/mixed results agree with their own input references at `rtol=atol=1e-5`. Native FP16 fails that diagnostic tolerance, and neither FP16 variant matches the original-source reference at that tolerance. This is a numerical diagnostic, **not an established weather-verification error budget**. Separate unit tests demonstrate native-half intermediate overflow and verify that casting before subtraction avoids those test failures. The mixed mode materializes FP32 tensors; it is not a fused low-precision implementation.
+
+Keep FP32 as the baseline until real-data accuracy requirements justify a change. See the [first precision report](results/rtx3050_precision_run01/analysis.md) and [repeat precision report](results/rtx3050_precision_run02/analysis.md) for all sizes, quartiles, saved metric values and error decomposition. Two short sessions do not establish long-term stability or statistical significance.
+
+```bash
+python precision_benchmark.py --sizes 1000000 5000000 10000000 --repeats 20 --warmup 5 --output results/my_precision01
+python scripts/analyze_precision.py results/my_precision01
+```
+
+The precision runner requires CUDA and refuses an existing output directory. Its CSV schema is separate from the original benchmark; use `analyze_precision.py` for validation and figures.
+
 ## Reproduce the reports and figures
 
 ```bash
@@ -110,6 +155,8 @@ python scripts/analyze_run.py results/rtx3050_run01
 python scripts/compare_runs.py results/rtx3050_run01 results/rtx3050_run02
 python plot_results.py results/rtx3050_run02/summary.csv --output results/rtx3050_run02/overview.png
 python plot_results.py results/rtx3050_resident_run01/summary.csv --output results/rtx3050_resident_run01/overview.png
+python scripts/analyze_precision.py results/rtx3050_precision_run01
+python scripts/analyze_precision.py results/rtx3050_precision_run02
 ```
 
 `analyze_run.py` is the original run01 report generator with run01-specific narrative. `compare_runs.py` compares the original five-method runs. `plot_results.py` supports CPU-only, original GPU, resident and historical CSVs.
@@ -121,7 +168,7 @@ The five original rows from the shared conversation remain unchanged in [legacy_
 ## Roadmap
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
-2. **v3: FP32 vs FP16.** Use identical source inputs and compare runtime, peak allocated memory and Bias/MAE/RMSE errors. Separate input quantization from arithmetic error, check finite outputs/overflow, and evaluate FP32 accumulation for low-precision inputs. Report the speed, memory and accuracy tradeoff before recommending a precision.
+2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Next establish real-data accuracy requirements; investigate fused or chunked mixed arithmetic only if the workflow warrants it.
 3. **v4: real weather verification.** Read public NetCDF/ERA5 data with xarray; align valid times, grids and units; define NaN/mask policy and area weighting; validate Bias/MAE/RMSE before timing.
 4. **Weather AI ecosystem.** Explore Earth-2 / PhysicsNeMo after the real-data verification workflow is established. Consider profiling, pinned memory and compiled/fused kernels against that workflow.
 

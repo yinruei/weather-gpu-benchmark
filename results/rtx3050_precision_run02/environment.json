@@ -1,0 +1,80 @@
+{
+  "python": "3.10.12",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "numpy": "2.2.6",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "sizes": [
+    1000000,
+    5000000,
+    10000000
+  ],
+  "modes": [
+    "fp32",
+    "fp16_native",
+    "fp16_fp32_math"
+  ],
+  "repeats": 20,
+  "warmup": 5,
+  "seed": 42,
+  "torch_threads": 1,
+  "thread_environment": {
+    "OMP_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null
+  },
+  "timing": "perf_counter wall time; CUDA synchronized; includes scalar return",
+  "boundary": "resident GPU inputs -> metrics -> three host scalars; excludes upload, host quantization, validation and file IO",
+  "mixed_boundary": "FP16 resident inputs cast to FP32 before subtraction inside every timed call; FP32 intermediates and reductions",
+  "native_boundary": "FP16 tensors and intermediate/output dtypes; internal reduction accumulation is backend-defined",
+  "reference": "NumPy FP64 arithmetic on original FP32 source values; separate FP64 reference on quantized FP16 inputs",
+  "tolerance": {
+    "rtol": 1e-05,
+    "atol": 1e-05,
+    "meaning": "diagnostic agreement only; not an application accuracy requirement"
+  },
+  "memory": "peak torch.cuda.memory_allocated minus pre-input baseline; includes active mode inputs and temporaries; not reserved or total device usage",
+  "input_distribution": "obs normal(280,10); forecast=obs+normal(0.5,2); float32 source arrays",
+  "mode_order": {
+    "1000000": [
+      "fp16_native",
+      "fp16_fp32_math",
+      "fp32"
+    ],
+    "5000000": [
+      "fp16_native",
+      "fp16_fp32_math",
+      "fp32"
+    ],
+    "10000000": [
+      "fp16_native",
+      "fp32",
+      "fp16_fp32_math"
+    ]
+  },
+  "before": {
+    "captured_at_utc": "2026-11-01T09:08:21.277469+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 40, 13.32 W, 20 %"
+  },
+  "after": {
+    "captured_at_utc": "2026-11-01T09:08:22.624074+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 42, 37.45 W, 69 %"
+  },
+  "finished_at_utc": "2026-11-01T09:08:22.651451+00:00"
+}
