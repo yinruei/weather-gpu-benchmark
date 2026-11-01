@@ -10,6 +10,8 @@ Latest scaling result: [6.68M genuine ECMWF ensemble values across four initiali
 
 Latest workflow optimization: [stage profiling and shared-input regional verification](results/rtx3050_pipeline_comparison/analysis.md). Five distinct regional tasks improve from 166–171 ms to about 52 ms on GPU, including read/preparation/upload. CPU receives the same input reuse; shared GPU/CPU whole-workflow speedup is 1.85–1.89x.
 
+Latency follow-up: [2,400 checked workflows under blocked/interleaved scheduling](results/rtx3050_stability_comparison/analysis.md) shows why a median alone is insufficient. GPU prepared-input reuse has P50 about 5.1–5.3 ms in same-method blocks versus 10.7–16.5 ms interleaved; the monitoring-off interleaved control still has a 51.5-ms P95. [JAX survey in Traditional Chinese](docs/jax_survey_zh.md) covers JIT, compatibility and a fair evaluation plan; JAX has not yet been installed or benchmarked.
+
 ## Three key findings
 
 1. **Fast GPU compute does not imply the same end-to-end speedup.** At 10M grid points in run02, CUDA compute takes 2.055 ms versus NumPy's 30.368 ms (14.78x). Including input transfer and scalar return takes 13.533 ms (2.24x). At 1M, this GPU E2E path is slower than NumPy in both baseline runs.
@@ -331,6 +333,30 @@ python scripts/analyze_pipeline.py results/my_pipeline01 results/my_pipeline02 -
 ```
 
 The input cache is local to this evaluation and stores prepared data, not result values. Full-domain/quadrant outputs are recomputed for every task. "First use" here means fresh input preparation in an initialized process with warm local storage; CUDA initialization, remote acquisition, source hashing, correctness checks and CSV writing are excluded. This regional reuse workload differs from the earlier single full-domain benchmark. GFS analysis remains a model-dependent reference, and the two sessions do not establish general forecast skill or performance across machines.
+
+## Latency stability and JAX evaluation plan
+
+`weather_stability.py` preserves the shared-input numerical kernels and measures 100 repetitions of each CPU/GPU first-use/reuse method in both scheduling modes. Blocked execution warms and measures one method consecutively. Interleaved execution shuffles all methods per repetition. A second monitored session reverses schedule order; a third session disables monitoring. All 2,400 measured five-region outputs agree with unchanged dense-path FP64 reference metrics. All 41 tests pass in WSL, including CUDA tests.
+
+| GPU prepared-input reuse | P50 ms | P95 ms |
+|---|---:|---:|
+| Monitored, blocked (two sessions) | 5.13–5.27 | 5.87–6.44 |
+| Monitored, interleaved (two sessions) | 14.43–16.47 | 27.00–28.89 |
+| Monitoring off, blocked | 5.12 | 5.64 |
+| Monitoring off, interleaved | 10.71 | 51.48 |
+
+These reuse rows exclude prepared-input setup equally for CPU/GPU. The complete local GPU workflow is measured separately: blocked P50 46.4–58.0 ms versus interleaved 60.4–64.6 ms across these sessions. Schedule and device activity affect observed latency, but this does not identify a single cause. Coarse 200-ms device-wide telemetry can miss short active bursts; matched low clock observations cannot establish the clock of each kernel. Monitoring-off results are a control, not an isolated estimate of observer cost.
+
+![Latency ECDFs, P50/P95 by session and coarse GPU context](results/rtx3050_stability_comparison/stability.png)
+
+```bash
+python weather_stability.py --output results/my_stability01 --telemetry
+python weather_stability.py --output results/my_stability02 --telemetry --schedules interleaved blocked --seed 20261106
+python weather_stability.py --output results/my_stability_control --seed 20261107
+python scripts/analyze_stability.py results/my_stability01 results/my_stability02 results/my_stability_control --output results/my_stability_comparison
+```
+
+The [JAX survey](docs/jax_survey_zh.md) recommends an isolated WSL Python >=3.12 environment for a future CUDA 12 proof of concept on this machine. Start with the pure weighted metric kernel, preserve shapes/masks/FP32 inputs, separate compilation/transfer/runtime and compare against both PyTorch eager and compiled execution. Existing Python 3.10/PyTorch/CUDA packages are unchanged; no JAX speedup is claimed. Next use kernel/host traces to investigate latency tails, then evaluate whether JAX reduces complete application time as well as resident compute.
 
 ## Reproduce the reports and figures
 

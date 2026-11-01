@@ -24,3 +24,5 @@ jobs:
       - run: python scripts/analyze_weather_batch.py results/latest/batch_ci --output results/latest/batch_ci_report
       - run: python weather_pipeline.py --backend numpy --case control_small --repeats 3 --warmup 1 --profile-repeats 2 --output results/latest/pipeline_ci
       - run: python scripts/analyze_pipeline.py results/latest/pipeline_ci --output results/latest/pipeline_ci_report
+      - run: python weather_stability.py --backend numpy --case control_small --repeats 4 --warmup 1 --output results/latest/stability_ci
+      - run: python scripts/analyze_stability.py results/latest/stability_ci --output results/latest/stability_ci_report
