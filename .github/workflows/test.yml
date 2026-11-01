@@ -20,3 +20,5 @@ jobs:
       - run: python scripts/analyze_weather.py results/latest/gfs_ci --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc
       - run: python weather_verify.py --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr --backend numpy --repeats 3 --warmup 1 --output results/latest/zarr_ci
       - run: python scripts/analyze_weather.py results/latest/zarr_ci --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr
+      - run: python weather_batch.py --backend numpy --cases control_small ensemble_small --repeats 3 --warmup 1 --output results/latest/batch_ci
+      - run: python scripts/analyze_weather_batch.py results/latest/batch_ci --output results/latest/batch_ci_report

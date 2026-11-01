@@ -1,0 +1,5 @@
+{
+  "attribution": "ECMWF IFS ENS and NOAA GFS processed by dynamical.org; see manifest.json",
+  "reference_role": "GFS f000 analysis, model-dependent, not independent observations",
+  "forecast_role": "51 individual IFS ENS members, not HRES or ensemble-mean forecasts"
+}

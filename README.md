@@ -6,6 +6,8 @@ NetCDF real-data result: [GFS 2-m forecasts vs matching GFS f000 analysis near T
 
 Zarr case: [ECMWF IFS ENS control from a pinned public Icechunk/Zarr snapshot](results/rtx3050_ecmwf_zarr_run01/analysis.md), evaluated directly from local Zarr stores against matching GFS analysis. ENS control is not HRES.
 
+Latest scaling result: [6.68M genuine ECMWF ensemble values across four initializations](results/rtx3050_ecmwf_batch_comparison/analysis.md). Two RTX 3050 sessions show 5.46–6.20x resident compute speedup, 1.49–1.53x including input upload, and 1.07–1.09x for the warm local Zarr pipeline.
+
 ## Three key findings
 
 1. **Fast GPU compute does not imply the same end-to-end speedup.** At 10M grid points in run02, CUDA compute takes 2.055 ms versus NumPy's 30.368 ms (14.78x). Including input transfer and scalar return takes 13.533 ms (2.24x). At 1M, this GPU E2E path is slower than NumPy in both baseline runs.
@@ -269,6 +271,34 @@ python scripts/prepare_ecmwf_zarr.py --snapshot-id G76A041BF9PWGCNRBFVG --output
 ```
 
 Use `--backend numpy` without CUDA. Local stores use explicit zero chunks and Git byte preservation for portable directory hashes. See the [Zarr report](results/rtx3050_ecmwf_zarr_run01/analysis.md) for timing boundaries and source-chunk/read observations.
+
+## Larger real-data batches: where GPU acceleration appears
+
+The new [Zarr batch subset](data/ecmwf_batch_case/README.md) contains **4 initializations x 8 leads x 51 members x 64 x 64 cells = 6,684,672 genuine forecast values**. Exact GFS analysis matching uses 20 unique valid-time cycles. The 6.8 MB compressed subset is included for offline reproduction. Each initialization/lead/member retains its own spatial Bias/MAE/RMSE; this does not evaluate an ensemble-mean forecast.
+
+| Largest-batch median | Session 1 | Session 2 |
+|---|---:|---:|
+| NumPy resident | 26.075 ms | 25.797 ms |
+| CUDA resident | 4.777 ms | 4.158 ms |
+| CUDA upload + compute | 17.074 ms | 17.278 ms |
+| NumPy warm local Zarr pipeline | 93.340 ms | 90.202 ms |
+| CUDA warm local Zarr pipeline | 85.987 ms | 84.606 ms |
+| CUDA per-group launch/return loop | 341.199 ms | 362.621 ms |
+
+Batching keeps reductions on device and returns the group metric matrix in one transfer. The per-group CUDA loop reuses the same device inputs but launches/reduces/returns one forecast group at a time; it measures dispatch/return overhead. **Compare CUDA with vectorized NumPy for CPU/GPU speedup**, and use the loop only to diagnose inefficient GPU scheduling. Pipeline gains remain modest because reading, decoding, normalization and packing occupy much of the workflow.
+
+Seven measured case shapes range from 4,096 to 6,684,672 values; case shape and value count change together, so this does not establish a universal crossover threshold. Both sessions validate all 9,312 saved metric rows and 720 timing samples against the same packed-data FP64 reference. All 35 WSL tests pass, including CUDA tests. Method order is shuffled within repetitions; case order is fixed. The two sessions do not establish long-term performance stability.
+
+![ECMWF real-data batch scaling](results/rtx3050_ecmwf_batch_comparison/batch_scaling.png)
+
+```bash
+python -m pip install -r requirements-zarr.txt
+python weather_batch.py --output results/my_batch01 --group-loop
+python weather_batch.py --output results/my_batch02 --group-loop --seed 20261102
+python scripts/analyze_weather_batch.py results/my_batch01 results/my_batch02 --output results/my_batch_comparison
+```
+
+Use `--backend numpy` without CUDA. Remote acquisition uses the separate Python >=3.12 environment: `python scripts/prepare_ecmwf_batch.py --output data/ecmwf_batch_recreated`. Both archives are provider-processed Zarr; GFS analysis remains a model-dependent reference. Members/overlapping dates are correlated, and these short cases cannot rank models. Remote acquisition is excluded from local timing.
 
 ## Reproduce the reports and figures
 

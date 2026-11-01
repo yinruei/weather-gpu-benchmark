@@ -1,0 +1,11 @@
+{
+  "units": "degree_Celsius",
+  "standard_name": "air_temperature",
+  "coordinates": "height_above_ground reference_initialization_time reference_lead_hours valid_time",
+  "_ARRAY_DIMENSIONS": [
+    "init_time",
+    "lead_time",
+    "latitude",
+    "longitude"
+  ]
+}

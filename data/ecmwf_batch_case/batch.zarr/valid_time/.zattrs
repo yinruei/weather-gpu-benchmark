@@ -1,0 +1,8 @@
+{
+  "units": "hours since 2024-05-07 00:00:00",
+  "calendar": "proleptic_gregorian",
+  "_ARRAY_DIMENSIONS": [
+    "init_time",
+    "lead_time"
+  ]
+}
