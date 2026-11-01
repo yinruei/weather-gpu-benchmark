@@ -1,0 +1,4 @@
+-r requirements-weather.txt
+# Needed only to fetch/decode the original GRIB2; prepared NetCDF works without these.
+cfgrib>=0.9.15
+eccodes>=2.43

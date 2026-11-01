@@ -2,6 +2,7 @@
 import argparse
 from collections import defaultdict
 import csv
+from datetime import datetime
 import json
 import os
 from pathlib import Path
@@ -26,15 +27,29 @@ def main():
     p.add_argument('run', type=Path)
     p.add_argument('--forecast', type=Path, default=Path('data/weather_demo/manufactured_forecast.nc'))
     p.add_argument('--reference', type=Path, default=Path('data/weather_demo/reference.nc'))
+    p.add_argument('--manifest', type=Path, help='Optional provenance manifest; otherwise use the input directory')
     a = p.parse_args()
     env = json.loads((a.run/'environment.json').read_text(encoding='utf-8'))
     if sha256(a.forecast) != env['forecast_sha256'] or sha256(a.reference) != env['reference_sha256']:
         raise ValueError('Input hashes differ from the recorded experiment')
     f, r, mask, weights = load_pair(a.forecast, a.reference, env['variable'], env['reference_variable'], env['weighting'])
-    manifest_path = Path('data/weather_demo/manifest.json')
-    demo_manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
-    is_demo = (demo_manifest.get('files', {}).get(a.forecast.name) == env['forecast_sha256'] and
-               demo_manifest.get('files', {}).get(a.reference.name) == env['reference_sha256'])
+    manifest_path = a.manifest or a.forecast.parent/'manifest.json'
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
+    if manifest and (manifest.get('files', {}).get(a.forecast.name) != env['forecast_sha256'] or
+                     manifest.get('files', {}).get(a.reference.name) != env['reference_sha256']):
+        raise ValueError('Provenance manifest does not match the input file hashes')
+    is_demo = bool(manifest.get('injected_missing_cells'))
+    is_gfs = manifest.get('case_kind') == 'gfs_forecast_vs_f000'
+    if is_gfs:
+        initial = np.datetime64(datetime.fromisoformat(manifest['forecast_initialization_utc']).replace(tzinfo=None), 'ns')
+        leads = np.array(manifest['forecast_lead_hours'])
+        np.testing.assert_array_equal(f.forecast_reference_time.values, np.full(f.sizes['time'], initial))
+        np.testing.assert_array_equal(f.lead_hours.values, leads)
+        np.testing.assert_array_equal(initial+leads.astype('timedelta64[h]'), f.time.values)
+        np.testing.assert_array_equal(r.forecast_reference_time.values, r.time.values)
+        np.testing.assert_array_equal(r.lead_hours.values, np.zeros(r.sizes['time']))
+        if float(f.height_above_ground.values) != 2. or float(r.height_above_ground.values) != 2.:
+            raise ValueError('GFS pair must retain its shared 2-m height coordinate')
     metrics, timings, samples = [read_csv(a.run/name) for name in ['metrics.csv', 'timing_summary.csv', 'timing_samples.csv']]
     scopes = [('all_times', f.values, r.values, mask, weights)] + [
         (str(t), f.values[i], r.values[i], mask[i], weights[i]) for i, t in enumerate(f.time.values)]
@@ -74,12 +89,22 @@ def main():
         np.testing.assert_allclose([[float(s[k]) for k in METRICS] for s in raw],
                                    np.broadcast_to(expected['all_times'][0], (env['repeats'], 3)), rtol=1e-5, atol=1e-5)
     pooled = {row['backend']: row for row in metrics if row['scope'] == 'all_times'}
+    if is_demo:
+        case_description = ('NCEP reanalysis air temperature at sigma 0.995 is a real reference field. '
+                            'The forecast perturbation and missing cells are deliberately manufactured. '
+                            'This is a software-validation case, not a forecast-skill assessment, not ERA5 and not 2-m station observations.')
+    elif is_gfs:
+        case_description = (f"Real GFS 2-m temperature forecasts initialized {manifest['forecast_initialization_utc']}, "
+                            f"at leads {manifest['forecast_lead_hours']} hours, paired with GFS f000 analysis/initialization fields "
+                            'from the matching valid-time cycles. No perturbations, injected masks, interpolation or regridding. '
+                            'The reference is from the same model system, not independent station observations. '
+                            'These are forecast-minus-analysis errors for one case, not a general estimate of forecast skill.')
+    else:
+        case_description = 'User-supplied temperature fields. Scientific provenance and matching physical variable/vertical level must be established separately.'
     lines = [f'# NetCDF weather pipeline: {a.run.name}', '',
              f"Forecast role: **{env['forecast_role']}**.", '',
              f"Reference role: {env['reference_role']}.", '',
-             'For the committed demo, NCEP reanalysis air temperature at sigma 0.995 is a real reference field. '
-             'The forecast perturbation and missing cells are deliberately manufactured. This is a software-validation case, '
-             'not a forecast-skill assessment, not ERA5 and not 2-m station observations.', '',
+             case_description, '',
              f"Coverage: {int(mask.sum())}/{mask.size} joint finite values ({mask.mean():.2%}); "
              f"{f.sizes['time']} valid times, {f.sizes['lat']} x {f.sizes['lon']} grid. "
              f"{str(f.time.values[0])} to {str(f.time.values[-1])} UTC. "
@@ -99,6 +124,14 @@ def main():
         row = pooled[backend]
         lines.append(f'| {backend} | ' + ' | '.join(f'{float(row[k]):.9f}' for k in METRICS) +
                      f" | {float(row['valid_fraction']):.2%} | {float(row['valid_weight_fraction']):.2%} |")
+    if is_gfs:
+        lines += ['', '## Valid-time errors against matching GFS analysis', '',
+                  '| Valid time UTC | Forecast lead h | Bias K | MAE K | RMSE K |',
+                  '|---|---:|---:|---:|---:|']
+        for t, lead in zip(f.time.values, manifest['forecast_lead_hours']):
+            row = next(row for row in metrics if row['scope'] == str(t) and row['backend'] == 'reference_fp64')
+            lines.append(f"| {np.datetime_as_string(t, unit='m')} | {lead} | " +
+                         ' | '.join(f'{float(row[k]):.6f}' for k in METRICS) + ' |')
     lines += ['', '## Timing boundaries', '',
               f"{env['warmup']} warmups and {env['repeats']} measured repetitions per method. Resident compute reuses packed "
               'joint-valid inputs and weights; CUDA includes scalar return. The file pipeline reopens both NetCDF files, '
@@ -112,9 +145,11 @@ def main():
     lines += ['', '## Interpretation and limits', '',
               '- This deliberately small input is a correctness case, not a GPU scaling benchmark. Inspect the observed runtimes; '
               'do not extrapolate them to large domains or claim GPU acceleration if CUDA is slower.',
-              '- The example has four six-hourly samples on one date. The reported errors reflect the manufactured perturbation and '
-              'mask pattern, not operational forecast performance. Real-forecast evaluation requires a genuine forecast/reference pair, '
-              'matching valid times, levels and variable meaning.',
+              ('- Errors reflect manufactured perturbations and masks, not an operational forecast.' if is_demo else
+               '- This case covers one forecast initialization and one valid date. Lead time and valid time change together; '
+               'these four points cannot isolate a general lead-time dependence. The regional average includes both land and ocean. '
+               'Same-system analysis is not independent station truth.' if is_gfs else
+               '- Scientific interpretation requires matching variable meaning and vertical level, and a suitable reference.'),
               '- Cosine-latitude weights approximate relative cell areas on regular latitude/longitude grids. '
               'Curvilinear/projected grids and dateline-crossing subsets require additional grid/area handling.',
               '- Methods execute in blocks in a fixed order. Only these short sessions and this small region are represented; '
@@ -125,10 +160,15 @@ def main():
                   '[xarray example](https://docs.xarray.dev/en/stable/examples/area_weighted_temperature.html), '
                   '[NOAA PSL NCEP reanalysis](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html). '
                   'Reanalysis data provided by NOAA PSL, Boulder, Colorado, USA.', '']
+    elif is_gfs:
+        manifest_link = Path(os.path.relpath(manifest_path, a.run)).as_posix()
+        lines += [f'Source message URLs, byte ranges, SHA-256 hashes, initialization/lead/valid-time matching and decoder versions: [manifest]({manifest_link}). '
+                  '[NOAA GFS open data](https://registry.opendata.aws/noaa-gfs-bdp-pds/), '
+                  '[NCEP product documentation](https://www.nco.ncep.noaa.gov/pmb/products/gfs/).', '']
     else:
         lines += ['Input file identities and supplied roles are recorded in environment.json. Verify their scientific provenance before interpreting metrics.', '']
     lines += [
-              '![Reference, manufactured forecast, errors, coverage and timing](weather.png)', '']
+              '![Reference, forecast, errors, coverage and timing](weather.png)', '']
     fig, axes = plt.subplots(2, 3, figsize=(15, 9))
     first_valid = next(i for i in range(f.sizes['time']) if mask[i].any())
     common = mask[first_valid]
@@ -140,8 +180,10 @@ def main():
     temp_cmap.set_bad('dimgray')
     error_cmap = plt.get_cmap('RdBu_r').copy()
     error_cmap.set_bad('dimgray')
-    forecast_label = 'Manufactured forecast' if is_demo else 'Forecast'
-    for ax, value, title in zip(axes[0], [ref, forecast, error], ['Reference (deg C)', forecast_label+' (deg C)', 'Forecast - reference (K)']):
+    forecast_label = ('Manufactured forecast' if is_demo else
+                      f"GFS forecast +{manifest['forecast_lead_hours'][first_valid]}h" if is_gfs else 'Forecast')
+    reference_label = 'GFS f000 analysis' if is_gfs else 'Reference'
+    for ax, value, title in zip(axes[0], [ref, forecast, error], [reference_label+' (deg C)', forecast_label+' (deg C)', 'Forecast - reference (K)']):
         options = dict(cmap=error_cmap, vmin=-max(np.nanmax(np.abs(error)), 1e-6), vmax=max(np.nanmax(np.abs(error)), 1e-6)) if value is error else dict(cmap=temp_cmap, vmin=bounds[0], vmax=bounds[1])
         plot = ax.pcolormesh(f.lon.values, f.lat.values, value, shading='auto', **options)
         fig.colorbar(plot, ax=ax, shrink=.85)
@@ -150,9 +192,11 @@ def main():
         ax.set_ylabel('Latitude (degrees north)')
     per_time = [row for row in metrics if row['backend'] == 'reference_fp64' and row['scope'] != 'all_times']
     hours = [str(t)[5:16].replace('T', '\n') for t in f.time.values]
+    if is_gfs:
+        hours = [label+f'\n+{lead}h' for label, lead in zip(hours, manifest['forecast_lead_hours'])]
     for key in METRICS:
         axes[1, 0].plot(hours, [float(row[key]) if row[key] else np.nan for row in per_time], 'o-', label=key.upper())
-    axes[1, 0].set_title('Weighted metrics at each valid time')
+    axes[1, 0].set_title('Forecast-minus-analysis metrics' if is_gfs else 'Weighted metrics at each valid time')
     axes[1, 0].set_xlabel('Valid time (UTC)')
     axes[1, 0].set_ylabel('Metric (K)')
     axes[1, 0].legend()
@@ -180,8 +224,10 @@ def main():
     axes[1, 2].legend(fontsize=8)
     for ax in axes[1]:
         ax.grid(axis='y', alpha=.2)
-    title = 'NCEP sigma-0.995 NetCDF demo: real reference + manufactured forecast' if is_demo else 'NetCDF temperature verification'
-    subtitle = 'Not a forecast-skill evaluation.' if is_demo else 'Verify input provenance before interpreting forecast skill.'
+    title = ('NCEP sigma-0.995 NetCDF demo: real reference + manufactured forecast' if is_demo else
+             'GFS 2-m temperature: genuine forecast vs matching f000 analysis' if is_gfs else 'NetCDF temperature verification')
+    subtitle = ('Not a forecast-skill evaluation.' if is_demo else
+                'Same-system analysis, not independent station truth.' if is_gfs else 'Verify input provenance before interpreting forecast skill.')
     display_time = np.datetime_as_string(f.time.values[first_valid], unit='m')
     fig.suptitle(title+'\nDisplayed valid time: '+display_time+' UTC; dark-gray cells excluded jointly. '+subtitle, fontsize=12)
     fig.tight_layout()

@@ -1,0 +1,205 @@
+{
+  "case_kind": "gfs_forecast_vs_f000",
+  "title": "GFS 2-m temperature forecast vs matching GFS f000 analysis",
+  "source_registry": "https://registry.opendata.aws/noaa-gfs-bdp-pds/",
+  "product_documentation": "https://www.nco.ncep.noaa.gov/pmb/products/gfs/",
+  "forecast_initialization_utc": "2024-05-06T00:00:00+00:00",
+  "forecast_lead_hours": [
+    24,
+    30,
+    36,
+    42
+  ],
+  "valid_times_utc": [
+    "2024-05-07T00:00:00+00:00",
+    "2024-05-07T06:00:00+00:00",
+    "2024-05-07T12:00:00+00:00",
+    "2024-05-07T18:00:00+00:00"
+  ],
+  "variable": "air",
+  "parameter": "TMP at 2 m above ground",
+  "units": "K",
+  "grid_resolution_degrees": 0.25,
+  "lat_bounds": [
+    18.0,
+    28.0
+  ],
+  "lon_bounds": [
+    115.0,
+    125.0
+  ],
+  "shape": [
+    4,
+    41,
+    41
+  ],
+  "reference_kind": "GFS f000 analysis/initialization field from the valid-time cycle; not independent station truth",
+  "interpretation": "One historical forecast cycle/day and a small land-and-ocean region. These are forecast-minus-analysis errors, not an independent station validation or a general skill estimate.",
+  "transformations": "Spatial subset and FP32 adoption only; no regridding, injected masks or artificial errors.",
+  "download_bytes": 4064456,
+  "sources": [
+    {
+      "role": "forecast",
+      "initialization_utc": "2024-05-06T00:00:00+00:00",
+      "lead_hours": 24,
+      "valid_time_utc": "2024-05-07T00:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f024",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f024.idx",
+      "selected_index_line": "581:423255751:d=2024050600:TMP:2 m above ground:24 hour fcst:",
+      "byte_range": [
+        423255751,
+        423760877
+      ],
+      "downloaded_bytes": 505127,
+      "grib_sha256": "0f58e98c639675acc5d3739bd68b17c651db8b0231cbe55279251ae0eae0bf1b",
+      "index_sha256": "f8fc49833abbecc9f0d45bf36b5fc9f5461d8caffa3370d09ee10f8540e045de",
+      "etag": "\"9045ec616bf99f8d20ab93f341b7c563\"",
+      "last_modified": "Mon, 06 May 2024 03:38:37 GMT",
+      "retrieved_at_utc": "2026-11-01T10:41:44.187298+00:00"
+    },
+    {
+      "role": "reference",
+      "initialization_utc": "2024-05-07T00:00:00+00:00",
+      "lead_hours": 0,
+      "valid_time_utc": "2024-05-07T00:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/00/atmos/gfs.t00z.pgrb2.0p25.f000",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/00/atmos/gfs.t00z.pgrb2.0p25.f000.idx",
+      "selected_index_line": "580:414584422:d=2024050700:TMP:2 m above ground:anl:",
+      "byte_range": [
+        414584422,
+        415088577
+      ],
+      "downloaded_bytes": 504156,
+      "grib_sha256": "96a5e498c7e1757ffc19a8f6e5a7f7b03bca59af45def1fdcaf3fc432a2b6411",
+      "index_sha256": "bd97bed39107a23f79ebe2bd102f8cbdf9a9c5e55bed14be879cd930e463fee7",
+      "etag": "\"ea6829fcdac9c25a6836e2585dc85063\"",
+      "last_modified": "Tue, 07 May 2024 03:31:37 GMT",
+      "retrieved_at_utc": "2026-11-01T10:41:48.488256+00:00"
+    },
+    {
+      "role": "forecast",
+      "initialization_utc": "2024-05-06T00:00:00+00:00",
+      "lead_hours": 30,
+      "valid_time_utc": "2024-05-07T06:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f030",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f030.idx",
+      "selected_index_line": "581:420796468:d=2024050600:TMP:2 m above ground:30 hour fcst:",
+      "byte_range": [
+        420796468,
+        421301288
+      ],
+      "downloaded_bytes": 504821,
+      "grib_sha256": "38ee6567b9fdc174b6452e4bb663b67373e3aa8ef1ebf61c6726130ff862491a",
+      "index_sha256": "2c6cbef1d77b4187c387e0c644c9fe509d2839be0f27e01e28590d42e038dd8c",
+      "etag": "\"352a725d63a6b6cb5967a6f51a18726d\"",
+      "last_modified": "Mon, 06 May 2024 03:40:08 GMT",
+      "retrieved_at_utc": "2026-11-01T10:41:50.980290+00:00"
+    },
+    {
+      "role": "reference",
+      "initialization_utc": "2024-05-07T06:00:00+00:00",
+      "lead_hours": 0,
+      "valid_time_utc": "2024-05-07T06:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/06/atmos/gfs.t06z.pgrb2.0p25.f000",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/06/atmos/gfs.t06z.pgrb2.0p25.f000.idx",
+      "selected_index_line": "580:413199766:d=2024050706:TMP:2 m above ground:anl:",
+      "byte_range": [
+        413199766,
+        413704081
+      ],
+      "downloaded_bytes": 504316,
+      "grib_sha256": "5a4234a71b2e1009b668e041b46c7e138e872e512d1c0a7a84c2cd379608717d",
+      "index_sha256": "1b8c7ca10948ad0de33d061ca846dd90b1e17fe473a3b0734c272b4d1d42000e",
+      "etag": "\"95c405f0ba4d7e11aa54c5f9c5a168f2\"",
+      "last_modified": "Tue, 07 May 2024 09:29:06 GMT",
+      "retrieved_at_utc": "2026-11-01T10:41:53.413916+00:00"
+    },
+    {
+      "role": "forecast",
+      "initialization_utc": "2024-05-06T00:00:00+00:00",
+      "lead_hours": 36,
+      "valid_time_utc": "2024-05-07T12:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f036",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f036.idx",
+      "selected_index_line": "581:419166316:d=2024050600:TMP:2 m above ground:36 hour fcst:",
+      "byte_range": [
+        419166316,
+        419677433
+      ],
+      "downloaded_bytes": 511118,
+      "grib_sha256": "93a99ea728cde8826340adbd99136373e09105d18fb38995710e4fbcabd9378d",
+      "index_sha256": "31a98c9b849688b3ca61709aaba32c6491ac3037664961a388f968b790c6cf59",
+      "etag": "\"bd732656fe66dcb633183c72bc0b2ec0\"",
+      "last_modified": "Mon, 06 May 2024 03:41:43 GMT",
+      "retrieved_at_utc": "2026-11-01T10:41:56.862818+00:00"
+    },
+    {
+      "role": "reference",
+      "initialization_utc": "2024-05-07T12:00:00+00:00",
+      "lead_hours": 0,
+      "valid_time_utc": "2024-05-07T12:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/12/atmos/gfs.t12z.pgrb2.0p25.f000",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/12/atmos/gfs.t12z.pgrb2.0p25.f000.idx",
+      "selected_index_line": "580:416693266:d=2024050712:TMP:2 m above ground:anl:",
+      "byte_range": [
+        416693266,
+        417203589
+      ],
+      "downloaded_bytes": 510324,
+      "grib_sha256": "8dfc2bb35d893ece84b32e13d1a39db665920688283491dc599d51648aa59df7",
+      "index_sha256": "687d5fea2b5f289cf51cde1ec404a59cccd76e31224948bf2d644952b1635917",
+      "etag": "\"9d2d806edf128a769b5c5fadab34fabb\"",
+      "last_modified": "Tue, 07 May 2024 15:29:39 GMT",
+      "retrieved_at_utc": "2026-11-01T10:42:01.385396+00:00"
+    },
+    {
+      "role": "forecast",
+      "initialization_utc": "2024-05-06T00:00:00+00:00",
+      "lead_hours": 42,
+      "valid_time_utc": "2024-05-07T18:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f042",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240506/00/atmos/gfs.t00z.pgrb2.0p25.f042.idx",
+      "selected_index_line": "581:423523139:d=2024050600:TMP:2 m above ground:42 hour fcst:",
+      "byte_range": [
+        423523139,
+        424035212
+      ],
+      "downloaded_bytes": 512074,
+      "grib_sha256": "844a0f82db9aeac87381319934daee84bed4e0d4be98363e09e180f63c2d39fb",
+      "index_sha256": "c56217f7362eb10e92a7d39a973c939d15583e19f38112b137fc7c430f5ce07b",
+      "etag": "\"386969eedfc12a8bb0f4a5051b08c790\"",
+      "last_modified": "Mon, 06 May 2024 03:43:02 GMT",
+      "retrieved_at_utc": "2026-11-01T10:42:05.738666+00:00"
+    },
+    {
+      "role": "reference",
+      "initialization_utc": "2024-05-07T18:00:00+00:00",
+      "lead_hours": 0,
+      "valid_time_utc": "2024-05-07T18:00:00+00:00",
+      "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/18/atmos/gfs.t18z.pgrb2.0p25.f000",
+      "index_url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20240507/18/atmos/gfs.t18z.pgrb2.0p25.f000.idx",
+      "selected_index_line": "580:419392890:d=2024050718:TMP:2 m above ground:anl:",
+      "byte_range": [
+        419392890,
+        419905409
+      ],
+      "downloaded_bytes": 512520,
+      "grib_sha256": "244d0f065009c1f9c5e93c4679a4ca3d88ea4e038d10ebd5d383749ec39ffbf5",
+      "index_sha256": "58f60ac344cc8302adba9e30ba85f924bebd0c1fd679a594a404e0766cc7cb5e",
+      "etag": "\"0303e090f43ce5c0b2cf3573ee5b85f6\"",
+      "last_modified": "Tue, 07 May 2024 21:31:36 GMT",
+      "retrieved_at_utc": "2026-11-01T10:42:10.114441+00:00"
+    }
+  ],
+  "decoder_versions": {
+    "xarray": "2026.9.0",
+    "cfgrib": "0.9.15.1",
+    "eccodes": "2.50.0",
+    "scipy": "1.18.1",
+    "numpy": "2.5.4"
+  },
+  "files": {
+    "forecast.nc": "865caece3f1a7ec2dce9dbac0de4490cfeead568f7c825bc6cd329ff3a292c9a",
+    "reference.nc": "f306f9e9fd1ff9433d75cf102023b0fcb0a9ff5d634d77b16abfaa9571627e45"
+  }
+}

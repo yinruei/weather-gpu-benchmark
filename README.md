@@ -1,6 +1,8 @@
 # Weather GPU Benchmark
 
-Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by a first real-NetCDF pipeline using reanalysis temperatures and a manufactured forecast. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
+Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by NetCDF cases using both a controlled reanalysis-based demo and a genuine GFS forecast/analysis pair. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
+
+Latest real-data result: [GFS 2-m forecasts vs matching GFS f000 analysis near Taiwan](results/rtx3050_gfs_pair_run01/analysis.md), with checked initialization/lead/valid-time matching and no manufactured perturbations.
 
 ## Three key findings
 
@@ -194,7 +196,44 @@ python scripts/analyze_weather.py results/my_weather01
 
 For a CPU-only run, use `--backend numpy`. Outputs are `metrics.csv`, `timing_summary.csv`, `timing_samples.csv` and `environment.json`; the analysis script validates input hashes, coverage, backend agreement and raw timing summaries before generating `analysis.md` and `weather.png`. With other input files, pass their paths again using `analyze_weather.py --forecast ... --reference ...`.
 
-Next: replace the manufactured forecast with a genuine forecast/reference pair for a matched variable, level, valid time and region. Then evaluate a larger domain and define an application error budget before revisiting FP16.
+The following case replaces the manufactured forecast with a genuine matched forecast/analysis pair. A larger domain and an application error budget remain necessary before claiming operational GPU or FP16 benefits.
+
+## v4: genuine GFS forecast / analysis pair
+
+Real [NOAA GFS products](https://registry.opendata.aws/noaa-gfs-bdp-pds/) provide a matched historical case near Taiwan: **2-m temperature in K, native 0.25-degree grid, 18–28 N and 115–125 E**, including both land and ocean. No synthetic forecast errors, missing cells, interpolation or regridding are introduced. [Preparation and provenance](data/gfs_taiwan_pair/README.md) include every source message URL, index selection, byte range, checksum and decoder version.
+
+| Forecast initialization UTC | Forecast lead h | Valid time UTC | Reference |
+|---|---:|---|---|
+| 2024-05-06 00:00 | 24 | 2024-05-07 00:00 | GFS 2024-05-07 00 UTC f000 |
+| 2024-05-06 00:00 | 30 | 2024-05-07 06:00 | GFS 2024-05-07 06 UTC f000 |
+| 2024-05-06 00:00 | 36 | 2024-05-07 12:00 | GFS 2024-05-07 12 UTC f000 |
+| 2024-05-06 00:00 | 42 | 2024-05-07 18:00 | GFS 2024-05-07 18 UTC f000 |
+
+The reference is the **same-system zero-hour analysis/initialization field**, labeled `anl` in the NOAA index. It is not independent station observations. All 6,724 selected values (four 41 x 41 grids) are finite. Cosine-latitude weighted pooled errors against analysis:
+
+| Metric | FP64 arithmetic reference | NumPy FP32 | CUDA FP32 |
+|---|---:|---:|---:|
+| Bias K | -0.199035721 | -0.199035704 | -0.199035719 |
+| MAE K | 0.498139354 | 0.498139322 | 0.498139381 |
+| RMSE K | 0.880694300 | 0.880694270 | 0.880694270 |
+
+In this case the forecast is about 0.20 K colder than the analysis on the pooled domain/time average. These are **forecast-minus-analysis errors for one initialization/day**, not a general GFS skill estimate or Taiwan-land-only verification. Valid time and lead change together, so the four points do not isolate a general lead-time trend. No land mask is applied.
+
+![Genuine GFS forecast, analysis, error map and verification](results/rtx3050_gfs_pair_run01/weather.png)
+
+CPU/CUDA values agree with FP64 reference arithmetic at `rtol=atol=1e-5`. All 80 raw timing/metric samples and 15 metric rows reconcile, and 25 tests pass in WSL. NumPy/CUDA resident medians are 0.0175/0.2297 ms; warm-file pipeline medians are 11.2759/11.9840 ms. This regional correctness case is still small and shows no GPU acceleration. See the [full paired-data report](results/rtx3050_gfs_pair_run01/analysis.md) for valid-time scores and timing boundaries.
+
+Evaluate the committed files offline with the weather dependencies; GRIB decoding is not needed:
+
+```bash
+python -m pip install -r requirements-weather.txt
+python weather_verify.py --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc --backend both --output results/my_gfs_pair01
+python scripts/analyze_weather.py results/my_gfs_pair01 --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc
+```
+
+Use `--backend numpy` without CUDA. To recreate the pair from the original NOAA archive, install `requirements-gfs.txt` and run `python scripts/prepare_gfs_pair.py --output data/gfs_pair_recreated`. Only eight indexed TMP/2-m messages are downloaded (about 4.06 MB plus indexes), with HTTP range/framing/hash checks. Acquisition/decoding are excluded from the NetCDF pipeline timings.
+
+Next: validate more dates and genuine forecasts against a suitable independent reference, distinguish land/ocean or station sampling, and measure larger batches to locate any practical CPU/GPU crossover.
 
 ## Reproduce the reports and figures
 
@@ -207,6 +246,7 @@ python scripts/analyze_precision.py results/rtx3050_precision_run01
 python scripts/analyze_precision.py results/rtx3050_precision_run02
 python scripts/analyze_weather.py results/rtx3050_weather_run01
 python scripts/analyze_weather.py results/rtx3050_weather_run02
+python scripts/analyze_weather.py results/rtx3050_gfs_pair_run01 --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc
 ```
 
 `analyze_run.py` is the original run01 report generator with run01-specific narrative. `compare_runs.py` compares the original five-method runs. `plot_results.py` supports CPU-only, original GPU, resident and historical CSVs.
@@ -219,7 +259,7 @@ The five original rows from the shared conversation remain unchanged in [legacy_
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
 2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Next establish real-data accuracy requirements; investigate fused or chunked mixed arithmetic only if the workflow warrants it.
-3. **v4: first NetCDF correctness case completed.** Real NCEP reference, explicitly manufactured forecast/missing cells, unit/coordinate checks, joint masks, area-weighted metrics, actual warm-file pipeline timing and CPU/CUDA agreement. Next obtain a genuine forecast/reference pair and validate its variable, level, units, valid times and grid before making skill claims. ERA5 can be a reanalysis reference, not automatically station truth.
+3. **v4: controlled and genuine paired cases completed.** Alongside the manufactured NCEP demo, a genuine GFS 2-m forecast vs valid-time f000 analysis case now preserves original fields, metadata guards, exact-grid alignment and CPU/CUDA agreement. Next add more cases, land/station handling and an appropriate independent reference before generalizing skill; benchmark larger batches separately. ERA5 can be a reanalysis reference, not automatically station truth.
 4. **Weather AI ecosystem.** Explore Earth-2 / PhysicsNeMo after the real-data verification workflow is established. Consider profiling, pinned memory and compiled/fused kernels against that workflow.
 
 Learning goal: explain how data movement, numerical precision and measurement boundaries affect a useful weather-verification pipeline.

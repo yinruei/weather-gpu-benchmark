@@ -1,0 +1,62 @@
+{
+  "python": "3.10.12",
+  "numpy": "2.2.6",
+  "xarray": "2025.6.1",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "forecast_sha256": "865caece3f1a7ec2dce9dbac0de4490cfeead568f7c825bc6cd329ff3a292c9a",
+  "reference_sha256": "f306f9e9fd1ff9433d75cf102023b0fcb0a9ff5d634d77b16abfaa9571627e45",
+  "forecast_file": "forecast.nc",
+  "reference_file": "reference.nc",
+  "forecast_role": "real operational GFS 2-m temperature forecast; original values, no manufactured perturbation",
+  "reference_role": "real GFS f000 analysis/initialization-time 2-m temperature; same model system, not independent station observations",
+  "variable": "air",
+  "reference_variable": "air",
+  "weighting": "coslat",
+  "dtype": "float32",
+  "metrics_units": "K",
+  "valid_time_policy": "time coordinates already represent UTC valid time; exact matching after sorting",
+  "coordinate_policy": "1D regular lat/lon for coslat; longitude wrapped to [-180,180); no regridding",
+  "missing_policy": "joint finite forecast/reference mask; normalize by valid-cell weights",
+  "repeats": 20,
+  "warmup": 5,
+  "shape": [
+    4,
+    41,
+    41
+  ],
+  "finite_points": 6724,
+  "total_points": 6724,
+  "time_start": "2024-05-07T00:00:00.000000000",
+  "time_end": "2024-05-07T18:00:00.000000000",
+  "before": {
+    "captured_at_utc": "2026-11-01T10:45:46.682840+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 38, 27.90 W, 5 %"
+  },
+  "after": {
+    "captured_at_utc": "2026-11-01T10:45:47.388061+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 38, 27.82 W, 6 %"
+  },
+  "timing": "resident compute includes scalar return; pipeline includes warm-cache NetCDF read, decode, unit/coordinate checks, mask/weights, packing, allocation/upload (CUDA) and computation; excludes context init, download and output writing",
+  "timing_order": "all repeats of each method in order; not order-balanced",
+  "numerical_tolerance": {
+    "rtol": 1e-05,
+    "atol": 1e-05
+  }
+}

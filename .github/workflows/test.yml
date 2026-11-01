@@ -16,3 +16,5 @@ jobs:
       - run: python plot_results.py results/latest/summary.csv
       - run: python weather_verify.py --forecast data/weather_demo/manufactured_forecast.nc --reference data/weather_demo/reference.nc --backend numpy --repeats 3 --warmup 1 --output results/latest/weather_ci
       - run: python scripts/analyze_weather.py results/latest/weather_ci
+      - run: python weather_verify.py --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc --backend numpy --repeats 3 --warmup 1 --output results/latest/gfs_ci
+      - run: python scripts/analyze_weather.py results/latest/gfs_ci --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc
