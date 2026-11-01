@@ -22,6 +22,26 @@ python benchmark.py --numpy-only --sizes 1000 10000 --repeats 3 --warmup 1
 
 The output folder contains `summary.csv` (median and quartiles), `samples.csv` (individual timings), and `environment.json` (hardware/software context). Default PyTorch CPU threads: 1; change with `--threads`. NumPy thread-related environment variables are recorded, not controlled. Inspect `nvidia-smi` separately to record the driver version and system load for published runs. Dependencies are broad compatibility ranges, not an exact environment lock.
 
+## Measured RTX 3050 run01
+
+User-supplied results with **300 raw timings**, 5 warmups and 20 measured repeats per method/size. All reported medians, quartiles and speedups were independently recalculated from the raw samples and match. GPU execution was performed on the user's machine, not reproduced in this review environment.
+
+| Grid points | NumPy CPU | CUDA compute | GPU E2E | Compute speedup | E2E speedup |
+|---:|---:|---:|---:|---:|---:|
+| 1M | 1.261 ms | 0.296 ms | 1.697 ms | 4.26x | 0.74x |
+| 5M | 12.982 ms | 1.074 ms | 7.583 ms | 12.09x | 1.71x |
+| 10M | 26.152 ms | 2.038 ms | 13.823 ms | 12.83x | 1.89x |
+
+![Measured runtime and speedup](results/rtx3050_run01/benchmark.png)
+
+At 10M points, H2D alone takes 11.330 ms versus 2.038 ms for CUDA compute. Avoiding input transfer is a useful next hypothesis to test with a GPU-resident pipeline. The separate medians are not additive components of the measured E2E median.
+
+CUDA compute IQR/median is 2.61%–4.14%; PyTorch CPU is 18.42%–36.83%. These describe variation within one run, not confidence intervals or repeatability across sessions. Exact CPU model, NVIDIA driver version and power/load context are not recorded. See the [full analysis and limitations](results/rtx3050_run01/analysis.md) and [raw timing samples](results/rtx3050_run01/samples.csv).
+
+```bash
+python scripts/analyze_run.py results/rtx3050_run01
+```
+
 ## Historical result: RTX 3050
 
 The original five rows from the shared conversation are preserved verbatim in `results/legacy_rtx3050.csv`. The conversation reports an RTX 3050 8 GB / WSL2 environment; the CSV itself lacks full environment metadata and raw repeat timings. These measurements have **not** been reproduced here.
@@ -53,11 +73,11 @@ All methods receive warm-up iterations. Report median and 25th/75th percentiles,
 
 ## 驗證狀態與下一步
 
-本次已驗證 NumPy 的已知答案、無效輸入處理、CPU smoke test、原始數據繪圖與 Python 語法。執行環境沒有 PyTorch/CUDA，因此 PyTorch CPU 與 CUDA 路徑尚未實測；請先在你的 RTX 3050 執行 quick start，保留三種輸出，再進行效能判讀。
+已完成 NumPy 已知答案與無效輸入測試、CPU smoke test。使用者另提供 RTX 3050 的 PyTorch CPU/CUDA 實測檔案；本次核對全部 300 筆時間紀錄及其摘要，並保留原始檔。GPU 未在審閱環境重跑；上傳檔案未保存各後端指標數值，因此不能由這些檔案獨立重算數值一致性。
 
 依序精進：
 
-1. RTX 3050 重跑：比較 warm-up 前後、不同 threads、完整流程和計算時間。
+1. RTX 3050 再跑一輪至獨立資料夾，確認跨次穩定性，再分別比較 threads 與資料常駐 GPU 的情境。
 2. 加入 PyTorch CPU/CUDA 自動正確性測試、OOM 清楚提示與 driver metadata。
 3. 用 profiler 找出 reduction、配置與傳輸瓶頸，再評估 pinned memory / GPU-resident pipeline。
 4. 擴充 xarray/NetCDF 實際資料，處理時間、格點、單位與缺值，再加入面積加權。
