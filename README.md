@@ -12,6 +12,8 @@ Latest workflow optimization: [stage profiling and shared-input regional verific
 
 Latency follow-up: [2,400 checked workflows under blocked/interleaved scheduling](results/rtx3050_stability_comparison/analysis.md) shows why a median alone is insufficient. GPU prepared-input reuse has P50 about 5.1–5.3 ms in same-method blocks versus 10.7–16.5 ms interleaved; the monitoring-off interleaved control still has a 51.5-ms P95. [JAX survey in Traditional Chinese](docs/jax_survey_zh.md) covers JIT, compatibility and a fair evaluation plan; JAX has not yet been installed or benchmarked.
 
+Current PyTorch follow-up: [CPU/CUDA dispatch and result-return traces](results/rtx3050_dispatch_comparison/analysis.md) verify that five regional returns can become one without changing output bytes or numerical kernels. Prepared-input median latency falls about 12–20% in four measured comparisons; complete local workflow gains are inconsistent, including a regression. The alternative remains an explicit experiment. JAX implementation is deferred.
+
 ## Three key findings
 
 1. **Fast GPU compute does not imply the same end-to-end speedup.** At 10M grid points in run02, CUDA compute takes 2.055 ms versus NumPy's 30.368 ms (14.78x). Including input transfer and scalar return takes 13.533 ms (2.24x). At 1M, this GPU E2E path is slower than NumPy in both baseline runs.
@@ -356,7 +358,32 @@ python weather_stability.py --output results/my_stability_control --seed 2026110
 python scripts/analyze_stability.py results/my_stability01 results/my_stability02 results/my_stability_control --output results/my_stability_comparison
 ```
 
-The [JAX survey](docs/jax_survey_zh.md) recommends an isolated WSL Python >=3.12 environment for a future CUDA 12 proof of concept on this machine. Start with the pure weighted metric kernel, preserve shapes/masks/FP32 inputs, separate compilation/transfer/runtime and compare against both PyTorch eager and compiled execution. Existing Python 3.10/PyTorch/CUDA packages are unchanged; no JAX speedup is claimed. Next use kernel/host traces to investigate latency tails, then evaluate whether JAX reduces complete application time as well as resident compute.
+The [JAX survey](docs/jax_survey_zh.md) records compatibility and evaluation considerations. JAX implementation is deferred; current work continues in the existing Python 3.10/PyTorch/CUDA environment.
+
+## Trace diagnosis: reduce result-return boundaries
+
+`weather_dispatch.py` compares the unchanged per-region-return baseline with keeping all five regional metric tensors on device, stacking them and returning once. Both return **97,920 bytes of FP32 results** with identical region/initialization/lead/member identity. Two sessions contain 2,000 unprofiled primary calls and 160 independent profiled calls. All returned values agree with the unchanged dense-path FP64 reference; all 43 WSL CUDA tests pass.
+
+| Prepared-input reuse median | Original: 5 returns | Alternative: 1 return |
+|---|---:|---:|
+| Session 1, blocked | 5.082 ms | 4.450 ms |
+| Session 1, interleaved | 9.680 ms | 8.295 ms |
+| Session 2, blocked | 6.959 ms | 6.130 ms |
+| Session 2, interleaved | 7.534 ms | 6.040 ms |
+
+Traces verify **5 -> 1 DtoH copy events**. Physical copy activity is around 0.01 ms, while CPU return ranges last several milliseconds because they include waiting for prior GPU work and host/driver return handling. This explains why result-return scheduling matters even for a small payload. CPU ranges overlap GPU execution; their durations must not be added as separate CPU/GPU components. Profiler measurements have instrumentation overhead and remain separate from primary latency samples.
+
+Full local workflows include fresh read/preparation/upload, and their benefits are inconsistent: session 1 blocked median changes 47.006 -> 51.649 ms, while the other measured combinations improve. A lower reuse P50/P95 also does not guarantee a lower maximum: session 2 interleaved maximum changes 18.445 -> 23.136 ms. The original default paths are retained; the alternative is explicitly measured rather than universally substituted. These schedule conditions differ from the earlier stability runner, so comparisons should use methods within this experiment.
+
+![Primary result-return comparisons and independent CPU/CUDA trace ranges](results/rtx3050_dispatch_comparison/dispatch.png)
+
+```bash
+python weather_dispatch.py --output results/my_dispatch01
+python weather_dispatch.py --output results/my_dispatch02 --schedules interleaved blocked --seed 20261109
+python scripts/analyze_dispatch.py results/my_dispatch01 results/my_dispatch02 --output results/my_dispatch_comparison
+```
+
+Each run includes a compressed Chrome trace, per-call summaries and raw primary timings. The analyzer can independently reconcile saved GPU traces using CPU-only dependencies; CI performs that validation without claiming to execute GPU work. This diagnosis narrows one actionable source of overhead but does not identify a single cause of all latency tails. Forecast-verification work can now build on the measured pipeline while retaining per-region/member metrics and numerical checks.
 
 ## Reproduce the reports and figures
 
