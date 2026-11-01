@@ -1,4 +1,4 @@
-"""Verify canonical time/lat/lon temperature NetCDF fields on CPU and CUDA.
+"""Verify canonical time/lat/lon temperature NetCDF or local Zarr on CPU/CUDA.
 
 Time coordinates must already represent matching UTC valid times. No regridding
 or forecast-initialization/lead-time inference is performed.
@@ -19,8 +19,20 @@ METRICS = ('bias', 'mae', 'rmse')
 
 
 def sha256(path):
+    """File SHA-256, or a sorted relative-path/file-digest tree for directories."""
+    path = Path(path)
+    if path.is_dir():
+        files = sorted((p for p in path.rglob('*') if p.is_file()),
+                       key=lambda p: p.relative_to(path).as_posix())
+        if not files:
+            raise ValueError('Cannot hash an empty store')
+        tree = hashlib.sha256(b'zarr-directory-v1\0')
+        for file in files:
+            tree.update(file.relative_to(path).as_posix().encode('utf-8')+b'\0')
+            tree.update(bytes.fromhex(sha256(file)))
+        return tree.hexdigest()
     digest = hashlib.sha256()
-    with Path(path).open('rb') as stream:
+    with path.open('rb') as stream:
         for chunk in iter(lambda: stream.read(1024*1024), b''):
             digest.update(chunk)
     return digest.hexdigest()
@@ -119,7 +131,9 @@ def torch_weighted(f, r, weights):
 def load_pair(forecast_path, reference_path, variable, reference_variable, weighting):
     fields = []
     for path, name in [(forecast_path, variable), (reference_path, reference_variable)]:
-        with xr.open_dataset(path) as dataset:
+        dataset = (xr.open_zarr(path, chunks=None, consolidated=None) if Path(path).is_dir()
+                   else xr.open_dataset(path))
+        with dataset:
             fields.append(dataset[name].load())
     return prepare_pair(*fields, weighting=weighting)
 
@@ -186,6 +200,8 @@ def main():
                cuda_runtime=torch.version.cuda if torch else None,
                forecast_sha256=sha256(args.forecast), reference_sha256=sha256(args.reference),
                forecast_file=args.forecast.name, reference_file=args.reference.name,
+               input_formats=dict(forecast='zarr' if args.forecast.is_dir() else 'netcdf',
+                                  reference='zarr' if args.reference.is_dir() else 'netcdf'),
                forecast_role=f.attrs.get('experiment_role', 'user-supplied field; origin not verified'),
                reference_role=r.attrs.get('experiment_role', 'user-supplied reference; origin not verified'),
                variable=args.variable, reference_variable=args.reference_variable,
@@ -197,7 +213,7 @@ def main():
                finite_points=int(mask.sum()), total_points=int(mask.size),
                time_start=str(f.time.values[0]), time_end=str(f.time.values[-1]),
                before=None, after=None,
-               timing='resident compute includes scalar return; pipeline includes warm-cache NetCDF read, decode, unit/coordinate checks, mask/weights, packing, allocation/upload (CUDA) and computation; excludes context init, download and output writing',
+               timing='resident compute includes scalar return; pipeline includes warm-cache local dataset read, decode, unit/coordinate checks, mask/weights, packing, allocation/upload (CUDA) and computation; excludes context init, remote acquisition and output writing',
                timing_order='all repeats of each method in order; not order-balanced',
                numerical_tolerance=dict(rtol=1e-5, atol=1e-5))
     if torch:

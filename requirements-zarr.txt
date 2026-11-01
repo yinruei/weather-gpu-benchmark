@@ -1,0 +1,3 @@
+-r requirements-weather.txt
+# Read/write the local canonical Zarr v2 subsets on the existing CUDA environment.
+zarr>=2.18

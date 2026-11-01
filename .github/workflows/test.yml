@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install -r requirements-weather.txt
+      - run: pip install -r requirements-zarr.txt
       - run: python -m unittest discover -s tests -v
       - run: python benchmark.py --numpy-only --sizes 1000 10000 --repeats 3 --warmup 1
       - run: python plot_results.py results/latest/summary.csv
@@ -18,3 +18,5 @@ jobs:
       - run: python scripts/analyze_weather.py results/latest/weather_ci
       - run: python weather_verify.py --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc --backend numpy --repeats 3 --warmup 1 --output results/latest/gfs_ci
       - run: python scripts/analyze_weather.py results/latest/gfs_ci --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc
+      - run: python weather_verify.py --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr --backend numpy --repeats 3 --warmup 1 --output results/latest/zarr_ci
+      - run: python scripts/analyze_weather.py results/latest/zarr_ci --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr

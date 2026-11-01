@@ -1,0 +1,2 @@
+# Preserve Zarr metadata/chunk bytes so directory hashes survive every checkout.
+**/*.zarr/** -text

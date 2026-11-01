@@ -1,0 +1,78 @@
+{
+  "case_kind": "ecmwf_ifs_ens_control_zarr_vs_gfs_f000",
+  "title": "ECMWF IFS ENS control from Zarr vs common GFS f000 analysis",
+  "source_catalog": "https://stac.dynamical.org/ecmwf-ifs-ens-forecast-15-day-0-25-degree/collection.json",
+  "catalog_sha256": "cca3c25e775ebeba4e046e8c34dc72679856180e1dbdbf09d5754df42d3ac447",
+  "source_dataset": "ecmwf-ifs-ens-forecast-15-day-0-25-degree",
+  "source_asset": "https://dynamical-ecmwf-ifs-ens.s3.us-west-2.amazonaws.com/ecmwf-ifs-ens-forecast-15-day-0-25-degree/v0.1.0.icechunk",
+  "snapshot_id": "G76A041BF9PWGCNRBFVG",
+  "ensemble_member": 0,
+  "model_identity": "IFS ENS control, not IFS HRES or AIFS",
+  "forecast_initialization_utc": "2024-05-06T00:00:00+00:00",
+  "forecast_lead_hours": [
+    24,
+    30,
+    36,
+    42
+  ],
+  "valid_times_utc": [
+    "2024-05-07T00:00:00.000000000",
+    "2024-05-07T06:00:00.000000000",
+    "2024-05-07T12:00:00.000000000",
+    "2024-05-07T18:00:00.000000000"
+  ],
+  "variable": "air",
+  "source_variable": "temperature_2m",
+  "source_units": "degree_Celsius",
+  "reference_units": "K",
+  "grid_resolution_degrees": 0.25,
+  "lat_bounds": [
+    18.25,
+    26.0
+  ],
+  "lon_bounds": [
+    116.0,
+    123.75
+  ],
+  "shape": [
+    4,
+    32,
+    32
+  ],
+  "source_chunk_estimate": {
+    "chunk_shape": [
+      1,
+      85,
+      51,
+      32,
+      32
+    ],
+    "spatial_chunks": 1,
+    "nominal_uncompressed_source_chunk_bytes": 17756160,
+    "selected_logical_bytes": 16384
+  },
+  "remote_metadata_open_sec": 4.207259399816394,
+  "remote_selected_materialization_sec": 3.4719993993639946,
+  "network_timing_note": "Single remote read observation; not a cold-cache throughput estimate. Nominal uncompressed chunk bytes are not measured network bytes.",
+  "provider_processing": "dynamical.org converts ECMWF Open Data GRIB into Celsius Zarr and rounds floating-point bits for compression; not bitwise native GRIB.",
+  "license": "ECMWF-derived forecast: CC BY 4.0 and ECMWF Terms of Use; NOAA reference retains its original provenance.",
+  "attribution": "ECMWF IFS ENS forecast data processed by dynamical.org from ECMWF Open Data.",
+  "reference_source_file": "reference.nc",
+  "reference_source_sha256": "f306f9e9fd1ff9433d75cf102023b0fcb0a9ff5d634d77b16abfaa9571627e45",
+  "reference_source_manifest": "data/gfs_taiwan_pair/manifest.json",
+  "interpretation": "One historical ENS control forecast against same-valid-time GFS analysis, across land and ocean. GFS analysis is model-dependent and not independent truth; no model ranking or general skill conclusion.",
+  "transformations": "Exact init/member/lead and spatial selection, no interpolation or artificial errors. Forecast retained in Celsius; reference retained in Kelvin; verification normalizes units.",
+  "local_store_format": "Zarr v2, consolidated, explicit zero chunks, air chunks=(1,lat,lon)",
+  "directory_hash_algorithm": "sha256(zarr-directory-v1 NUL + sorted(relative UTF-8 path NUL + binary file SHA-256))",
+  "acquisition_versions": {
+    "icechunk": "2.3.1",
+    "zarr": "3.4.2",
+    "xarray": "2026.9.0",
+    "numpy": "2.5.4"
+  },
+  "acquisition_python": "3.13.3",
+  "files": {
+    "forecast.zarr": "e0367b2089f86256e8d470a41d22966447bdc94072b7e121a77e7ffc1f36f877",
+    "reference.zarr": "40ac1f2073fdb91b0138878a5bad40d34e533089538b81c49d3b5c554a9ebe62"
+  }
+}

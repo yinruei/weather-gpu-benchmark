@@ -40,7 +40,10 @@ def main():
         raise ValueError('Provenance manifest does not match the input file hashes')
     is_demo = bool(manifest.get('injected_missing_cells'))
     is_gfs = manifest.get('case_kind') == 'gfs_forecast_vs_f000'
-    if is_gfs:
+    is_ecmwf = manifest.get('case_kind') == 'ecmwf_ifs_ens_control_zarr_vs_gfs_f000'
+    is_paired = is_gfs or is_ecmwf
+    storage_name = 'Zarr' if a.forecast.is_dir() or a.reference.is_dir() else 'NetCDF'
+    if is_paired:
         initial = np.datetime64(datetime.fromisoformat(manifest['forecast_initialization_utc']).replace(tzinfo=None), 'ns')
         leads = np.array(manifest['forecast_lead_hours'])
         np.testing.assert_array_equal(f.forecast_reference_time.values, np.full(f.sizes['time'], initial))
@@ -49,7 +52,9 @@ def main():
         np.testing.assert_array_equal(r.forecast_reference_time.values, r.time.values)
         np.testing.assert_array_equal(r.lead_hours.values, np.zeros(r.sizes['time']))
         if float(f.height_above_ground.values) != 2. or float(r.height_above_ground.values) != 2.:
-            raise ValueError('GFS pair must retain its shared 2-m height coordinate')
+            raise ValueError('Paired case must retain its shared 2-m height coordinate')
+        if is_ecmwf and (int(f.ensemble_member.values) != 0 or manifest['ensemble_member'] != 0):
+            raise ValueError('ECMWF case must retain ENS control member 0')
     metrics, timings, samples = [read_csv(a.run/name) for name in ['metrics.csv', 'timing_summary.csv', 'timing_samples.csv']]
     scopes = [('all_times', f.values, r.values, mask, weights)] + [
         (str(t), f.values[i], r.values[i], mask[i], weights[i]) for i, t in enumerate(f.time.values)]
@@ -99,9 +104,16 @@ def main():
                             'from the matching valid-time cycles. No perturbations, injected masks, interpolation or regridding. '
                             'The reference is from the same model system, not independent station observations. '
                             'These are forecast-minus-analysis errors for one case, not a general estimate of forecast skill.')
+    elif is_ecmwf:
+        case_description = (f"Real ECMWF IFS ENS control member 0 initialized {manifest['forecast_initialization_utc']}, "
+                            f"leads {manifest['forecast_lead_hours']} hours, read from the public dynamical.org Icechunk/Zarr archive. "
+                            'This is ENS control, not IFS HRES, AIFS or an ensemble mean. The forecast remains in Celsius in the local Zarr; '
+                            'the matched GFS f000 analysis remains in Kelvin and both are normalized before verification. '
+                            'The provider rounds floating-point bits during reformatting. GFS analysis is model-dependent, not independent '
+                            'station truth; this single case does not rank ECMWF against GFS.')
     else:
         case_description = 'User-supplied temperature fields. Scientific provenance and matching physical variable/vertical level must be established separately.'
-    lines = [f'# NetCDF weather pipeline: {a.run.name}', '',
+    lines = [f'# {storage_name} weather pipeline: {a.run.name}', '',
              f"Forecast role: **{env['forecast_role']}**.", '',
              f"Reference role: {env['reference_role']}.", '',
              case_description, '',
@@ -116,7 +128,7 @@ def main():
              'It is not a continuous-day average.', '',
              'Reference arithmetic uses FP64 on the same packed FP32 data and weights. All saved backend values and all timed '
              f"metric values agree at rtol=atol=1e-5; {len(samples)} positive finite timing samples and all summaries reconcile. "
-             'NetCDF input hashes match. No timing samples were removed.', '',
+             'Input file/directory hashes match. No timing samples were removed.', '',
              '## Pooled verification metrics', '',
              '| Backend | Bias K | MAE K | RMSE K | Valid fraction | Area-weighted valid fraction |',
              '|---|---:|---:|---:|---:|---:|']
@@ -124,7 +136,7 @@ def main():
         row = pooled[backend]
         lines.append(f'| {backend} | ' + ' | '.join(f'{float(row[k]):.9f}' for k in METRICS) +
                      f" | {float(row['valid_fraction']):.2%} | {float(row['valid_weight_fraction']):.2%} |")
-    if is_gfs:
+    if is_paired:
         lines += ['', '## Valid-time errors against matching GFS analysis', '',
                   '| Valid time UTC | Forecast lead h | Bias K | MAE K | RMSE K |',
                   '|---|---:|---:|---:|---:|']
@@ -134,7 +146,7 @@ def main():
                          ' | '.join(f'{float(row[k]):.6f}' for k in METRICS) + ' |')
     lines += ['', '## Timing boundaries', '',
               f"{env['warmup']} warmups and {env['repeats']} measured repetitions per method. Resident compute reuses packed "
-              'joint-valid inputs and weights; CUDA includes scalar return. The file pipeline reopens both NetCDF files, '
+              'joint-valid inputs and weights; CUDA includes scalar return. The local dataset pipeline reopens both NetCDF files or Zarr stores, '
               'decodes units/coordinates, checks alignment, builds the mask and weights, packs valid cells, '
               'allocates/uploads inputs for CUDA and returns metrics. OS/file caches are warm, not a cold-storage experiment. '
               'Context initialization, downloading and result-file output are excluded. The file-pipeline method is actually timed, '
@@ -148,7 +160,7 @@ def main():
               ('- Errors reflect manufactured perturbations and masks, not an operational forecast.' if is_demo else
                '- This case covers one forecast initialization and one valid date. Lead time and valid time change together; '
                'these four points cannot isolate a general lead-time dependence. The regional average includes both land and ocean. '
-               'Same-system analysis is not independent station truth.' if is_gfs else
+               'GFS analysis is not independent station truth and can favor its own model system.' if is_paired else
                '- Scientific interpretation requires matching variable meaning and vertical level, and a suitable reference.'),
               '- Cosine-latitude weights approximate relative cell areas on regular latitude/longitude grids. '
               'Curvilinear/projected grids and dateline-crossing subsets require additional grid/area handling.',
@@ -165,6 +177,25 @@ def main():
         lines += [f'Source message URLs, byte ranges, SHA-256 hashes, initialization/lead/valid-time matching and decoder versions: [manifest]({manifest_link}). '
                   '[NOAA GFS open data](https://registry.opendata.aws/noaa-gfs-bdp-pds/), '
                   '[NCEP product documentation](https://www.nco.ncep.noaa.gov/pmb/products/gfs/).', '']
+    elif is_ecmwf:
+        manifest_link = Path(os.path.relpath(manifest_path, a.run)).as_posix()
+        estimate = manifest['source_chunk_estimate']
+        lines += ['## Remote Zarr acquisition (separate from benchmark)', '',
+                  f"Read-only snapshot: `{manifest['snapshot_id']}`. Remote metadata open: "
+                  f"{manifest['remote_metadata_open_sec']:.3f} s; selected-value materialization: "
+                  f"{manifest['remote_selected_materialization_sec']:.3f} s. Each is one observed read, not a throughput benchmark.", '',
+                  f"Logical selected temperature payload: {estimate['selected_logical_bytes']:,} bytes. "
+                  f"Source chunk shape: {estimate['chunk_shape']}; {estimate['spatial_chunks']} spatial chunk(s), "
+                  f"{estimate['nominal_uncompressed_source_chunk_bytes']:,} nominal uncompressed bytes. "
+                  'The chunk includes other leads and ensemble members even when selecting only member 0 and four leads. '
+                  'These are storage-layout estimates, not measured HTTP bytes. A Zarr subset is not necessarily a tiny physical read.', '',
+                  'Remote acquisition uses Icechunk/Zarr; offline verification reads consolidated local Zarr v2 stores. '
+                  'Zero-valued integer/time chunks are explicitly written for legacy Zarr 2 compatibility. '
+                  'Directory hashes include metadata and data chunks, and Git attributes preserve their bytes.', '',
+                  f'Source snapshot, processing, local directory hashes, units and reference provenance: [manifest]({manifest_link}). '
+                  '[ECMWF IFS ENS archive and attribution](https://dynamical.org/catalog/ecmwf-ifs-ens-forecast-15-day-0-25-degree/). '
+                  'ECMWF-derived data via dynamical.org; CC BY 4.0 and ECMWF Terms of Use apply. '
+                  'Reference: NOAA GFS analysis from the previously documented source.', '']
     else:
         lines += ['Input file identities and supplied roles are recorded in environment.json. Verify their scientific provenance before interpreting metrics.', '']
     lines += [
@@ -181,8 +212,9 @@ def main():
     error_cmap = plt.get_cmap('RdBu_r').copy()
     error_cmap.set_bad('dimgray')
     forecast_label = ('Manufactured forecast' if is_demo else
+                      f"IFS ENS control +{manifest['forecast_lead_hours'][first_valid]}h" if is_ecmwf else
                       f"GFS forecast +{manifest['forecast_lead_hours'][first_valid]}h" if is_gfs else 'Forecast')
-    reference_label = 'GFS f000 analysis' if is_gfs else 'Reference'
+    reference_label = 'GFS f000 analysis' if is_paired else 'Reference'
     for ax, value, title in zip(axes[0], [ref, forecast, error], [reference_label+' (deg C)', forecast_label+' (deg C)', 'Forecast - reference (K)']):
         options = dict(cmap=error_cmap, vmin=-max(np.nanmax(np.abs(error)), 1e-6), vmax=max(np.nanmax(np.abs(error)), 1e-6)) if value is error else dict(cmap=temp_cmap, vmin=bounds[0], vmax=bounds[1])
         plot = ax.pcolormesh(f.lon.values, f.lat.values, value, shading='auto', **options)
@@ -192,11 +224,11 @@ def main():
         ax.set_ylabel('Latitude (degrees north)')
     per_time = [row for row in metrics if row['backend'] == 'reference_fp64' and row['scope'] != 'all_times']
     hours = [str(t)[5:16].replace('T', '\n') for t in f.time.values]
-    if is_gfs:
+    if is_paired:
         hours = [label+f'\n+{lead}h' for label, lead in zip(hours, manifest['forecast_lead_hours'])]
     for key in METRICS:
         axes[1, 0].plot(hours, [float(row[key]) if row[key] else np.nan for row in per_time], 'o-', label=key.upper())
-    axes[1, 0].set_title('Forecast-minus-analysis metrics' if is_gfs else 'Weighted metrics at each valid time')
+    axes[1, 0].set_title('Forecast-minus-analysis metrics' if is_paired else 'Weighted metrics at each valid time')
     axes[1, 0].set_xlabel('Valid time (UTC)')
     axes[1, 0].set_ylabel('Metric (K)')
     axes[1, 0].legend()
@@ -225,8 +257,10 @@ def main():
     for ax in axes[1]:
         ax.grid(axis='y', alpha=.2)
     title = ('NCEP sigma-0.995 NetCDF demo: real reference + manufactured forecast' if is_demo else
+             'ECMWF IFS ENS control from Zarr vs GFS f000 analysis (not HRES)' if is_ecmwf else
              'GFS 2-m temperature: genuine forecast vs matching f000 analysis' if is_gfs else 'NetCDF temperature verification')
     subtitle = ('Not a forecast-skill evaluation.' if is_demo else
+                'Model-dependent reference, not independent station truth; single-case results only.' if is_ecmwf else
                 'Same-system analysis, not independent station truth.' if is_gfs else 'Verify input provenance before interpreting forecast skill.')
     display_time = np.datetime_as_string(f.time.values[first_valid], unit='m')
     fig.suptitle(title+'\nDisplayed valid time: '+display_time+' UTC; dark-gray cells excluded jointly. '+subtitle, fontsize=12)

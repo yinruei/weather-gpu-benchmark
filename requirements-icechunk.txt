@@ -1,0 +1,3 @@
+# Remote Icechunk v2 acquisition requires Python >=3.12.
+-r requirements-zarr.txt
+icechunk>=2.0

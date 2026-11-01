@@ -1,0 +1,4 @@
+{
+  "storage_role": "canonical local Zarr v2 subset for offline CPU/CUDA verification",
+  "attribution": "ECMWF IFS ENS via dynamical.org, and NOAA GFS via NOAA Open Data. See manifest.json for source roles and licenses."
+}

@@ -1,0 +1,12 @@
+{
+  "units": "K",
+  "standard_name": "air_temperature",
+  "long_name": "2 m air temperature",
+  "experiment_role": "real GFS f000 analysis/initialization field copied to Zarr; common reference, not independent station observations",
+  "coordinates": "forecast_reference_time height_above_ground lead_hours",
+  "_ARRAY_DIMENSIONS": [
+    "time",
+    "lat",
+    "lon"
+  ]
+}

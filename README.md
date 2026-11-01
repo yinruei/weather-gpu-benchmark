@@ -1,8 +1,10 @@
 # Weather GPU Benchmark
 
-Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by NetCDF cases using both a controlled reanalysis-based demo and a genuine GFS forecast/analysis pair. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
+Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by real NetCDF and Zarr cases, including NOAA GFS and ECMWF IFS ENS control forecasts. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
 
-Latest real-data result: [GFS 2-m forecasts vs matching GFS f000 analysis near Taiwan](results/rtx3050_gfs_pair_run01/analysis.md), with checked initialization/lead/valid-time matching and no manufactured perturbations.
+NetCDF real-data result: [GFS 2-m forecasts vs matching GFS f000 analysis near Taiwan](results/rtx3050_gfs_pair_run01/analysis.md), with checked initialization/lead/valid-time matching and no manufactured perturbations.
+
+Zarr case: [ECMWF IFS ENS control from a pinned public Icechunk/Zarr snapshot](results/rtx3050_ecmwf_zarr_run01/analysis.md), evaluated directly from local Zarr stores against matching GFS analysis. ENS control is not HRES.
 
 ## Three key findings
 
@@ -235,6 +237,39 @@ Use `--backend numpy` without CUDA. To recreate the pair from the original NOAA 
 
 Next: validate more dates and genuine forecasts against a suitable independent reference, distinguish land/ocean or station sampling, and measure larger batches to locate any practical CPU/GPU crossover.
 
+## ECMWF Zarr acquisition and native Zarr evaluation
+
+The [public ECMWF IFS ENS archive processed by dynamical.org](https://dynamical.org/catalog/ecmwf-ifs-ens-forecast-15-day-0-25-degree/) retains initialization, lead and member axes. We read **member 0 (ENS control)** from a pinned, read-only Icechunk snapshot, selecting the 2024-05-06 00 UTC run at leads 24/30/36/42 h over a chunk-aligned 32 x 32 region near Taiwan (18.25–26 N, 116–123.75 E). The archive supplies 2-m temperature in Celsius; it is normalized against Kelvin GFS f000 analysis at the exact same valid times and cells.
+
+Both prepared inputs remain **Zarr v2 stores**, and `weather_verify.py` now directly reads local Zarr directories as well as NetCDF files. No NetCDF intermediate is needed for the ECMWF forecast evaluation. [Data, attribution, snapshot and reproduction instructions](data/ecmwf_zarr_pair/README.md) identify the third-party processing and reference source.
+
+| Pooled metric | FP64 arithmetic reference | NumPy FP32 | CUDA FP32 |
+|---|---:|---:|---:|
+| Bias K | 0.218128577 | 0.218128562 | 0.218128577 |
+| MAE K | 0.623759979 | 0.623759925 | 0.623759985 |
+| RMSE K | 0.859978730 | 0.859978676 | 0.859978676 |
+
+All 4,096 values are finite. All 80 timing/metric samples and 15 metric rows reconcile; 31 tests pass in WSL, including NetCDF/Zarr numerical parity, units/missing values, source-axis selection, directory hashes and explicit zero-coordinate chunk compatibility. NumPy/CUDA resident medians are 0.0125/0.2317 ms. Warm local Zarr pipeline medians are 13.8442/14.9328 ms. The input remains too small to show GPU acceleration.
+
+![ECMWF ENS control Zarr fields, errors and timing](results/rtx3050_ecmwf_zarr_run01/weather.png)
+
+**Do not rank models from these numbers.** This is ENS control, not IFS HRES or AIFS; the reference is GFS analysis, not independent station observations. The source provider applies unit conversion and bit rounding. This chunk-aligned box differs from the earlier 41 x 41 GFS case, so comparing its 0.860 K RMSE directly with the earlier 0.881 K would also mix regions. The domain contains land and ocean, and only one historical run/day is represented.
+
+Remote metadata opening took 4.207 s and selected-data materialization 3.472 s in the first observed read. These are separate from the repeated local pipeline measurements. The source chunk includes 85 leads and 51 members: one selected spatial chunk has 17,756,160 nominal uncompressed bytes, although the selected member/four leads contain only 16,384 logical temperature bytes. Neither number measures actual HTTP traffic. **Zarr permits selective access, but chunk layout determines the physical work.** These experiments do not establish a general Zarr-versus-NetCDF performance advantage.
+
+```bash
+# Existing WSL Python 3.10 CUDA environment: offline local Zarr evaluation
+python -m pip install -r requirements-zarr.txt
+python weather_verify.py --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr --backend both --output results/my_ecmwf_zarr01
+python scripts/analyze_weather.py results/my_ecmwf_zarr01 --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr
+
+# Python >=3.12: remote Icechunk v2 acquisition (Windows project Python 3.13 was tested)
+python -m pip install -r requirements-icechunk.txt
+python scripts/prepare_ecmwf_zarr.py --snapshot-id G76A041BF9PWGCNRBFVG --output data/ecmwf_zarr_recreated
+```
+
+Use `--backend numpy` without CUDA. Local stores use explicit zero chunks and Git byte preservation for portable directory hashes. See the [Zarr report](results/rtx3050_ecmwf_zarr_run01/analysis.md) for timing boundaries and source-chunk/read observations.
+
 ## Reproduce the reports and figures
 
 ```bash
@@ -247,6 +282,7 @@ python scripts/analyze_precision.py results/rtx3050_precision_run02
 python scripts/analyze_weather.py results/rtx3050_weather_run01
 python scripts/analyze_weather.py results/rtx3050_weather_run02
 python scripts/analyze_weather.py results/rtx3050_gfs_pair_run01 --forecast data/gfs_taiwan_pair/forecast.nc --reference data/gfs_taiwan_pair/reference.nc
+python scripts/analyze_weather.py results/rtx3050_ecmwf_zarr_run01 --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr
 ```
 
 `analyze_run.py` is the original run01 report generator with run01-specific narrative. `compare_runs.py` compares the original five-method runs. `plot_results.py` supports CPU-only, original GPU, resident and historical CSVs.
@@ -259,7 +295,7 @@ The five original rows from the shared conversation remain unchanged in [legacy_
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
 2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Next establish real-data accuracy requirements; investigate fused or chunked mixed arithmetic only if the workflow warrants it.
-3. **v4: controlled and genuine paired cases completed.** Alongside the manufactured NCEP demo, a genuine GFS 2-m forecast vs valid-time f000 analysis case now preserves original fields, metadata guards, exact-grid alignment and CPU/CUDA agreement. Next add more cases, land/station handling and an appropriate independent reference before generalizing skill; benchmark larger batches separately. ERA5 can be a reanalysis reference, not automatically station truth.
+3. **v4: controlled, genuine GFS and ECMWF Zarr cases completed.** Preserve run/member/lead identity, exact-grid alignment and CPU/CUDA agreement across NetCDF and local Zarr. Remote acquisition and chunk costs are separate from compute. Next add more cases, land/station handling and an appropriate independent reference before generalizing skill; batch larger workloads while retaining per-lead/member statistics. ERA5 can be a reanalysis reference, not automatically station truth.
 4. **Weather AI ecosystem.** Explore Earth-2 / PhysicsNeMo after the real-data verification workflow is established. Consider profiling, pinned memory and compiled/fused kernels against that workflow.
 
 Learning goal: explain how data movement, numerical precision and measurement boundaries affect a useful weather-verification pipeline.
