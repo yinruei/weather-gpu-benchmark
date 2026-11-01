@@ -1,0 +1,425 @@
+{
+  "captured_utc": "2026-11-01T23:38:43.303923+00:00",
+  "scope": "Local pipeline performance and numerical correctness; untrained FNO",
+  "python": "3.12.16",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "nvidia-physicsnemo": "2.2.2",
+    "numpy": "2.2.6",
+    "xarray": "2026.9.0",
+    "zarr": "3.4.2",
+    "scipy": "1.18.1"
+  },
+  "cuda_runtime": "12.6",
+  "hardware": {
+    "captured_at_utc": "2026-11-01T23:38:43.309181+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 40, 11.86 W, 7 %"
+  },
+  "source_sha256": "94fcbd8622cea68e9ce68ae59a2ca66edce4ede582c0aec15efa7e4abaa32f1b",
+  "source_manifest": {
+    "case_kind": "ecmwf_ens_batch_vs_gfs_analysis",
+    "sources": [
+      {
+        "dataset": "ecmwf-ifs-ens-forecast-15-day-0-25-degree",
+        "catalog": "https://stac.dynamical.org/ecmwf-ifs-ens-forecast-15-day-0-25-degree/collection.json",
+        "asset": "https://dynamical-ecmwf-ifs-ens.s3.us-west-2.amazonaws.com/ecmwf-ifs-ens-forecast-15-day-0-25-degree/v0.1.0.icechunk",
+        "snapshot_id": "G76A041BF9PWGCNRBFVG",
+        "catalog_sha256": "cca3c25e775ebeba4e046e8c34dc72679856180e1dbdbf09d5754df42d3ac447",
+        "metadata_open_seconds": 3.9049622993916273,
+        "read_budget": {
+          "chunk_shape": [
+            1,
+            85,
+            51,
+            32,
+            32
+          ],
+          "chunks": 16,
+          "nominal_uncompressed_bytes": 284098560,
+          "selected_logical_bytes": 26738688
+        },
+        "selected_materialization_seconds": 12.674146300181746
+      },
+      {
+        "dataset": "noaa-gfs-forecast",
+        "catalog": "https://stac.dynamical.org/noaa-gfs-forecast/collection.json",
+        "asset": "https://dynamical-noaa-gfs.s3.us-west-2.amazonaws.com/noaa-gfs-forecast/v0.2.7.icechunk",
+        "snapshot_id": "7FB36MTVTBHMA65ETQB0",
+        "catalog_sha256": "54829bc58c726029429fe897e1131a04b109b357f545c8e15ff967980a3831e2",
+        "metadata_open_seconds": 4.588635600171983,
+        "read_budget": {
+          "chunk_shape": [
+            1,
+            105,
+            121,
+            121
+          ],
+          "chunks": 80,
+          "nominal_uncompressed_bytes": 491937600,
+          "selected_logical_bytes": 327680
+        },
+        "selected_materialization_seconds": 33.82189199980348
+      }
+    ],
+    "shape": [
+      4,
+      8,
+      51,
+      64,
+      64
+    ],
+    "initializations": [
+      "2024-05-06T00:00:00.000000000",
+      "2024-05-07T00:00:00.000000000",
+      "2024-05-08T00:00:00.000000000",
+      "2024-05-09T00:00:00.000000000"
+    ],
+    "lead_hours": [
+      24,
+      30,
+      36,
+      42,
+      48,
+      54,
+      60,
+      66
+    ],
+    "ensemble_members": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "valid_times": [
+      [
+        "2024-05-07T00:00:00.000000000",
+        "2024-05-07T06:00:00.000000000",
+        "2024-05-07T12:00:00.000000000",
+        "2024-05-07T18:00:00.000000000",
+        "2024-05-08T00:00:00.000000000",
+        "2024-05-08T06:00:00.000000000",
+        "2024-05-08T12:00:00.000000000",
+        "2024-05-08T18:00:00.000000000"
+      ],
+      [
+        "2024-05-08T00:00:00.000000000",
+        "2024-05-08T06:00:00.000000000",
+        "2024-05-08T12:00:00.000000000",
+        "2024-05-08T18:00:00.000000000",
+        "2024-05-09T00:00:00.000000000",
+        "2024-05-09T06:00:00.000000000",
+        "2024-05-09T12:00:00.000000000",
+        "2024-05-09T18:00:00.000000000"
+      ],
+      [
+        "2024-05-09T00:00:00.000000000",
+        "2024-05-09T06:00:00.000000000",
+        "2024-05-09T12:00:00.000000000",
+        "2024-05-09T18:00:00.000000000",
+        "2024-05-10T00:00:00.000000000",
+        "2024-05-10T06:00:00.000000000",
+        "2024-05-10T12:00:00.000000000",
+        "2024-05-10T18:00:00.000000000"
+      ],
+      [
+        "2024-05-10T00:00:00.000000000",
+        "2024-05-10T06:00:00.000000000",
+        "2024-05-10T12:00:00.000000000",
+        "2024-05-10T18:00:00.000000000",
+        "2024-05-11T00:00:00.000000000",
+        "2024-05-11T06:00:00.000000000",
+        "2024-05-11T12:00:00.000000000",
+        "2024-05-11T18:00:00.000000000"
+      ]
+    ],
+    "latitude_bounds": [
+      18.25,
+      34.0
+    ],
+    "longitude_bounds": [
+      116.0,
+      131.75
+    ],
+    "forecast_points": 6684672,
+    "unique_reference_times": 20,
+    "transformations": "Exact source selections; no tiling, artificial perturbations or regridding. Reference indexed by exact valid time and shared across members.",
+    "provider_processing": "dynamical.org converts native GRIB to Celsius Zarr and rounds floating-point bits; not bitwise native GRIB.",
+    "license": "CC BY 4.0 for provider archives; ECMWF Terms of Use also apply to ECMWF-derived data.",
+    "attribution": "ECMWF IFS ENS forecast and NOAA NWS NCEP GFS data processed by dynamical.org from their open-data archives.",
+    "interpretation": "Separate per-initialization/lead/member spatial metrics; descriptive pooled errors are not ensemble-mean forecast skill. Reference is GFS analysis, not independent truth. Overlapping valid times and related members are not independent samples.",
+    "acquisition_python": "3.13.3",
+    "acquisition_versions": {
+      "icechunk": "2.3.1",
+      "zarr": "3.4.2",
+      "xarray": "2026.9.0",
+      "numpy": "2.5.4"
+    },
+    "files": {
+      "batch.zarr": "94fcbd8622cea68e9ce68ae59a2ca66edce4ede582c0aec15efa7e4abaa32f1b"
+    }
+  },
+  "model_config": {
+    "in_channels": 1,
+    "out_channels": 1,
+    "dimension": 2,
+    "latent_channels": 16,
+    "num_fno_layers": 2,
+    "num_fno_modes": 8,
+    "padding": 0,
+    "coord_features": true,
+    "decoder_layers": 2,
+    "decoder_layer_size": 16,
+    "activation_fn": "gelu",
+    "decoder_activation_fn": "silu"
+  },
+  "model_state_sha256": "281522cf2a5ca5bbccf4c7fe455f272fa5b1c67e1a83c52fbdd0f2836a671b97",
+  "weights_sha256": "be8c77821f6be25869f9cf773f4a4f49330d336a7d790cc15e403752f4ee52f4",
+  "baseline": "rtx3050_physicsnemo_run01",
+  "cases": [
+    {
+      "case": "b16_s64",
+      "batch": 16,
+      "side": 64
+    }
+  ],
+  "methods": [
+    "cpu",
+    "cuda"
+  ],
+  "stages": [
+    "read_decode",
+    "prepare",
+    "upload",
+    "forward",
+    "return",
+    "write_close"
+  ],
+  "repeats": 30,
+  "warmup": 3,
+  "profile_repeats": 8,
+  "threads": 6,
+  "interop_threads": 1,
+  "order_seed": 20261104,
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "tf32": false,
+  "deterministic_algorithms": true,
+  "setup_seconds": 6.863003313999798,
+  "timing": "Primary wall time from local Zarr open/read/decode/coordinate validation through scaling/packing, host tensor creation, upload (CUDA), forward, full host return, uncompressed NPZ write and file close. Models/weights remain resident; no input cache is reused. Reference/hash/readback validation and temporary-file cleanup are outside timing. Profiles are separate synchronized executions; no overlap/prefetch.",
+  "cache": "Repeated local reads after setup/reference validation; OS/library caches uncontrolled, no cache clearing. First observations are initialized-process observations, not cold disk/process measurements. Source hash verification and reference setup may already warm caches.",
+  "write": "np.savez, uncompressed ZIP, identical schema and fixed metadata for CPU/CUDA. File creation and close included; no fsync/durable-media guarantee. Every output is read back and checked outside timing. Only last primary output per case/backend retained; other trial outputs removed after validation outside timing.",
+  "profile": "Separate stage-synchronized runs; mean stage times sum with unattributed mean to measured profile mean, never to primary P50.",
+  "case_metadata": {
+    "b16_s64": {
+      "identity": {
+        "frames": [
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 0,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 1,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 2,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 3,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 4,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 5,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 6,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 7,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 8,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 9,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 10,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 11,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 12,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 13,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 14,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          },
+          {
+            "initialization": "2024-05-06T00:00:00.000000000",
+            "lead_hours": 24,
+            "member": 15,
+            "valid_time": "2024-05-07T00:00:00.000000000"
+          }
+        ],
+        "latitude": [
+          18.25,
+          34.0
+        ],
+        "longitude": [
+          116.0,
+          131.75
+        ],
+        "source_units": "degree_Celsius",
+        "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+      },
+      "input_sha256": "b5328a473548062e9bd5bab3cdadc69007201e71497e09652ca16e4f42761f9e",
+      "baseline_artifact_sha256": "e4b7a8c0128f050b363a90038b3598744325e79c37b5ee479ab6ecd3b0ba4aeb",
+      "budget": {
+        "chunk_shape": [
+          1,
+          4,
+          51,
+          32,
+          32
+        ],
+        "chunks_touched": 4,
+        "nominal_chunk_uncompressed_bytes": 3342336,
+        "materialized_frames": 16,
+        "selected_logical_bytes": 262144,
+        "packed_input_bytes": 262144
+      },
+      "outputs": {
+        "cuda": {
+          "path": "outputs/b16_s64_cuda.npz",
+          "sha256": "3a8ade731894ca3e1b748c9bc8f93d2c4829677e0d13510f2a28b340bcbe2162",
+          "payload_sha256": "ffeb63ac62267ffdaa1474903674d8686f7b4261959c0ec5e0ea765ce51444b8",
+          "bytes": 268436
+        },
+        "cpu": {
+          "path": "outputs/b16_s64_cpu.npz",
+          "sha256": "45b24c6863ac810ef870dc7d5e69fe33336e367fb279ffc2ede4be6826e5d3d0",
+          "payload_sha256": "30749c291a1e1d143ac5958fc3f71678489872cd5275a81d8d6338cec3613780",
+          "bytes": 268436
+        }
+      }
+    }
+  },
+  "hardware_after": {
+    "captured_at_utc": "2026-11-01T23:38:47.610515+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 41, 27.69 W, 6 %"
+  }
+}

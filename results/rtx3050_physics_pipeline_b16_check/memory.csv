@@ -1,0 +1,2 @@
+case,baseline_allocated_bytes,peak_allocated_bytes,peak_extra_allocated_bytes,peak_reserved_bytes
+b16_s64,34087936,64758784,30670848,79691776

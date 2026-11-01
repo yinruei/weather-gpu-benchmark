@@ -407,6 +407,27 @@ All 1,200 timed outputs pass elementwise CPU FP64 checks using the same FP32 wei
 
 For a fresh WSL/Linux CUDA12 checkout, run `bash scripts/setup_physicsnemo.sh`; then activate `.venv/physicsnemo/bin/activate`. The installer uses the [complete lock](requirements-physicsnemo.lock.txt), including CUDA-compatible torchvision and Warp binaries. It preserves an existing isolated environment and leaves the original weather-gpu environment separate. Use `python physicsnemo_benchmark.py --output results/my_physicsnemo01` with a new output path. CI validates saved GPU artifacts using CPU dependencies; the live FNO smoke test runs when the optional framework is installed.
 
+## Phase 5B: complete local Zarr-to-FNO-to-file workflow
+
+The same fixed untrained model now runs through Zarr open/read/decode/check, FP32 input packing, CUDA upload, forward, full host return and **uncompressed NPZ write/close**. CPU/CUDA models remain resident; every call rereads local input and writes the same output schema/byte count. Every file is read back and checked against the full FP64 reference outside timing. Setup, validation, hashing and temporary-file cleanup are separate; file close does not guarantee durable-media persistence (`fsync` is not requested).
+
+| Input | CPU full-workflow P50 ms | CUDA full-workflow P50 ms | CPU/CUDA ratio |
+|---|---:|---:|---:|
+| B1, 32x32 | 21.10–23.93 | 22.62–24.59 | 0.93–0.97x |
+| B4, 64x64 | 26.60–30.21 | 24.65–28.12 | 1.07–1.08x |
+| B16, 64x64 | 36.50–41.48 | 52.45–58.81 | 0.62–0.79x |
+| B64, 64x64 | 104.54–106.39 | 40.55–42.12 | 2.53–2.58x |
+
+These are two 30-repeat sessions, with separate 8-repeat synchronized profiles. B64 retains about 2.5x complete-workflow acceleration, while the earlier forward/upload/return result was about 7.4x. Small inputs have little end-to-end benefit. **B16 is slower on CUDA in both main sessions**; a separate B16-only process measured CPU 40.559 ms versus CUDA 27.259 ms (1.49x). All three datasets are retained. Shape/history, scheduling and power/system state are not isolated by that contrast, so it does not establish a cause.
+
+Profiles are separate executions and can differ substantially from primary timings; their means/shares are not an exact decomposition of primary P50. Source/reference setup and validation can warm OS caches, with no cache clearing or cold-disk claim. The reader preserves the earlier bounding-selection behavior: B64 materializes 102 frames before taking 64. This makes read coverage and later reader optimization explicit. No remote download, training, forecast-quality evaluation or Earth2Studio execution is included.
+
+[Full result tables and protocol](results/rtx3050_physics_pipeline_comparison/analysis.md), [B16-only control](results/rtx3050_physics_pipeline_b16_report/analysis.md), [Traditional Chinese explanation/reproduction](docs/physicsnemo_pipeline_zh.md).
+
+![Complete local workflow and independent stage profiles](results/rtx3050_physics_pipeline_comparison/physicsnemo_pipeline.png)
+
+In the existing isolated environment, run `python physicsnemo_pipeline.py --output results/my_physics_pipeline01`, then `python scripts/analyze_physicsnemo_pipeline.py results/my_physics_pipeline01 --output results/my_physics_pipeline_report`. Use new output paths. CI revalidates retained files, source identities/hashes, numerical errors, trial hashes, quantiles, execution order and stage sums on CPU.
+
 ## Reproduce the reports and figures
 
 ```bash
@@ -430,7 +451,7 @@ The five original rows from the shared conversation remain unchanged in [legacy_
 
 ## Roadmap
 
-Mapping to the original five-step plan: (1) figures, (2) hardware/README, (3) FP32/FP16 and (4) real-data performance pipelines now have reproducible baselines. **Step 5A is implemented, with an initial 5B FP32 benchmark:** an isolated PhysicsNeMo environment runs a small FNO on real ECMWF Zarr input frames. See the [phase-5 results](results/rtx3050_physicsnemo_comparison/analysis.md) and [Traditional Chinese plan](docs/phase5_plan_zh.md). This uses fixed random, untrained weights for performance and numerical checks. Earth2Studio model pipelines (5C) remain future work; forecast quality remains outside scope.
+Mapping to the original five-step plan: (1) figures, (2) hardware/README, (3) FP32/FP16 and (4) real-data performance pipelines now have reproducible baselines. **Step 5A and initial 5B forward/full-workflow benchmarks are implemented:** an isolated PhysicsNeMo environment runs a small FNO on real ECMWF Zarr input frames. See the [forward results](results/rtx3050_physicsnemo_comparison/analysis.md), [complete local workflow](results/rtx3050_physics_pipeline_comparison/analysis.md) and [Traditional Chinese plan](docs/phase5_plan_zh.md). This uses fixed random, untrained weights for performance and numerical checks. Earth2Studio model pipelines (5C) remain future work; forecast quality remains outside scope.
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
 2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Further precision experiments must specify numerical-error tolerances for the benchmark outputs and measure the resulting time/memory tradeoff.

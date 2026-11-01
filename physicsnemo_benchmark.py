@@ -58,7 +58,8 @@ def array_mapping_hash(mapping):
     return digest.hexdigest()
 
 
-def load_input(store, case):
+def read_input(store, case):
+    """Read the native bounding selection; defer numerical packing to prepare_input."""
     import xarray as xr
     from weather_batch import validate_batch
     batch, side = case['batch'], case['side']
@@ -76,8 +77,6 @@ def load_input(store, case):
                                     ensemble_member=slice(member_count), latitude=slice(-side, None),
                                     longitude=slice(side)).load()
         raw = selected.values.reshape(-1, side, side)[:batch, None]
-        if not np.isfinite(raw).all():
-            raise ValueError('FNO fixture requires finite input; no silent NaN fill')
         identities = [dict(initialization=str(initial), lead_hours=int(lead/np.timedelta64(1, 'h')),
                            member=int(member), valid_time=str(initial+lead))
                       for initial in selected.init_time.values for lead in selected.lead_time.values
@@ -85,8 +84,19 @@ def load_input(store, case):
         metadata = dict(frames=identities, latitude=[float(selected.latitude.min()), float(selected.latitude.max())],
                         longitude=[float(selected.longitude.min()), float(selected.longitude.max())],
                         source_units='degree_Celsius', transform='(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization')
-        result = np.ascontiguousarray(((raw.astype(np.float64)-20.)/20.).astype(np.float32))
-    return result, metadata
+        coordinates = {name: selected[name].values.copy() for name in ['latitude', 'longitude']}
+    return raw, metadata, coordinates
+
+
+def prepare_input(raw):
+    if not np.isfinite(raw).all():
+        raise ValueError('FNO fixture requires finite input; no silent NaN fill')
+    return np.ascontiguousarray(((raw.astype(np.float64)-20.)/20.).astype(np.float32))
+
+
+def load_input(store, case):
+    raw, metadata, _ = read_input(store, case)
+    return prepare_input(raw), metadata
 
 
 def error_summary(actual, reference):

@@ -1,6 +1,6 @@
 # 第五步：NVIDIA 生態系的推論與資料流程效能
 
-狀態（2026-11-02，Asia/Taipei）：**5A 已實作完成，5B 已完成第一組 FP32 batch benchmark。** 只研究效能、資源使用與數值正確性；預報品質、模型排名、訓練成效及獨立觀測驗證不在範疇。JAX 試作持續暫緩。
+狀態（2026-11-02，Asia/Taipei）：**5A 已實作完成，5B 已有 FP32 forward 與本機 Zarr 到輸出檔的完整流程基線。** 只研究效能、資源使用與數值正確性；預報品質、模型排名、訓練成效及獨立觀測驗證不在範疇。JAX 試作持續暫緩。
 
 ## 原始五步走到哪裡
 
@@ -82,9 +82,9 @@ python scripts/analyze_physicsnemo.py results/my_physicsnemo01 results/my_physic
 | 子階段 | 現況與後續 |
 |---|---|
 | 5A. 環境與最小 forward | 已完成 |
-| 5B. 模型推論 benchmark | FP32 尺寸／batch、CPU/GPU、完整回傳、P50/P95、記憶體、數值一致性已完成；接著量「Zarr 讀取 → 縮放／打包 → 上傳 → FNO → 取回 → 寫檔」總成本 |
+| 5B. 模型推論 benchmark | FP32 forward 與「Zarr 讀取 → 縮放／打包 → 上傳 → FNO → 取回 → 寫檔」兩輪基線已完成，另保存 B16 單獨執行對照；下一步控制流程節奏與讀取重用 |
 | 5C. Earth2Studio 流程 | 尚未實作；先確認指定模型的多變數、層次、時間窗口、網格、單位、權重與容量需求，再準備合格輸入 |
 
-下一步優先把目前 FNO 接成完整資料流程，才能知道 GPU forward 的 7–8 倍效益，在讀檔及寫檔也算入後還剩多少。AMP/FP16 需要先確認 FFT 等實際算子支援，再衡量時間、記憶體與數值誤差。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
+完整流程 B64 的兩輪加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。詳見[完整流程中文分析與重跑指令](physicsnemo_pipeline_zh.md)，含所有反例與快取／計時限制。先控制這些效能條件，再評估 AMP/FP16 的算子支援與誤差／效能取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
 
 參考：[官方 FNO API](https://docs.nvidia.com/physicsnemo/latest/physicsnemo/api/models/fnos.html)、[PhysicsNeMo 套件](https://pypi.org/project/nvidia-physicsnemo/)、[NVIDIA Warp CUDA wheel 說明](https://github.com/NVIDIA/warp/blob/main/README.md)、[Earth2Studio](https://nvidia.github.io/earth2studio/main/)。版本數字以本次安裝與保存 lock 為準。
