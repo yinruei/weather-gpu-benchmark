@@ -8,6 +8,8 @@ Zarr case: [ECMWF IFS ENS control from a pinned public Icechunk/Zarr snapshot](r
 
 Latest scaling result: [6.68M genuine ECMWF ensemble values across four initializations](results/rtx3050_ecmwf_batch_comparison/analysis.md). Two RTX 3050 sessions show 5.46–6.20x resident compute speedup, 1.49–1.53x including input upload, and 1.07–1.09x for the warm local Zarr pipeline.
 
+Latest workflow optimization: [stage profiling and shared-input regional verification](results/rtx3050_pipeline_comparison/analysis.md). Five distinct regional tasks improve from 166–171 ms to about 52 ms on GPU, including read/preparation/upload. CPU receives the same input reuse; shared GPU/CPU whole-workflow speedup is 1.85–1.89x.
+
 ## Three key findings
 
 1. **Fast GPU compute does not imply the same end-to-end speedup.** At 10M grid points in run02, CUDA compute takes 2.055 ms versus NumPy's 30.368 ms (14.78x). Including input transfer and scalar return takes 13.533 ms (2.24x). At 1M, this GPU E2E path is slower than NumPy in both baseline runs.
@@ -299,6 +301,36 @@ python scripts/analyze_weather_batch.py results/my_batch01 results/my_batch02 --
 ```
 
 Use `--backend numpy` without CUDA. Remote acquisition uses the separate Python >=3.12 environment: `python scripts/prepare_ecmwf_batch.py --output data/ecmwf_batch_recreated`. Both archives are provider-processed Zarr; GFS analysis remains a model-dependent reference. Members/overlapping dates are correlated, and these short cases cannot rank models. Remote acquisition is excluded from local timing.
+
+## Full-workflow optimization: profile stages and share inputs
+
+`weather_pipeline.py` evaluates the full domain and its four quadrants, preserving a separate score for every initialization/lead/member. It compares repeated region-specific Zarr reads, one full read with the existing dense representation, one read with shared reference/weights, and explicitly labeled already-prepared reuse. The old region-specific method selects the region before reading; the comparison does not deliberately read unrelated chunks.
+
+| Five-task whole-workflow median | Session 1 | Session 2 |
+|---|---:|---:|
+| CPU, reopen/prepare each region | 171.855 ms | 174.037 ms |
+| CPU, read once and share inputs | 96.249 ms | 98.633 ms |
+| GPU, reopen/prepare each region | 166.244 ms | 170.941 ms |
+| GPU, read once and share inputs | 52.139 ms | 52.091 ms |
+| CPU, shared inputs already prepared | 55.420 ms | 57.036 ms |
+| GPU, shared inputs already prepared | 8.641 ms | 7.385 ms |
+
+The first four rows include all local reading, preparation and GPU upload as applicable; reuse-only excludes setup equally for CPU/GPU. GPU whole-workflow improvement is 3.19–3.28x versus its original repeated-read workflow, while CPU improves 1.76–1.79x. Comparing both optimized workflows gives **1.85–1.89x GPU/CPU speedup**, rather than comparing optimized GPU with unoptimized CPU.
+
+One GFS analysis per initialization/lead and one latitude-weight vector replace member-expanded copies. All-finite input needs no stored per-member mask; missing values retain the tested joint-mask fallback. Logical prepared input payload drops **76.50 -> 26.00 MiB (66.0%)** on either backend. This is not total/peak VRAM. The original FP32 Kelvin normalization, individual-member identities and metrics remain numerically consistent with the unchanged dense FP64 arithmetic reference.
+
+![Regional whole-workflow timings, phase costs and input storage](results/rtx3050_pipeline_comparison/pipeline.png)
+
+The phase profiles independently measure Zarr reading/decoding, checks, units, mask/weights, packing, region selection, upload, compute/reshape and result return. They use extra CUDA synchronization and are kept separate from primary end-to-end samples. Mean phase durations reconcile with their own profiled total; independently sampled medians are not added together. All 39 tests pass in WSL; each session validates 320 uninstrumented workflow samples, 80 stage-profile workflows and 9,792 FP64 reference region/group rows.
+
+```bash
+source ~/venvs/weather-gpu/bin/activate
+python weather_pipeline.py --output results/my_pipeline01
+python weather_pipeline.py --output results/my_pipeline02 --seed 20261104
+python scripts/analyze_pipeline.py results/my_pipeline01 results/my_pipeline02 --output results/my_pipeline_comparison
+```
+
+The input cache is local to this evaluation and stores prepared data, not result values. Full-domain/quadrant outputs are recomputed for every task. "First use" here means fresh input preparation in an initialized process with warm local storage; CUDA initialization, remote acquisition, source hashing, correctness checks and CSV writing are excluded. This regional reuse workload differs from the earlier single full-domain benchmark. GFS analysis remains a model-dependent reference, and the two sessions do not establish general forecast skill or performance across machines.
 
 ## Reproduce the reports and figures
 

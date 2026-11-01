@@ -22,3 +22,5 @@ jobs:
       - run: python scripts/analyze_weather.py results/latest/zarr_ci --forecast data/ecmwf_zarr_pair/forecast.zarr --reference data/ecmwf_zarr_pair/reference.zarr
       - run: python weather_batch.py --backend numpy --cases control_small ensemble_small --repeats 3 --warmup 1 --output results/latest/batch_ci
       - run: python scripts/analyze_weather_batch.py results/latest/batch_ci --output results/latest/batch_ci_report
+      - run: python weather_pipeline.py --backend numpy --case control_small --repeats 3 --warmup 1 --profile-repeats 2 --output results/latest/pipeline_ci
+      - run: python scripts/analyze_pipeline.py results/latest/pipeline_ci --output results/latest/pipeline_ci_report
