@@ -50,8 +50,12 @@ def main():
     parser.add_argument('--threads', type=int, default=1, help='PyTorch CPU thread count; NumPy thread env vars are recorded')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--numpy-only', action='store_true')
+    parser.add_argument('--resident', action='store_true',
+                        help='Also measure resident GPU inputs with scalar return; requires CUDA')
     parser.add_argument('--output', type=Path, default=Path('results/latest'))
     args = parser.parse_args()
+    if args.resident and args.numpy_only:
+        parser.error('--resident requires CUDA and cannot be used with --numpy-only')
     if min(args.sizes) <= 0 or args.repeats < 2 or args.warmup < 1 or args.threads < 1:
         parser.error('Positive sizes/threads, at least 2 repeats and 1 warmup required')
     torch = None
@@ -62,6 +66,8 @@ def main():
             parser.error('Install PyTorch or explicitly use --numpy-only')
         torch.set_num_threads(args.threads)
     cuda = torch is not None and torch.cuda.is_available()
+    if args.resident and not cuda:
+        parser.error('--resident requires a CUDA-enabled PyTorch environment and GPU')
     import os
     metadata = dict(python=platform.python_version(), platform=platform.platform(),
                     processor=platform.processor(), numpy=np.__version__,
@@ -73,6 +79,12 @@ def main():
                     seed=args.seed, sizes=args.sizes, repeats=args.repeats, warmup=args.warmup,
                     dtype='float32', missing_data='reject', aggregation='unweighted global',
                     timing='perf_counter wall time; CUDA synchronized; validation outside timing')
+    if args.resident:
+        metadata.update(
+            resident_inputs=True,
+            resident_boundary='GPU-resident input tensors -> metrics -> three host scalars; no input copy',
+            initial_upload_boundary='two pageable host tensors -> new device tensors; includes allocation; context already initialized',
+            workload='same two synthetic input arrays reused for every repetition; excludes file IO and preprocessing')
     rows, raw = [], []
     for n in args.sizes:
         rng = np.random.default_rng(args.seed)
@@ -96,8 +108,11 @@ def main():
                 sync = torch.cuda.synchronize
                 # Initialize context before measuring any transfer.
                 torch.empty(1, device='cuda'); sync()
+                upload_start = time.perf_counter()
                 fg, og = f.to('cuda'), o.to('cuda')
                 sync()
+                if args.resident:
+                    row['initial_upload_with_allocation_sec'] = time.perf_counter() - upload_start
                 torch.cuda.reset_peak_memory_stats()
                 result = record('torch_cuda', lambda: torch_kernel(fg, og), sync)
                 row['gpu_peak_allocated_mb'] = torch.cuda.max_memory_allocated() / 1024**2
@@ -111,6 +126,15 @@ def main():
                 np.testing.assert_allclose(result, reference, rtol=1e-5, atol=1e-5)
                 row['gpu_compute_speedup'] = row['numpy_cpu_median_sec'] / row['torch_cuda_median_sec']
                 row['gpu_e2e_speedup'] = row['numpy_cpu_median_sec'] / row['gpu_e2e_median_sec']
+                if args.resident:
+                    def resident_end_to_end():
+                        return tuple(v.item() for v in torch_kernel(fg, og))
+                    result = record('gpu_resident_e2e', resident_end_to_end, sync)
+                    np.testing.assert_allclose(result, reference, rtol=1e-5, atol=1e-5)
+                    row['gpu_resident_e2e_speedup'] = row['numpy_cpu_median_sec'] / row['gpu_resident_e2e_median_sec']
+                    row['resident_vs_reupload_speedup'] = row['gpu_e2e_median_sec'] / row['gpu_resident_e2e_median_sec']
+                    for metric, value in zip(['bias', 'mae', 'rmse'], result):
+                        row['gpu_resident_' + metric] = value
                 del fg, og, result
             del f, o
         rows.append(row)

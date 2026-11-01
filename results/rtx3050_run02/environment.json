@@ -1,0 +1,27 @@
+{
+  "python": "3.10.12",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "processor": "x86_64",
+  "numpy": "2.2.6",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "gpu": "NVIDIA GeForce RTX 3050",
+  "torch_threads": 1,
+  "thread_environment": {
+    "OMP_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null
+  },
+  "seed": 42,
+  "sizes": [
+    1000000,
+    5000000,
+    10000000
+  ],
+  "repeats": 20,
+  "warmup": 5,
+  "dtype": "float32",
+  "missing_data": "reject",
+  "aggregation": "unweighted global",
+  "timing": "perf_counter wall time; CUDA synchronized; validation outside timing"
+}

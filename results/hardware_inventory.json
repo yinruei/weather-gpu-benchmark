@@ -1,0 +1,19 @@
+{
+  "captured_at_utc": "2026-11-01T09:01:12.311811+00:00",
+  "capture_scope": "post-experiment hardware inventory; not contemporaneous metadata for previous runs",
+  "cpu_model_observed": "12th Gen Intel(R) Core(TM) i5-12400F",
+  "wsl_logical_cpus": 12,
+  "distribution": "Ubuntu 22.04.1 LTS",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "gpu_name": "NVIDIA GeForce RTX 3050",
+  "gpu_total_memory_bytes": 8589410304,
+  "compute_capability": [
+    8,
+    6
+  ],
+  "python": "3.10.12",
+  "numpy": "2.2.6",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "nvidia_smi_gpu_query": "NVIDIA GeForce RTX 3050, 560.94, 8192 MiB"
+}
