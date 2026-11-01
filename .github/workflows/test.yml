@@ -27,3 +27,4 @@ jobs:
       - run: python weather_stability.py --backend numpy --case control_small --repeats 4 --warmup 1 --output results/latest/stability_ci
       - run: python scripts/analyze_stability.py results/latest/stability_ci --output results/latest/stability_ci_report
       - run: python scripts/analyze_dispatch.py results/rtx3050_dispatch_run01 results/rtx3050_dispatch_run02 --output results/latest/dispatch_ci
+      - run: python scripts/analyze_physicsnemo.py results/rtx3050_physicsnemo_run01 results/rtx3050_physicsnemo_run02 --output results/latest/physicsnemo_ci

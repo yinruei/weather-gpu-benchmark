@@ -1,0 +1,23 @@
+{
+  "captured_utc": "2026-11-01T14:02:47.083157+00:00",
+  "stage": "5A-readiness-only",
+  "scope": "inference/data-pipeline performance and numerical correctness; no forecast quality assessment",
+  "python": "3.10.12",
+  "executable": "/home/yinruei/venvs/weather-gpu/bin/python",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "cuda_available": true,
+  "gpu_name": "NVIDIA GeForce RTX 3050",
+  "gpu_total_memory_bytes": 8589410304,
+  "compute_capability": [
+    8,
+    6
+  ],
+  "packages": {
+    "earth2studio": null,
+    "nvidia-physicsnemo": null
+  },
+  "free_disk_bytes": 1004170702848,
+  "installation_performed": false,
+  "weights_downloaded": false
+}

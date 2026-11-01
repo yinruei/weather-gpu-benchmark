@@ -387,6 +387,26 @@ python scripts/analyze_dispatch.py results/my_dispatch01 results/my_dispatch02 -
 
 Each run includes a compressed Chrome trace, per-call summaries and raw primary timings. The analyzer can independently reconcile saved GPU traces using CPU-only dependencies; CI performs that validation without claiming to execute GPU work. This diagnosis narrows one actionable source of overhead but does not identify a single cause of all latency tails. Subsequent work remains focused on processing efficiency, memory and numerical correctness under explicitly defined workloads.
 
+## Phase 5A: PhysicsNeMo FNO forward performance
+
+The official small 2D FNO runs in a separate WSL Python 3.12.16 environment, with PhysicsNeMo 2.2.2 and PyTorch 2.14.1+cu126. Its 132,353 parameters have fixed random, **untrained** weights; inputs are distinct real ECMWF Zarr frames with fixed `(Celsius - 20)/20` scaling. This is an architecture performance workload. It does not run a pretrained weather model or assess forecast quality.
+
+Two sessions, each with 5 warmups and 30 samples per case/method, use identical weights and different method-order seeds:
+
+| Input | CPU P50 ms | GPU resident + full return P50 ms | CPU/GPU ratio |
+|---|---:|---:|---:|
+| B1, 32x32 | 1.01–1.11 | 1.47–1.53 | 0.68–0.73x |
+| B4, 64x64 | 5.03–5.22 | 1.67–1.73 | 3.01–3.02x |
+| B64, 64x64 | 76.61–79.48 | 10.08–10.13 | 7.56–7.88x |
+
+Uploading input each invocation and returning full output takes 10.31–10.58 ms for B64 (7.43–7.52x). The maximum observed warm-invocation PyTorch allocated peak is about 150.5 MiB, not total process VRAM. CPU uses 6 threads; TF32 is disabled. Reads/transforms, model setup, reference computation, checks and writes are excluded from these steady-state timings. First observed forwards and setup costs are recorded separately; these are not cold-process startup measurements.
+
+All 1,200 timed outputs pass elementwise CPU FP64 checks using the same FP32 weights/input cast to double, at rtol=1e-4, atol=1e-5. Complete saved backend arrays and weights allow offline validation; both sessions' references were independently recomputed in the isolated environment. [Full methods, P95, memory boundaries and reproduction](results/rtx3050_physicsnemo_comparison/analysis.md); [Chinese guide and next step](docs/phase5_plan_zh.md).
+
+![PhysicsNeMo FNO timing, speedup, memory and numerical agreement](results/rtx3050_physicsnemo_comparison/physicsnemo.png)
+
+For a fresh WSL/Linux CUDA12 checkout, run `bash scripts/setup_physicsnemo.sh`; then activate `.venv/physicsnemo/bin/activate`. The installer uses the [complete lock](requirements-physicsnemo.lock.txt), including CUDA-compatible torchvision and Warp binaries. It preserves an existing isolated environment and leaves the original weather-gpu environment separate. Use `python physicsnemo_benchmark.py --output results/my_physicsnemo01` with a new output path. CI validates saved GPU artifacts using CPU dependencies; the live FNO smoke test runs when the optional framework is installed.
+
 ## Reproduce the reports and figures
 
 ```bash
@@ -409,6 +429,8 @@ python scripts/analyze_weather.py results/rtx3050_ecmwf_zarr_run01 --forecast da
 The five original rows from the shared conversation remain unchanged in [legacy_rtx3050.csv](results/legacy_rtx3050.csv), with their [historical chart](results/legacy_benchmark.png). They lack raw repeat timings and full metadata. The reported maximum compute speedup is 13.73x at 20M. At 50M, H2D + compute implies an **estimated** 1.68x speedup, not directly measured E2E latency. The legacy memory field's measurement boundary is unknown. Do not merge these rows with the current protocol or treat them as independently reproduced results.
 
 ## Roadmap
+
+Mapping to the original five-step plan: (1) figures, (2) hardware/README, (3) FP32/FP16 and (4) real-data performance pipelines now have reproducible baselines. **Step 5A is implemented, with an initial 5B FP32 benchmark:** an isolated PhysicsNeMo environment runs a small FNO on real ECMWF Zarr input frames. See the [phase-5 results](results/rtx3050_physicsnemo_comparison/analysis.md) and [Traditional Chinese plan](docs/phase5_plan_zh.md). This uses fixed random, untrained weights for performance and numerical checks. Earth2Studio model pipelines (5C) remain future work; forecast quality remains outside scope.
 
 1. **FP32 baseline: completed.** Repeated timings, raw samples, four-panel figures, hardware inventory and the resident-input experiment. Further repeat sessions and profiling remain useful for assessing stability.
 2. **v3: first precision comparison completed.** Two sessions compare FP32, native FP16 and FP16 storage with FP32 arithmetic, including input/error decomposition, allocated memory and overflow tests. Further precision experiments must specify numerical-error tolerances for the benchmark outputs and measure the resulting time/memory tradeoff.

@@ -1,0 +1,11 @@
+# Install CUDA PyTorch separately with its explicit cu126 source, in a new venv.
+torch==2.14.1+cu126
+torchvision==0.29.1+cu126
+nvidia-physicsnemo==2.2.2
+# Official NVIDIA CUDA12 build; current PyPI Warp wheels target CUDA13.
+warp-lang @ https://github.com/NVIDIA/warp/releases/download/v1.18.0/warp_lang-1.18.0%2Bcu12-py3-none-manylinux_2_28_x86_64.whl
+numpy==2.2.6
+xarray
+zarr
+scipy
+matplotlib
