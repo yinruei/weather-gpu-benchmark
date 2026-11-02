@@ -32,3 +32,4 @@ jobs:
       - run: python scripts/analyze_physicsnemo_pipeline.py results/rtx3050_physics_pipeline_b16_check --output results/latest/physicsnemo_pipeline_b16_ci
       - run: python scripts/analyze_physicsnemo_reuse.py results/rtx3050_physics_reuse_run01 results/rtx3050_physics_reuse_run02 --output results/latest/physicsnemo_reuse_ci
       - run: python scripts/analyze_physicsnemo_schedule.py results/rtx3050_physics_schedule_run01 results/rtx3050_physics_schedule_run02 --output results/latest/physicsnemo_schedule_ci
+      - run: python scripts/analyze_physicsnemo_graph.py results/rtx3050_physics_graph_run01 results/rtx3050_physics_graph_run02 --output results/latest/physicsnemo_graph_ci

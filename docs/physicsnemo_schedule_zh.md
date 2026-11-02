@@ -82,4 +82,4 @@ python scripts/analyze_physicsnemo_schedule.py results/my_physics_schedule01 res
 
 目前不把「分組處理」改成預設效能優化；前一輪已量到的資料集 handle／條件式輸入重用仍更值得採用。
 
-下一個可控制的實作是固定 shape 的 CUDA Graph 重播，測試能否減少重複派送成本；必須先確認 FFT／模型算子能捕捉，保留普通 eager 路徑，檢查新輸入更新及 FP64 一致性，再比較時間、建立成本與額外記憶體。如果未通過或沒有實測收益，就如實記錄，不能拿啟動時間或漏掉完整回傳換取漂亮數字。這仍屬效能工程，不擴大到預報表現。
+後續已完成[固定 shape CUDA Graph 對照](physicsnemo_graph_zh.md)，包含真實新輸入更新、FP64 核對、建立時間、額外記憶體與實際 graph-launch trace。B16 resident 的 P50 約少 23%，B64 約少 5–6%；eager 仍保留，較慢最大值也完整記錄。下一步才是接回完整讀取到寫檔流程，確認應用層的實際收益；仍不擴大到預報表現。

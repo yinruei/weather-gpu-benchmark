@@ -452,6 +452,20 @@ Both sessions retain 768 primary calls, 48 equal-work blocks and 96 trace calls,
 
 ![Paired batch schedules and independent CUDA traces](results/rtx3050_physics_schedule_comparison/physicsnemo_schedule.png)
 
+## Phase 5B: CUDA Graph replay with real input updates
+
+`CudaGraphRunner` retains eager execution and captures one fixed-shape graph for B16 and B64. Two disjoint real ECMWF input windows are used for A/B/A update tests and alternating new-input requests. Graph inputs/outputs keep fixed addresses; wrong shape/dtype/noncontiguous layout/device is rejected. Every call recomputes and returns the full output; no model-output cache is used.
+
+Two shuffled 30-repeat sessions compare resident input, timed D2D updates and timed pageable CPU uploads. With resident input, **B16 P50 changes from 3.19–3.21 to 2.47–2.48 ms (about 23% lower latency)**; B64 changes from 9.93–10.03 to 9.39–9.46 ms (about 5–6% lower). Update/upload paths also show median improvements. Resident resets are a shared untimed precondition for both eager and graph; all primary numbers exclude source I/O, packing, file writes and graph setup. Some graph maxima regress, including B64 resident 11.55 -> 19.51 ms in session 1; all tails/samples remain archived.
+
+Graph setup (buffer clone, side-stream warmup, capture/instantiate, first replay) takes 20.10–21.14 ms for B16 and 49.17–52.05 ms for B64. Net PyTorch allocated changes are 32.5/34 MiB, with graphs/source buffers coexisting; these are not total VRAM or standalone pool sizes. Mean-saving-based break-even is explicitly an estimate sensitive to outliers, not a measured multi-request application.
+
+Independent traces verify real `cudaGraphLaunch`, full output DtoH and the required new-input copies. Capture changes internal copy implementation (`memcpy128` device kernels versus eager DtoD events here), so launch/copy-category changes are not proof of reduced mathematical work or exclusive CPU causality. CPU/GPU intervals overlap, and profile timing does not replace primary timing.
+
+Both sessions retain 720 primary calls, 12 A/B/A checks, 24 memory probes, 48 trace calls and complete inputs/references/outputs/state. All outputs pass CPU FP64 checks; references were independently recomputed from archived weights. [Full results and costs](results/rtx3050_physics_graph_comparison/analysis.md), [Chinese interpretation and commands](docs/physicsnemo_graph_zh.md). CPU CI independently reconciles archived evidence; the optional analyzer flag `--recompute-reference` requires the isolated PhysicsNeMo environment. Eager remains the existing workflow default; full Zarr-to-file graph integration is future work.
+
+![CUDA Graph latency, setup persistence and estimated amortization](results/rtx3050_physics_graph_comparison/physicsnemo_graph.png)
+
 ## Reproduce the reports and figures
 
 ```bash
