@@ -440,6 +440,18 @@ Separate blocked cadence controls compare continuous GPU calls, a 25 ms idle gap
 
 ![Input reuse, call cadence and conditional setup amortization](results/rtx3050_physics_reuse_comparison/physicsnemo_reuse.png)
 
+## Phase 5B: isolate batch-shape schedules with real CUDA traces
+
+Two sessions compare grouping B16/B64 calls against alternating them, keeping the same 64x64 grids, resident inputs/weights, equal call counts and full host outputs. Primary timings have **no profiler, annotations or CUDA events**. Both first batch and first schedule are counterbalanced across paired rounds, with identical alternating warmup before every block. Output checks run after each block.
+
+B16 P50 is 2.91–2.93 ms grouped versus 3.04–3.17 ms alternating; B64 is 9.75–9.99 versus 9.84–9.93 ms. Paired equal-work block ratios (alternating/grouped) are **1.015x and 0.993x**, with grouped faster in 8/12 and 5/12 pairs. There is no consistent total-work gain across these sessions, and this controlled contrast does not reproduce the earlier multi-fold pipeline outliers. Grouping is not adopted as a default optimization.
+
+Separate CPU/CUDA traces capture 99 kernel events and one full DtoH copy per call (256 KiB B16, 1 MiB B64), with no HtoD observed in these resident-input calls. For B64, mean CPU return ranges are about 7.4–7.7 ms while GPU copy activity is about 0.6 ms; return ranges include preceding-work completion. CPU dispatch/return durations overlap device activity and cannot be added. Trace timings include instrumentation and are not primary performance results; active interval union is not GPU occupancy.
+
+Both sessions retain 768 primary calls, 48 equal-work blocks and 96 trace calls, actual outputs/weights and compressed Chrome traces. [Full tables and trace accounting](results/rtx3050_physics_schedule_comparison/analysis.md), [Chinese interpretation/reproduction](docs/physicsnemo_schedule_zh.md). The CPU analyzer independently reconstructs trace intervals and validates copy bytes, order/transitions, hashes, FP64 errors, quantiles and block sums.
+
+![Paired batch schedules and independent CUDA traces](results/rtx3050_physics_schedule_comparison/physicsnemo_schedule.png)
+
 ## Reproduce the reports and figures
 
 ```bash

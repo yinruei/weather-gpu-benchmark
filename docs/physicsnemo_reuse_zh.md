@@ -74,4 +74,4 @@ python scripts/analyze_physicsnemo_reuse.py results/my_physics_reuse01 results/m
 
 使用新輸出路徑。只重驗證保存結果與畫圖不需要 Torch／PhysicsNeMo。[完整原始表、配對差異與方法](../results/rtx3050_physics_reuse_comparison/analysis.md)。
 
-目前最有證據支持的改善是重用資料集 handle，並在同一批輸入會被多次使用時重用打包結果。下一步可固定 GPU 輸入、只改變「相同 shape 連續處理／不同 shape 交錯處理」，配合 CUDA trace，釐清剩餘模型延遲；在此之前不把變動說成已查明的硬體問題。Earth2Studio 仍是後續 5C，預報表現持續排除。
+目前最有證據支持的改善是重用資料集 handle，並在同一批輸入會被多次使用時重用打包結果。後續已完成[固定輸入的 shape 排程與 CUDA trace](physicsnemo_schedule_zh.md)：兩輪的整批配對比值分別 1.015×、0.993×，沒有一致的分組收益，也未重現先前的大幅延遲；不把它歸因為已查明的硬體問題。Earth2Studio 仍是後續 5C，預報表現持續排除。

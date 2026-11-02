@@ -82,7 +82,7 @@ python scripts/analyze_physicsnemo.py results/my_physicsnemo01 results/my_physic
 | 子階段 | 現況與後續 |
 |---|---|
 | 5A. 環境與最小 forward | 已完成 |
-| 5B. 模型推論 benchmark | FP32 forward、兩輪完整流程、B16 對照，以及兩輪配對重用／節奏實驗已完成；shape 切換與 CUDA trace 仍待控制診斷 |
+| 5B. 模型推論 benchmark | FP32 forward、完整流程、B16 對照、配對重用／節奏與固定輸入 shape 排程／CUDA trace 已完成；下一個候選是固定 shape CUDA Graph 重播 |
 | 5C. Earth2Studio 流程 | 尚未實作；先確認指定模型的多變數、層次、時間窗口、網格、單位、權重與容量需求，再準備合格輸入 |
 
 完整流程 B64 的兩輪基線加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。後續[重用與節奏實驗](physicsnemo_reuse_zh.md)顯示 B64 重用已開資料集可把 GPU 請求由約 44–47 ms 降到約 29–30 ms；條件式輸入快取還可改善，但不是任意新資料的讀取到寫檔速度。先控制剩餘效能變動，再評估 AMP/FP16 的算子支援與誤差／效能取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
