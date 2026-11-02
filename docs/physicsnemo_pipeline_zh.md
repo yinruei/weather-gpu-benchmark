@@ -74,6 +74,6 @@ python scripts/analyze_physicsnemo_pipeline.py results/my_physics_pipeline01 res
 
 ## 接下來的優化方向
 
-先用固定 B16／B64 與配對順序，區分「連續模型呼叫」和「每次插入讀取／寫檔」對 GPU 延遲的影響，再檢查相應 CUDA trace；在原因尚未控制前，不選擇性只報最快 case。
+後續已完成固定 B16／B64 的配對重用與呼叫節奏實驗，包含 GPU event／主機時間；詳見[重用與節奏對照](physicsnemo_reuse_zh.md)。B64 重用已開啟資料集的 GPU 請求約 29–30 ms，準備好的輸入可再降低請求時間，但必須計入適用條件與建立成本。節奏實驗沒有穩定重現先前 B16 的延遲，CUDA trace 與 shape 切換的控制仍是後續診斷。
 
 讀取端可比較開檔重用、精確 frame 選取與減少重複解碼，完整記錄哪些成本被快取；之後再按瓶頸評估批次或傳輸重疊。上述工作仍屬於 5B。5C Earth2Studio 的模型／輸入相容性接通尚未實作，預報表現持續排除。

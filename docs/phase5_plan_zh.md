@@ -82,9 +82,9 @@ python scripts/analyze_physicsnemo.py results/my_physicsnemo01 results/my_physic
 | 子階段 | 現況與後續 |
 |---|---|
 | 5A. 環境與最小 forward | 已完成 |
-| 5B. 模型推論 benchmark | FP32 forward 與「Zarr 讀取 → 縮放／打包 → 上傳 → FNO → 取回 → 寫檔」兩輪基線已完成，另保存 B16 單獨執行對照；下一步控制流程節奏與讀取重用 |
+| 5B. 模型推論 benchmark | FP32 forward、兩輪完整流程、B16 對照，以及兩輪配對重用／節奏實驗已完成；shape 切換與 CUDA trace 仍待控制診斷 |
 | 5C. Earth2Studio 流程 | 尚未實作；先確認指定模型的多變數、層次、時間窗口、網格、單位、權重與容量需求，再準備合格輸入 |
 
-完整流程 B64 的兩輪加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。詳見[完整流程中文分析與重跑指令](physicsnemo_pipeline_zh.md)，含所有反例與快取／計時限制。先控制這些效能條件，再評估 AMP/FP16 的算子支援與誤差／效能取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
+完整流程 B64 的兩輪基線加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。後續[重用與節奏實驗](physicsnemo_reuse_zh.md)顯示 B64 重用已開資料集可把 GPU 請求由約 44–47 ms 降到約 29–30 ms；條件式輸入快取還可改善，但不是任意新資料的讀取到寫檔速度。先控制剩餘效能變動，再評估 AMP/FP16 的算子支援與誤差／效能取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
 
 參考：[官方 FNO API](https://docs.nvidia.com/physicsnemo/latest/physicsnemo/api/models/fnos.html)、[PhysicsNeMo 套件](https://pypi.org/project/nvidia-physicsnemo/)、[NVIDIA Warp CUDA wheel 說明](https://github.com/NVIDIA/warp/blob/main/README.md)、[Earth2Studio](https://nvidia.github.io/earth2studio/main/)。版本數字以本次安裝與保存 lock 為準。

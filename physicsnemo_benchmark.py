@@ -61,30 +61,35 @@ def array_mapping_hash(mapping):
 def read_input(store, case):
     """Read the native bounding selection; defer numerical packing to prepare_input."""
     import xarray as xr
+    with xr.open_zarr(store, chunks=None, consolidated=True) as ds:
+        return read_from_dataset(ds, case)
+
+
+def read_from_dataset(ds, case):
+    """Same native selection for a fresh or already-open dataset handle."""
     from weather_batch import validate_batch
     batch, side = case['batch'], case['side']
-    with xr.open_zarr(store, chunks=None, consolidated=True) as ds:
-        validate_batch(ds)
-        if side > min(ds.sizes['latitude'], ds.sizes['longitude']):
-            raise ValueError('Requested native spatial subset is larger than the source; no tiling')
-        ni, nl, nm = [ds.sizes[d] for d in ['init_time', 'lead_time', 'ensemble_member']]
-        if batch > ni*nl*nm:
-            raise ValueError('Insufficient distinct source frames; no synthetic repetition')
-        run_count = (batch+nl*nm-1)//(nl*nm)
-        lead_count = min(nl, (batch+nm-1)//nm) if run_count == 1 else nl
-        member_count = min(nm, batch)
-        selected = ds.forecast.isel(init_time=slice(run_count), lead_time=slice(lead_count),
-                                    ensemble_member=slice(member_count), latitude=slice(-side, None),
-                                    longitude=slice(side)).load()
-        raw = selected.values.reshape(-1, side, side)[:batch, None]
-        identities = [dict(initialization=str(initial), lead_hours=int(lead/np.timedelta64(1, 'h')),
-                           member=int(member), valid_time=str(initial+lead))
-                      for initial in selected.init_time.values for lead in selected.lead_time.values
-                      for member in selected.ensemble_member.values][:batch]
-        metadata = dict(frames=identities, latitude=[float(selected.latitude.min()), float(selected.latitude.max())],
-                        longitude=[float(selected.longitude.min()), float(selected.longitude.max())],
-                        source_units='degree_Celsius', transform='(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization')
-        coordinates = {name: selected[name].values.copy() for name in ['latitude', 'longitude']}
+    validate_batch(ds)
+    if side > min(ds.sizes['latitude'], ds.sizes['longitude']):
+        raise ValueError('Requested native spatial subset is larger than the source; no tiling')
+    ni, nl, nm = [ds.sizes[d] for d in ['init_time', 'lead_time', 'ensemble_member']]
+    if batch > ni*nl*nm:
+        raise ValueError('Insufficient distinct source frames; no synthetic repetition')
+    run_count = (batch+nl*nm-1)//(nl*nm)
+    lead_count = min(nl, (batch+nm-1)//nm) if run_count == 1 else nl
+    member_count = min(nm, batch)
+    selected = ds.forecast.isel(init_time=slice(run_count), lead_time=slice(lead_count),
+                                ensemble_member=slice(member_count), latitude=slice(-side, None),
+                                longitude=slice(side)).load()
+    raw = selected.values.reshape(-1, side, side)[:batch, None]
+    identities = [dict(initialization=str(initial), lead_hours=int(lead/np.timedelta64(1, 'h')),
+                       member=int(member), valid_time=str(initial+lead))
+                  for initial in selected.init_time.values for lead in selected.lead_time.values
+                  for member in selected.ensemble_member.values][:batch]
+    metadata = dict(frames=identities, latitude=[float(selected.latitude.min()), float(selected.latitude.max())],
+                    longitude=[float(selected.longitude.min()), float(selected.longitude.max())],
+                    source_units='degree_Celsius', transform='(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization')
+    coordinates = {name: selected[name].values.copy() for name in ['latitude', 'longitude']}
     return raw, metadata, coordinates
 
 

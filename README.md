@@ -428,6 +428,18 @@ Profiles are separate executions and can differ substantially from primary timin
 
 In the existing isolated environment, run `python physicsnemo_pipeline.py --output results/my_physics_pipeline01`, then `python scripts/analyze_physicsnemo_pipeline.py results/my_physics_pipeline01 --output results/my_physics_pipeline_report`. Use new output paths. CI revalidates retained files, source identities/hashes, numerical errors, trial hashes, quantiles, execution order and stage sums on CPU.
 
+## Phase 5B: paired input reuse and GPU cadence controls
+
+Two further sessions interleave B16/B64 and all seven CPU/CUDA workflows within each repetition. For B64, CUDA request P50 falls from **44.06–47.02 ms** with repeated reopening to **28.89–29.78 ms** with an already-open dataset, **23.14–25.01 ms** with prepared CPU input, and **23.04–23.09 ms** with resident GPU input. Each path still returns full output and writes/closes the same uncompressed NPZ. CPU also benefits from reader/input reuse; these are workflow improvements, not extra GPU arithmetic speed.
+
+Open-once still selects, loads, checks and packs each request. Input caches apply to the **identical input reused across requests**, with setup costs recorded separately; changing source frames/transforms requires rebuilding them. One-off setup observations include differing initialization/cache states and are not fair cold-start comparisons. The amortization plot explicitly uses measured setup/N plus warm request means, not separately measured N-request applications.
+
+Separate blocked cadence controls compare continuous GPU calls, a 25 ms idle gap, source reading/packing and CPU FNO work before each GPU call. B16 forward/full-return medians span roughly 3.4–4.8 ms and do not consistently reproduce the earlier 26–33 ms profile interval. No single driver/power/shape-history cause is established. CUDA event intervals include possible dispatch/scheduling gaps; they are not kernel-active time or occupancy. Both cases, all controls, all slower results and raw ordering remain archived.
+
+[Paired results, setup and cadence tables](results/rtx3050_physics_reuse_comparison/analysis.md), [Chinese explanation and reproducible commands](docs/physicsnemo_reuse_zh.md). Both sessions total 840 real workflow files and 768 cadence outputs verified against the same CPU FP64 reference. CI checks archived evidence using CPU dependencies.
+
+![Input reuse, call cadence and conditional setup amortization](results/rtx3050_physics_reuse_comparison/physicsnemo_reuse.png)
+
 ## Reproduce the reports and figures
 
 ```bash
