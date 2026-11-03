@@ -1,3 +1,5 @@
 # Preserve Zarr metadata/chunk bytes so directory hashes survive every checkout.
 **/*.zarr/** -text
+# Store probe files are byte-hashed evidence; preserve their LF bytes on Windows.
+**/store_probes.json -text
 *.sh text eol=lf
