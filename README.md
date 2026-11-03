@@ -2,6 +2,8 @@
 
 Start with the [short performance case study](docs/performance_case_study.md): architecture, primary reader comparison, real Nsight timeline, and engineering decisions. [Chinese explanation](docs/physicsnemo_gather_nsight_zh.md).
 
+For a guided walkthrough, use the [five-minute presentation and CPU-only evidence demo](docs/project_demo_zh.md) and [technical questions with code/evidence links](docs/technical_interview_zh.md). Run `python scripts/demo_performance_case.py --output results/latest/demo01` with the CPU dependencies to rebuild validated reports from the archived measurements.
+
 Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by real NetCDF and Zarr cases, including NOAA GFS and ECMWF IFS ENS control forecasts. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
 
 **Current scope: performance engineering of weather-data processing and metric computation.** Evaluate CPU/GPU latency, throughput, memory, data movement, storage/chunk access, batching, reuse and numerical precision. Bias/MAE/RMSE provide representative calculations and correctness checks against a numerical reference. Forecast quality, model skill/ranking, ensemble-skill assessment and validation against independent observations are outside this task. Dataset changes must serve a stated performance or numerical-correctness experiment.

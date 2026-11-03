@@ -33,3 +33,5 @@ flowchart LR
 **Decision.** Retain bounding and close this bounded experiment. Select optimizations using complete-workflow evidence, numerical checks and explicit lifecycle boundaries.
 
 [Reader details](../results/rtx3050_physics_gather_comparison/analysis.md) · [Nsight evidence and limits](../results/rtx3050_physics_nsight_comparison/analysis.md) · [Chinese explanation](physicsnemo_gather_nsight_zh.md)
+
+[Five-minute walkthrough and executable evidence demo](project_demo_zh.md) · [Technical questions](technical_interview_zh.md)
