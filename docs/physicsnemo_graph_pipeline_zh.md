@@ -106,6 +106,6 @@ python physicsnemo_graph_pipeline.py --engines cpu --readers reopen --output res
 
 ## 下一個合理實作
 
-先改善 reader 的實際讀取覆蓋：依真實 frame 身分只取需要的 B 張，量測讀取／解碼、完整請求 P50／P95、讀取 chunk 和 materialized bytes，並保留現有 reader 當對照。A/B、座標／時間身分、完整輸出及數值容許度都必須相同。這項工作目前尚未實作；先用同輪對照確認能否改善，再評估非同步預取／傳輸重疊。Graph 保持可選即可，暫不擴充 JAX 或預報品質評估。
+後續已完成[精確 frame reader 與原版的同輪對照](physicsnemo_reader_zh.md)：forecast backing 較小，但實際 Store 仍取回相同的 4 個 chunks，vectorized exact 路徑反而更慢，因此保留原版預設。下一步先比較連續 slice＋NumPy gather／chunk 分組，必要時再測獨立副本的 chunk layout。A/B、座標／時間身分、完整輸出及數值容許度持續相同。Graph 保持可選，暫不擴充 JAX 或預報品質評估。
 
 [完整原始表、profile 與重現說明](../results/rtx3050_physics_graph_pipeline_comparison/analysis.md)

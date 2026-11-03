@@ -22,10 +22,12 @@ from physicsnemo_graph import CASES, CudaGraphRunner, load_variant
 from physicsnemo_pipeline import STAGES, StageClock, output_payload, stage, verify_output, write_output
 from weather_dispatch import merged_duration
 from weather_verify import sha256, write_csv
+from physicsnemo_reader import READER_POLICIES, read_exact, read_coverage
 
 
 ENGINES = ['cpu', 'eager', 'graph']
-READERS = ['open_once', 'reopen']
+READERS = list(READER_POLICIES)
+DEFAULT_READERS = ['open_once', 'reopen']
 
 
 def methods(engines, readers):
@@ -41,7 +43,11 @@ def request_order(engines, readers, repeats, seed):
             for repeat in range(repeats) for order, i in enumerate(rng.permutation(len(jobs)))]
 
 
-def read_variant(data, case, variant, dataset=None):
+def read_variant(data, case, variant, dataset=None, *, selection='bounding'):
+    if selection == 'exact':
+        return read_exact(data, case, variant, dataset)
+    if selection != 'bounding':
+        raise ValueError('Unknown frame selection')
     if variant not in [0, 1]:
         raise ValueError('Two disjoint genuine input variants required')
     count = case['batch']
@@ -86,9 +92,10 @@ class FnoFilePipeline:
             shape = (case['batch'], 1, case['side'], case['side'])
             if self.device_input is None or tuple(self.device_input.shape) != shape or self.device_input.dtype != torch.float32 or not self.device_input.is_cuda:
                 raise ValueError('Matching CUDA FP32 input buffer required')
-        self.owns_dataset = reader == 'open_once' and dataset is None
+        self.policy = READER_POLICIES[reader]
+        self.owns_dataset = self.policy['reuse'] and dataset is None
         start = time.perf_counter()
-        self.dataset = (xr.open_zarr(data, chunks=None, consolidated=True) if self.owns_dataset else dataset) if reader == 'open_once' else None
+        self.dataset = (xr.open_zarr(data, chunks=None, consolidated=True) if self.owns_dataset else dataset) if self.policy['reuse'] else None
         self.reader_setup_sec = time.perf_counter()-start
 
     def close(self):
@@ -104,12 +111,12 @@ class FnoFilePipeline:
 
     def execute(self, variant, path, source_hash, state_hash, clock=None, annotate=False):
         import torch
-        if self.reader == 'open_once' and self.dataset is None:
+        if self.policy['reuse'] and self.dataset is None:
             raise ValueError('Open-once worker is closed')
         start = time.perf_counter_ns()
         with torch.inference_mode():
             with workflow_stage(clock, annotate, 'read_decode'):
-                raw, identity, coordinates = read_variant(self.data, self.case, variant, self.dataset)
+                raw, identity, coordinates = read_variant(self.data, self.case, variant, self.dataset, selection=self.policy['selection'])
             with workflow_stage(clock, annotate, 'prepare'):
                 packed = prepare_input(raw)
                 tensor = torch.from_numpy(packed)
@@ -160,7 +167,7 @@ def main():
     parser.add_argument('--data', type=Path, default=Path('data/ecmwf_batch_case/batch.zarr'))
     parser.add_argument('--reference-run', type=Path, default=Path('results/rtx3050_physics_graph_run01'))
     parser.add_argument('--engines', nargs='+', choices=ENGINES, default=ENGINES)
-    parser.add_argument('--readers', nargs='+', choices=READERS, default=READERS)
+    parser.add_argument('--readers', nargs='+', choices=READERS, default=DEFAULT_READERS)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--repeats', type=int, default=30)
     parser.add_argument('--profile-repeats', type=int, default=6)
@@ -209,7 +216,7 @@ def main():
     (args.output/'outputs').mkdir()
     shutil.copyfile(weights_path, args.output/'weights.npz')
     start = time.perf_counter()
-    shared_dataset = xr.open_zarr(args.data, chunks=None, consolidated=True) if 'open_once' in args.readers else None
+    shared_dataset = xr.open_zarr(args.data, chunks=None, consolidated=True) if any(READER_POLICIES[r]['reuse'] for r in args.readers) else None
     reader_setup_sec = time.perf_counter()-start
     from precision_benchmark import hardware_snapshot
     env = dict(captured_utc=datetime.now(timezone.utc).isoformat(), scope='Complete local Zarr-to-file CPU/eager/graph inference performance; untrained FNO',
@@ -218,10 +225,13 @@ def main():
         cuda_runtime=torch.version.cuda if has_gpu else None, source_sha256=source_hash, source_manifest=manifest,
         model_config=MODEL_CONFIG, model_state_sha256=state_hash, weights_sha256=ref['weights_sha256'], reference_run=args.reference_run.name,
         cases=CASES, engines=args.engines, readers=args.readers, methods=chosen, stages=STAGES,
+        reader_policies={r: READER_POLICIES[r] for r in args.readers},
+        read_coverage={c['case']: {selection: [read_coverage(args.data, c, v, selection) for v in [0, 1]]
+            for selection in sorted({READER_POLICIES[r]['selection'] for r in args.readers})} for c in CASES},
         repeats=args.repeats, profile_repeats=args.profile_repeats, trace_repeats=args.trace_repeats,
         warmup=args.warmup, threads=args.threads, interop_threads=1, seed=args.seed, tolerance=TOLERANCE,
         tf32=False, deterministic_algorithms=True, model_setup_seconds=model_setup_sec, shared_reader_setup_seconds=reader_setup_sec,
-        timing='Direct wall time includes genuine variant read/decode/coordinate validation, FP32 scaling/packing, output metadata, host tensor, upload/copy to fixed GPU input (GPU engines), FNO, full host return, uncompressed NPZ write/close. Models remain resident. Open-once reuses one shared dataset handle; reopen opens each request. No prepared input/output cache. Primary has no profiler/events/stage synchronization. Readback/hash/FP64 validation/cleanup outside timers.',
+        timing='Direct wall time includes genuine variant read/decode/coordinate validation, FP32 scaling/packing, output metadata, host tensor, upload/copy to fixed GPU input (GPU engines), FNO, full host return, uncompressed NPZ write/close. Models remain resident. open_once/exact_once reuse one shared handle; reopen/exact_reopen open each request. Bounding and exact selection are explicitly recorded in reader_policies. No prepared input/output cache. Primary has no profiler/events/stage synchronization. Readback/hash/FP64 validation/cleanup outside timers.',
         setup='Common imports/source-hash/model loading and shared reader opening are recorded separately. Graph setup includes clone, side-stream warmup, capture/instantiate and first replay; net allocator changes observed after eager warmup. All graphs/source handles coexist even during eager/CPU timings. Setup is excluded from primary; estimated amortization is not measured cold startup.',
         variants='Same two disjoint real windows as pinned reference run: A first B frames, B next B frames. Variant alternates by repeat for all matched engine/reader cases. Each request actually rereads and prepares its requested variant.',
         limits='OS/library caches uncontrolled and warmed by setup/reference/readback. File close is not fsync/durable media persistence. No async overlap, remote retrieval, precision change, training or forecast assessment. Stage profiles and traces are separate later observations and may differ from primary times. GPU allocator probes are not total VRAM or standalone eager memory.', case_metadata={})
@@ -263,7 +273,7 @@ def main():
                 engine, reader = method.split('_', 1)
                 workers[(name, method)] = FnoFilePipeline(args.data, case, cpu_model if engine == 'cpu' else gpu_model,
                     engine=engine, reader=reader, runner=runner if engine != 'cpu' else None, device_input=device_input,
-                    dataset=shared_dataset if reader == 'open_once' else None)
+                    dataset=shared_dataset if READER_POLICIES[reader]['reuse'] else None)
         def trial(job, retain=False, clock=None, annotate=False):
             name, method, variant = job['case'], job['method'], job['variant']
             path = args.output/'outputs'/f'{name}_{variant}_{method}.npz' if retain else args.output/'trial.npz'

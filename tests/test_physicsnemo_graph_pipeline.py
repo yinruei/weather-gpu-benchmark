@@ -9,6 +9,7 @@ import xarray as xr
 from physicsnemo_benchmark import prepare_input
 from physicsnemo_graph import CASES, load_variant
 from physicsnemo_graph_pipeline import ENGINES, READERS, FnoFilePipeline, methods, read_variant, request_order
+from physicsnemo_reader import READER_POLICIES
 from physicsnemo_pipeline import verify_output
 
 
@@ -60,7 +61,7 @@ class GraphPipelineTest(unittest.TestCase):
                         np.testing.assert_array_equal(x, expected)
                         self.assertEqual(identity, expected_identity)
                         verify_output(path, payload, expected.astype(np.float64))
-                if reader == 'open_once':
+                if READER_POLICIES[reader]['reuse']:
                     with self.assertRaises(ValueError):
                         pipeline.execute(0, Path(temp)/'closed.npz', 'source', 'state')
         with self.assertRaises(ValueError):

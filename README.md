@@ -485,7 +485,26 @@ Every trial file is read back and checked for all arrays, coordinates/time/membe
 
 ![Complete-file engines and independent stage profiles](results/rtx3050_physics_graph_pipeline_comparison/physicsnemo_graph_pipeline.png)
 
-In the isolated environment, run `python physicsnemo_graph_pipeline.py --output results/my_graph_pipeline01`. Use `--engines graph --readers open_once` for graph alone, or `--engines cpu --readers reopen` for CPU alone. All output paths must be new. Then run `python scripts/analyze_physicsnemo_graph_pipeline.py results/my_graph_pipeline01 --output results/my_graph_pipeline_report`; add `--recompute-reference` in the PhysicsNeMo environment for an independent FP64 rebuild. The existing eager scripts remain available. The next proposed optimization is reducing actual frame/chunk read coverage with the current reader retained as a paired control.
+In the isolated environment, run `python physicsnemo_graph_pipeline.py --output results/my_graph_pipeline01`. Use `--engines graph --readers open_once` for graph alone, or `--engines cpu --readers reopen` for CPU alone. All output paths must be new. Then run `python scripts/analyze_physicsnemo_graph_pipeline.py results/my_graph_pipeline01 --output results/my_graph_pipeline_report`; add `--recompute-reference` in the PhysicsNeMo environment for an independent FP64 rebuild. The existing eager scripts remain available. The subsequent exact-frame reader comparison is below.
+
+## Phase 5B: exact frame selection versus bounding reads
+
+`exact_once` and `exact_reopen` select paired native init/lead/member indices with a shared xarray frame dimension. They preserve genuine alternating A/B windows, coordinates/time identities, scaling, model state, fixed GPU buffers and complete output contracts. Existing `open_once`/`reopen` readers and CLI defaults remain: **this candidate reduces forecast array materialization but is slower, so it is not adopted as a speed optimization.**
+
+For B64, selected forecast backing falls from 1.594/2.391 MiB for A/B to 1 MiB; these are not process peak RAM. Separate Store probes show both paths still fetch the same four `[1,4,51,32,32]` chunks: 833,260 compressed bytes returned, 3,342,336 nominal uncompressed chunk bytes. Every forecast key/get/byte count is checked against the unchanged local store. These are Store API bytes, not physical disk/network traffic or decode-call counts.
+
+| B64, reused handle | Bounding P50 ms | Exact P50 ms |
+|---|---:|---:|
+| Independent read-only | 4.66–5.11 | 37.87–38.86 |
+| Full CPU workflow | 84.63–88.44 | 108.22–112.04 |
+| Full GPU eager workflow | 37.30–38.45 | 58.33–58.63 |
+| Full GPU graph workflow | 34.78–35.84 | 56.51–59.56 |
+
+Two sessions retain 640 read-only observations and 1,440 full-file primary requests, with 288 independent stage profiles, 96 real full-file traces and 32 runtime memory probes. Both sessions show slower exact P50s for every compared engine/reader/case. All raw samples, tails, source/backing byte records and per-variant paired contrasts remain. Every model output file passes complete array/coordinate/time/member/metadata and CPU FP64 checks; each session retains 48 actual primary outputs. Pinned FP64 references were independently recomputed. The comparison does not isolate the extra time to a specific indexing substep or imply all exact-reading strategies are slower.
+
+![Exact-frame materialization, Store bytes and complete workflow](results/rtx3050_physics_reader_comparison/physicsnemo_reader.png)
+
+[Full tables and reproduction](results/rtx3050_physics_reader_comparison/analysis.md), [Chinese plot interpretation and next experiment](docs/physicsnemo_reader_zh.md). Run `python physicsnemo_reader_benchmark.py --output results/my_reader01` for CPU read-only measurements, or explicitly add `--readers open_once exact_once reopen exact_reopen` to the full pipeline comparison. Store diagnostics support both Zarr 3 and the original Zarr 2 environment. Run measurements separately with new output paths. CPU CI reconciles saved GPU evidence, Store key/byte records, source selections, seeded pairing and quantiles; existing archived two-reader results remain supported. No rechunking, remote acquisition, training or forecast-quality evaluation is included. The next proposed candidate is contiguous slice selection followed by NumPy gathering, with chunk grouping/layout experiments measured separately.
 
 ## Reproduce the reports and figures
 

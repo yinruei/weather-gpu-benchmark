@@ -19,6 +19,7 @@ from physicsnemo_graph_pipeline import methods, read_variant, request_order, sum
 from physicsnemo_pipeline import STAGES, output_payload, verify_output
 from scripts.analyze_physicsnemo_graph import validate as validate_reference
 from weather_verify import sha256
+from physicsnemo_reader import READER_POLICIES, read_coverage
 
 
 def rows(path):
@@ -36,6 +37,15 @@ def validate(run, data, reference_run, reference=None):
     if env['source_sha256'] != source or source != ref['source_sha256'] or source != manifest['files']['batch.zarr'] or env['source_manifest'] != manifest:
         raise ValueError('Input/provenance mismatch')
     chosen = methods(env['engines'], env['readers'])
+    if 'reader_policies' in env:
+        if env['reader_policies'] != {r: READER_POLICIES[r] for r in env['readers']}:
+            raise ValueError('Reader policy mismatch')
+        expected_coverage = {c['case']: {s: [read_coverage(data, c, v, s) for v in [0, 1]]
+            for s in sorted({READER_POLICIES[r]['selection'] for r in env['readers']})} for c in CASES}
+        if env.get('read_coverage') != expected_coverage:
+            raise ValueError('Reader coverage mismatch')
+    elif any(READER_POLICIES[r]['selection'] != 'bounding' for r in env['readers']):
+        raise ValueError('Exact reader requires archived selection policies and coverage')
     if env['methods'] != chosen or env['cases'] != CASES or env['stages'] != STAGES or env['model_config'] != MODEL_CONFIG or env['tolerance'] != TOLERANCE or env['tf32'] or not env['deterministic_algorithms']:
         raise ValueError('Protocol mismatch')
     if env['reference_run'] != reference_run.name or env['weights_sha256'] != ref['weights_sha256'] or env['model_state_sha256'] != ref['model_state_sha256'] or sha256(run/'weights.npz') != ref['weights_sha256']:
