@@ -15,6 +15,8 @@ READER_POLICIES = {
     'reopen': dict(reuse=False, selection='bounding'),
     'exact_once': dict(reuse=True, selection='exact'),
     'exact_reopen': dict(reuse=False, selection='exact'),
+    'gather_once': dict(reuse=True, selection='gather'),
+    'gather_reopen': dict(reuse=False, selection='gather'),
 }
 
 
@@ -55,6 +57,37 @@ def read_exact(data, case, variant, dataset=None):
         return read_exact_from_dataset(ds, case, variant)
 
 
+def read_gather_from_dataset(ds, case, variant):
+    """One minimal rectangular basic slice, then paired NumPy gather in frame order."""
+    validate_batch(ds)
+    side = case['side']
+    if side < 1 or side > min(ds.sizes['latitude'], ds.sizes['longitude']):
+        raise ValueError('Native spatial subset required; no tiling')
+    dimensions = ['init_time', 'lead_time', 'ensemble_member']
+    indices = frame_indices(tuple(ds.sizes[d] for d in dimensions), case['batch'], variant)
+    starts, stops = indices.min(axis=0), indices.max(axis=0)+1
+    selected = ds.forecast.isel(**{d: slice(int(a), int(b)) for d, a, b in zip(dimensions, starts, stops)},
+        latitude=slice(-side, None), longitude=slice(side)).load()
+    local = indices-starts
+    # This advanced indexing copies only B frames; backend receives basic slices only.
+    raw = selected.values[local[:, 0], local[:, 1], local[:, 2]][:, None]
+    initial, lead, member = [ds[d].values[indices[:, i]] for i, d in enumerate(dimensions)]
+    frames = [dict(initialization=str(i), lead_hours=int(l/np.timedelta64(1, 'h')),
+                   member=int(m), valid_time=str(i+l)) for i, l, m in zip(initial, lead, member)]
+    coordinates = {d: selected[d].values.copy() for d in ['latitude', 'longitude']}
+    identity = dict(frames=frames, latitude=[float(selected.latitude.min()), float(selected.latitude.max())],
+                    longitude=[float(selected.longitude.min()), float(selected.longitude.max())],
+                    source_units='degree_Celsius', transform='(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization')
+    return raw, identity, coordinates
+
+
+def read_gather(data, case, variant, dataset=None):
+    if dataset is not None:
+        return read_gather_from_dataset(dataset, case, variant)
+    with xr.open_zarr(data, chunks=None, consolidated=True) as ds:
+        return read_gather_from_dataset(ds, case, variant)
+
+
 def read_coverage(data, case, variant, selection):
     """Logical materialization and unique stored chunks, not physical disk I/O."""
     data = Path(data)
@@ -68,6 +101,9 @@ def read_coverage(data, case, variant, selection):
         raise ValueError('Native spatial subset required')
     if selection == 'exact':
         selected_frames = indices
+    elif selection == 'gather':
+        starts, stops = indices.min(axis=0), indices.max(axis=0)+1
+        selected_frames = np.array(list(itertools.product(*(range(int(a), int(b)) for a, b in zip(starts, stops)))))
     elif selection == 'bounding':
         count = batch*(variant+1)
         ni, nl, nm = shape[:3]
@@ -84,7 +120,7 @@ def read_coverage(data, case, variant, selection):
     if any(not (data/k).is_file() for k in keys):
         raise ValueError('Coverage requires explicit stored forecast chunks')
     dtype = np.dtype(meta['dtype'])
-    return dict(selection=selection, requested_frames=batch, materialized_frames=len(selected_frames),
+    result = dict(selection=selection, requested_frames=batch, materialized_frames=len(selected_frames),
                 requested_raw_bytes=batch*side*side*dtype.itemsize,
                 materialized_raw_bytes=len(selected_frames)*side*side*dtype.itemsize,
                 packed_input_bytes=batch*side*side*4, chunk_shape=chunks,
@@ -92,6 +128,11 @@ def read_coverage(data, case, variant, selection):
                 stored_chunk_bytes=sum((data/k).stat().st_size for k in keys),
                 nominal_chunk_uncompressed_bytes=len(keys)*int(np.prod(chunks))*dtype.itemsize,
                 frame_indices=indices.tolist())
+    if selection == 'gather':
+        result.update(slice_starts=starts.tolist(), slice_stops=stops.tolist(),
+            returned_backing_bytes=batch*side*side*dtype.itemsize,
+            slice_plus_gather_bytes=(len(selected_frames)+batch)*side*side*dtype.itemsize)
+    return result
 
 
 def probe_reads(data, case, variant, selection):

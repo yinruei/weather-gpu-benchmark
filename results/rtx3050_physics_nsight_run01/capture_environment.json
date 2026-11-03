@@ -1,0 +1,62 @@
+{
+  "tool": {
+    "url": "https://developer.download.nvidia.com/devtools/repos/ubuntu2204/amd64/NsightSystems-linux-cli-public-2024.5.1.113-3461954.deb",
+    "metadata_url": "https://developer.download.nvidia.com/devtools/repos/ubuntu2204/amd64/Packages",
+    "sha256": "dc158b3bc7ca57939c0bad6eb6809e2efa5d6009f8e554e07dffb9efcbdab8c4",
+    "bytes": 139091262,
+    "package": {
+      "Package": "nsight-systems-cli-2024.5.1",
+      "Architecture": "amd64",
+      "Version": "2024.5.1.113-245134619542v0",
+      "Priority": "optional",
+      "Section": "devel",
+      "Maintainer": "Feedback <nsight-systems@nvidia.com>",
+      "Provides": "nsight-systems-cli",
+      "Depends": "libc6, libglib2.0-0",
+      "Filename": "NsightSystems-linux-cli-public-2024.5.1.113-3461954.deb",
+      "Size": "139091262",
+      "MD5sum": "1684f221f1934026d1f983f1ade26bdc",
+      "SHA1": "5264c76698b3be1321d4fc87b0727312319653ea",
+      "SHA256": "dc158b3bc7ca57939c0bad6eb6809e2efa5d6009f8e554e07dffb9efcbdab8c4",
+      "SHA512": "38806334fa70b7b2261ad0097d9d9e969884e0bfdc0656bae8b94a48d1b87f653501605323dbc7ec2775899833bf1d8a7dc4ff640452afce69bbd7a06f542eb0",
+      "Description": "Nsight Systems is a statistical sampling profiler with tracing features."
+    },
+    "executable": "/home/yinruei/weather-gpu-benchmark-github/.venv/tools/nsight-systems-2024.5.1/opt/nvidia/nsight-systems-cli/2024.5.1/target-linux-x64/nsys",
+    "version": "NVIDIA Nsight Systems version 2024.5.1.113-245134619542v0",
+    "scope": "Project-local package extraction; no apt install, driver change or Python dependency modification"
+  },
+  "target_sha256": "b71da1712619034775c6d8c5c6bd381492feb8c72c89c77f28e5af2e40ff3192",
+  "commands": [
+    [
+      "/home/yinruei/weather-gpu-benchmark-github/.venv/tools/nsight-systems-2024.5.1/opt/nvidia/nsight-systems-cli/2024.5.1/target-linux-x64/nsys",
+      "profile",
+      "--trace=cuda,nvtx",
+      "--sample=none",
+      "--cpuctxsw=none",
+      "--capture-range=cudaProfilerApi",
+      "--capture-range-end=stop",
+      "--force-overwrite=false",
+      "--output=/home/yinruei/weather-gpu-benchmark-github/results/rtx3050_physics_nsight_run01/capture",
+      "/home/yinruei/weather-gpu-benchmark-github/.venv/physicsnemo/bin/python",
+      "/home/yinruei/weather-gpu-benchmark-github/physicsnemo_nsight.py",
+      "--output",
+      "/home/yinruei/weather-gpu-benchmark-github/results/rtx3050_physics_nsight_run01/checks",
+      "--repeats",
+      "4",
+      "--capture"
+    ],
+    [
+      "/home/yinruei/weather-gpu-benchmark-github/.venv/tools/nsight-systems-2024.5.1/opt/nvidia/nsight-systems-cli/2024.5.1/target-linux-x64/nsys",
+      "export",
+      "--type=sqlite",
+      "--force-overwrite=false",
+      "--output=/home/yinruei/weather-gpu-benchmark-github/results/rtx3050_physics_nsight_run01/trace.sqlite",
+      "/home/yinruei/weather-gpu-benchmark-github/results/rtx3050_physics_nsight_run01/capture.nsys-rep"
+    ]
+  ],
+  "report_sha256": "4a214f151fa78aba53b2497a624732f6f12cd24bc61a6fc5519dbb618b6e797d",
+  "sqlite_sha256": "9ab3fc17cf3b1d77a4570163e62307ee0a8906789403324c248fded6271065c4",
+  "scope": "Real Nsight Systems CUDA/NVTX capture; no CPU sampling/context-switch tracing; independent diagnostic, not primary timing",
+  "capture_log_sha256": "b629179c8926756e5bf9cca3d845e235c16eb90c90ac27b12f84b71d53ce2f7b",
+  "export_log_sha256": "74accc29b9c5ac71ec7323d8d847ec67f0ff87bad635915a3a2d9175c895414c"
+}

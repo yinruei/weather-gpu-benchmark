@@ -21,6 +21,7 @@ from scripts.analyze_physicsnemo_graph_pipeline import rows, validate as validat
 from weather_verify import sha256
 
 PAIRS = [('open_once', 'exact_once'), ('reopen', 'exact_reopen')]
+LEGACY_READERS = ['open_once', 'reopen', 'exact_once', 'exact_reopen']
 
 
 def validate_reads(run, data, reference_run, reference):
@@ -29,8 +30,10 @@ def validate_reads(run, data, reference_run, reference):
     ref = reference['env']
     if env['source_sha256'] != source or source != ref['source_sha256'] or env['source_manifest'] != ref['source_manifest'] or env['reference_run'] != reference_run.name:
         raise ValueError('Reader source/reference mismatch')
-    if env['cases'] != CASES or env['readers'] != READERS or env['reader_policies'] != READER_POLICIES:
-        raise ValueError('Expected all original/exact reader policies')
+    selected = env['readers']
+    if env['cases'] != CASES or not selected or len(set(selected)) != len(selected) or any(r not in READERS for r in selected) or env['reader_policies'] != {r: READER_POLICIES[r] for r in selected}:
+        raise ValueError('Invalid reader selection/policies')
+    selections = sorted({READER_POLICIES[r]['selection'] for r in selected})
     records, summaries = rows(run/'timing_samples.csv'), rows(run/'timing_summary.csv')
     order = reader_order(env['readers'], env['repeats'], env['seed'])
     if len(records) != len(order):
@@ -46,7 +49,7 @@ def validate_reads(run, data, reference_run, reference):
     if sha256(path) != env['store_probes_sha256']:
         raise ValueError('Store probe hash mismatch')
     probes = json.loads(path.read_text())
-    coverage = {c['case']: {s: [read_coverage(data, c, v, s) for v in [0, 1]] for s in ['bounding', 'exact']} for c in CASES}
+    coverage = {c['case']: {s: [read_coverage(data, c, v, s) for v in [0, 1]] for s in selections} for c in CASES}
     if env['coverage'] != coverage or set(probes) != {c['case'] for c in CASES}:
         raise ValueError('Reader materialization/chunk coverage mismatch')
     for case in CASES:
@@ -55,7 +58,7 @@ def validate_reads(run, data, reference_run, reference):
         path = reference_run/canonical['reference_path']
         if sha256(path) != canonical['reference_sha256']:
             raise ValueError('Pinned reference changed')
-        if set(probes[name]) != {'bounding', 'exact'} or len(env['fixtures'][name]) != 2:
+        if set(probes[name]) != set(selections) or len(env['fixtures'][name]) != 2:
             raise ValueError('Missing reader probe/fixture variants')
         with np.load(path, allow_pickle=False) as saved:
             for variant, label in enumerate(['A', 'B']):
@@ -63,14 +66,14 @@ def validate_reads(run, data, reference_run, reference):
                 expected_input = saved['input_'+label]
                 if fixture['input_hash'] != array_mapping_hash({'input': expected_input}) or fixture['reference_sha256'] != sha256(path):
                     raise ValueError('Reader reference/input hash mismatch')
-                for selection in ['bounding', 'exact']:
+                for selection in selections:
                     raw, identity, coords = read_variant(data, case, variant, selection=selection)
                     np.testing.assert_array_equal(prepare_input(raw), expected_input)
                     expected_coords = {k: v.tolist() for k, v in coords.items()}
                     if identity != fixture['identity'] or expected_coords != fixture['coordinates']:
                         raise ValueError('Reader genuine frame/coordinate identity changed')
                     probe, budget = probes[name][selection][variant], coverage[name][selection][variant]
-                    if probe['identity'] != identity or probe['coordinates'] != expected_coords or probe['raw_bytes'] != budget['requested_raw_bytes'] or probe['backing_array_bytes'] != budget['materialized_raw_bytes']:
+                    if probe['identity'] != identity or probe['coordinates'] != expected_coords or probe['raw_bytes'] != budget['requested_raw_bytes'] or probe['backing_array_bytes'] != budget.get('returned_backing_bytes', budget['materialized_raw_bytes']):
                         raise ValueError('Store probe input identity/backing bytes mismatch')
                     forecast = [r for r in probe['records'] if re.fullmatch(r'forecast/\d+(?:\.\d+){4}', r['key'])]
                     if sorted(r['key'] for r in forecast) != budget['chunk_keys'] or probe['forecast_gets'] != len(forecast) or probe['forecast_returned_bytes'] != sum(r['bytes'] for r in forecast) or probe['forecast_returned_bytes'] != budget['stored_chunk_bytes']:
@@ -81,7 +84,7 @@ def validate_reads(run, data, reference_run, reference):
                             raise ValueError('Store key/returned byte evidence mismatch')
                 for row in [r for r in records if r['case'] == name and int(r['variant']) == variant]:
                     budget = coverage[name][READER_POLICIES[row['reader']]['selection']][variant]
-                    if row['input_sha256'] != fixture['input_hash'] or int(row['raw_bytes']) != budget['requested_raw_bytes'] or int(row['backing_array_bytes']) != budget['materialized_raw_bytes']:
+                    if row['input_sha256'] != fixture['input_hash'] or int(row['raw_bytes']) != budget['requested_raw_bytes'] or int(row['backing_array_bytes']) != budget.get('returned_backing_bytes', budget['materialized_raw_bytes']):
                         raise ValueError('Measured reader input/buffer bytes changed')
     for key in expected_keys:
         for field, value in stats([r for r in records if (r['case'], r['reader']) == key]).items():
@@ -124,7 +127,7 @@ def main():
     reference = validate_reference(args.reference_run, args.data, args.baseline, args.recompute_reference)
     pipelines = [validate_pipeline(p, args.data, args.reference_run, reference) for p in args.pipeline_runs]
     readers = [validate_reads(p, args.data, args.reference_run, reference) for p in args.reader_runs]
-    if any(set(r['env']['readers']) != set(READERS) or len(r['env']['readers']) != len(READERS) or r['env']['engines'] != ['cpu', 'eager', 'graph'] for r in pipelines):
+    if any(set(r['env']['readers']) != set(LEGACY_READERS) or len(r['env']['readers']) != len(LEGACY_READERS) or r['env']['engines'] != ['cpu', 'eager', 'graph'] for r in pipelines) or any(r['env']['readers'] != LEGACY_READERS for r in readers):
         raise ValueError('Full reader comparison requires all three engines and four readers')
     coverage = readers[0]['env']['coverage']
     fig, axes = plt.subplots(2, 2, figsize=(15, 10), layout='constrained')
@@ -158,7 +161,7 @@ def main():
         '| Session | Batch | Reader | P50 ms | P95 ms | Maximum ms |', '|---|---:|---|---:|---:|---:|']
     for run in readers:
         for c in CASES:
-            for reader in READERS:
+            for reader in LEGACY_READERS:
                 row = run['summary'][(c['case'], reader)]
                 text.append(f'| {run["path"].name} | {c["batch"]} | {reader} | {float(row["p50_sec"])*1000:.3f} | {float(row["p95_sec"])*1000:.3f} | {float(row["max_sec"])*1000:.3f} |')
     text += ['', 'Read-only timings include select/read/decode/source validation and, for reopen, dataset open/close. Packing, identity/value/coordinate checks, hashes, probes and report writing are outside primary timing. All cases/readers are shuffled within each repeat and use the same alternating A/B input. No model executes in these measurements. Shared-handle setup/probes/reference checks warm caches; there is no cold-disk claim.', '',

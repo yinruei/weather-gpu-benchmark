@@ -47,12 +47,39 @@ class ExactReaderTest(unittest.TestCase):
                 self.assertEqual(exact['nominal_chunk_uncompressed_bytes'], 3342336)
 
     def test_store_probe_observes_full_compressed_chunks_and_coordinate_reads(self):
-        for selection in ['bounding', 'exact']:
+        for selection in ['bounding', 'exact', 'gather']:
             probe = probe_reads(DATA, dict(batch=64, side=64), 1, selection)
             self.assertEqual(probe['forecast_gets'], 4)
             self.assertEqual(probe['forecast_returned_bytes'], 833260)
             self.assertTrue(any(r['key'].startswith('latitude/') and r['found'] for r in probe['records']))
             self.assertEqual(probe['identity']['frames'][0]['member'], 13)
+
+    def test_gather_basic_slice_preserves_frames_across_axes_and_reader_lifetimes(self):
+        with xr.open_zarr(DATA, chunks=None, consolidated=True) as ds:
+            for batch, side in [(16, 64), (64, 64), (205, 32), (416, 16)]:
+                case = dict(batch=batch, side=side)
+                for variant in [0, 1, 0]:
+                    expected, identity, coords = read_variant(DATA, case, variant, ds)
+                    actual, updated, coordinates = read_variant(DATA, case, variant, ds, selection='gather')
+                    np.testing.assert_array_equal(actual, expected)
+                    self.assertEqual(updated, identity)
+                    for key in coords:
+                        np.testing.assert_array_equal(coordinates[key], coords[key])
+        a, i, _ = read_variant(DATA, dict(batch=64, side=64), 1, selection='gather')
+        b, j, _ = read_variant(DATA, dict(batch=64, side=64), 1)
+        np.testing.assert_array_equal(prepare_input(a), prepare_input(b))
+        self.assertEqual(i, j)
+
+    def test_gather_budget_distinguishes_slice_array_from_returned_copy(self):
+        for batch, expected in [(16, [16, 16]), (64, [102, 102])]:
+            for variant in [0, 1]:
+                c = dict(batch=batch, side=64)
+                budget = read_coverage(DATA, c, variant, 'gather')
+                probe = probe_reads(DATA, c, variant, 'gather')
+                self.assertEqual(budget['materialized_frames'], expected[variant])
+                self.assertEqual(probe['backing_array_bytes'], budget['returned_backing_bytes'])
+                self.assertEqual(budget['slice_plus_gather_bytes'], (expected[variant]+batch)*64*64*4)
+                self.assertEqual(budget['stored_chunk_bytes'], 833260)
 
     def test_rejects_out_of_bounds_and_wrong_selection(self):
         for batch, variant in [(0, 0), (1.5, 0), (True, 0), (64, 2), (1000, 1)]:

@@ -22,7 +22,7 @@ from physicsnemo_graph import CASES, CudaGraphRunner, load_variant
 from physicsnemo_pipeline import STAGES, StageClock, output_payload, stage, verify_output, write_output
 from weather_dispatch import merged_duration
 from weather_verify import sha256, write_csv
-from physicsnemo_reader import READER_POLICIES, read_exact, read_coverage
+from physicsnemo_reader import READER_POLICIES, read_exact, read_gather, read_coverage
 
 
 ENGINES = ['cpu', 'eager', 'graph']
@@ -44,6 +44,8 @@ def request_order(engines, readers, repeats, seed):
 
 
 def read_variant(data, case, variant, dataset=None, *, selection='bounding'):
+    if selection == 'gather':
+        return read_gather(data, case, variant, dataset)
     if selection == 'exact':
         return read_exact(data, case, variant, dataset)
     if selection != 'bounding':
@@ -59,7 +61,10 @@ def read_variant(data, case, variant, dataset=None, *, selection='bounding'):
 
 @contextmanager
 def workflow_stage(clock, annotate, name):
-    if annotate:
+    if annotate == 'nvtx':
+        import torch
+        scope = torch.cuda.nvtx.range('file_'+name)
+    elif annotate:
         import torch
         scope = torch.profiler.record_function('file_'+name)
     else:

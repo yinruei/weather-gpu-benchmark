@@ -1,0 +1,15 @@
+Capture range started in the application.
+Capture range ended in the application.
+Generating '/tmp/nsys-report-42ef.qdstrm'
+
+[1/1] [0%                          ] capture.nsys-repProcessing events...
+
+[1/1] [0%                          ] capture.nsys-rep
+[1/1] [5%                          ] capture.nsys-rep
+[1/1] [================68%         ] capture.nsys-rep
+[1/1] [================71%         ] capture.nsys-rep
+[1/1] [========================100%] capture.nsys-rep
+[1/1] [========================100%] capture.nsys-rep
+PASS: 36 real full-file NVTX requests validated; all requested engines and genuine A/B inputs
+Generated:
+    /home/yinruei/weather-gpu-benchmark-github/results/rtx3050_physics_nsight_run03/capture.nsys-rep

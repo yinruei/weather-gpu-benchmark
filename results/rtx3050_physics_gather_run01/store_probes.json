@@ -1,0 +1,6426 @@
+{
+  "b16_s64": {
+    "bounding": [
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 262144,
+        "backing_array_bytes": 262144,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      },
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 262144,
+        "backing_array_bytes": 524288,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      }
+    ],
+    "exact": [
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 262144,
+        "backing_array_bytes": 262144,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      },
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 262144,
+        "backing_array_bytes": 262144,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      }
+    ],
+    "gather": [
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 262144,
+        "backing_array_bytes": 262144,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      },
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 262144,
+        "backing_array_bytes": 262144,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      }
+    ]
+  },
+  "b64_s64": {
+    "bounding": [
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 1048576,
+        "backing_array_bytes": 1671168,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 32,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 33,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 34,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 35,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 36,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 37,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 38,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 39,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 40,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 41,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 42,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 43,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 44,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 45,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 46,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 47,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 48,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 49,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 50,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 0,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 1,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 2,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 3,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 4,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 5,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 6,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 7,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 8,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 9,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 10,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 11,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 12,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      },
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 1048576,
+        "backing_array_bytes": 2506752,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 13,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 14,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 15,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 16,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 17,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 18,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 19,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 20,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 21,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 22,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 23,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 24,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 25,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 26,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 27,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 28,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 29,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 30,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 31,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 32,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 33,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 34,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 35,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 36,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 37,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 38,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 39,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 40,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 41,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 42,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 43,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 44,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 45,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 46,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 47,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 48,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 49,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 50,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 0,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 1,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 2,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 3,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 4,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 5,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 6,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 7,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 8,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 9,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 10,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 11,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 12,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 13,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 14,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 15,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 16,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 17,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 18,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 19,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 20,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 21,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 22,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 23,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 24,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 25,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      }
+    ],
+    "exact": [
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 1048576,
+        "backing_array_bytes": 1048576,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 32,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 33,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 34,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 35,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 36,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 37,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 38,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 39,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 40,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 41,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 42,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 43,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 44,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 45,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 46,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 47,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 48,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 49,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 50,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 0,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 1,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 2,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 3,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 4,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 5,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 6,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 7,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 8,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 9,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 10,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 11,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 12,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      },
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 1048576,
+        "backing_array_bytes": 1048576,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 13,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 14,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 15,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 16,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 17,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 18,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 19,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 20,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 21,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 22,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 23,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 24,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 25,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 26,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 27,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 28,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 29,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 30,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 31,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 32,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 33,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 34,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 35,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 36,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 37,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 38,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 39,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 40,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 41,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 42,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 43,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 44,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 45,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 46,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 47,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 48,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 49,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 50,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 0,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 1,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 2,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 3,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 4,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 5,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 6,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 7,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 8,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 9,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 10,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 11,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 12,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 13,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 14,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 15,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 16,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 17,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 18,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 19,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 20,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 21,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 22,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 23,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 24,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 25,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      }
+    ],
+    "gather": [
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 1048576,
+        "backing_array_bytes": 1048576,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 32,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 33,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 34,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 35,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 36,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 37,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 38,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 39,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 40,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 41,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 42,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 43,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 44,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 45,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 46,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 47,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 48,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 49,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 50,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 0,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 1,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 2,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 3,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 4,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 5,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 6,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 7,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 8,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 9,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 10,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 11,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 12,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      },
+      {
+        "records": [
+          {
+            "key": "zarr.json",
+            "bytes": 0,
+            "found": false,
+            "partial": false
+          },
+          {
+            "key": ".zgroup",
+            "bytes": 22,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zattrs",
+            "bytes": 272,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": ".zmetadata",
+            "bytes": 4764,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "ensemble_member/0",
+            "bytes": 92,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "init_time/0",
+            "bytes": 48,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "latitude/0",
+            "bytes": 137,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "lead_time/0",
+            "bytes": 80,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "longitude/0",
+            "bytes": 97,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "valid_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_initialization_time/0.0",
+            "bytes": 72,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "reference_lead_hours/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "height_above_ground/0",
+            "bytes": 24,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.0",
+            "bytes": 211693,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.0.1",
+            "bytes": 208070,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.0",
+            "bytes": 208199,
+            "found": true,
+            "partial": false
+          },
+          {
+            "key": "forecast/0.0.0.1.1",
+            "bytes": 205298,
+            "found": true,
+            "partial": false
+          }
+        ],
+        "forecast_gets": 4,
+        "forecast_returned_bytes": 833260,
+        "raw_bytes": 1048576,
+        "backing_array_bytes": 1048576,
+        "identity": {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 13,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 14,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 15,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 16,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 17,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 18,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 19,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 20,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 21,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 22,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 23,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 24,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 25,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 26,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 27,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 28,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 29,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 30,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 31,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 32,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 33,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 34,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 35,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 36,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 37,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 38,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 39,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 40,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 41,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 42,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 43,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 44,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 45,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 46,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 47,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 48,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 49,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 50,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 0,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 1,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 2,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 3,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 4,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 5,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 6,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 7,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 8,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 9,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 10,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 11,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 12,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 13,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 14,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 15,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 16,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 17,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 18,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 19,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 20,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 21,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 22,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 23,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 24,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 25,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        "coordinates": {
+          "latitude": [
+            34.0,
+            33.75,
+            33.5,
+            33.25,
+            33.0,
+            32.75,
+            32.5,
+            32.25,
+            32.0,
+            31.75,
+            31.5,
+            31.25,
+            31.0,
+            30.75,
+            30.5,
+            30.25,
+            30.0,
+            29.75,
+            29.5,
+            29.25,
+            29.0,
+            28.75,
+            28.5,
+            28.25,
+            28.0,
+            27.75,
+            27.5,
+            27.25,
+            27.0,
+            26.75,
+            26.5,
+            26.25,
+            26.0,
+            25.75,
+            25.5,
+            25.25,
+            25.0,
+            24.75,
+            24.5,
+            24.25,
+            24.0,
+            23.75,
+            23.5,
+            23.25,
+            23.0,
+            22.75,
+            22.5,
+            22.25,
+            22.0,
+            21.75,
+            21.5,
+            21.25,
+            21.0,
+            20.75,
+            20.5,
+            20.25,
+            20.0,
+            19.75,
+            19.5,
+            19.25,
+            19.0,
+            18.75,
+            18.5,
+            18.25
+          ],
+          "longitude": [
+            116.0,
+            116.25,
+            116.5,
+            116.75,
+            117.0,
+            117.25,
+            117.5,
+            117.75,
+            118.0,
+            118.25,
+            118.5,
+            118.75,
+            119.0,
+            119.25,
+            119.5,
+            119.75,
+            120.0,
+            120.25,
+            120.5,
+            120.75,
+            121.0,
+            121.25,
+            121.5,
+            121.75,
+            122.0,
+            122.25,
+            122.5,
+            122.75,
+            123.0,
+            123.25,
+            123.5,
+            123.75,
+            124.0,
+            124.25,
+            124.5,
+            124.75,
+            125.0,
+            125.25,
+            125.5,
+            125.75,
+            126.0,
+            126.25,
+            126.5,
+            126.75,
+            127.0,
+            127.25,
+            127.5,
+            127.75,
+            128.0,
+            128.25,
+            128.5,
+            128.75,
+            129.0,
+            129.25,
+            129.5,
+            129.75,
+            130.0,
+            130.25,
+            130.5,
+            130.75,
+            131.0,
+            131.25,
+            131.5,
+            131.75
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -82,9 +82,11 @@ python scripts/analyze_physicsnemo.py results/my_physicsnemo01 results/my_physic
 | 子階段 | 現況與後續 |
 |---|---|
 | 5A. 環境與最小 forward | 已完成 |
-| 5B. 模型推論 benchmark | FP32 forward、完整流程、配對重用／節奏、shape 排程／trace、CUDA Graph 及精確 frame reader 對照已完成；exact 減少 forecast backing，但同樣讀取 chunks 且較慢，維持原版預設；下一步比較連續 slice＋gather／chunk 分組策略 |
+| 5B. 模型推論 benchmark | FP32、完整流程、重用／排程、CUDA Graph、三種 reader 與真實 Nsight 已完成；gather 無穩定整體收益，維持 bounding，本輪效能實驗收尾；已有英文案例 |
 | 5C. Earth2Studio 流程 | 尚未實作；先確認指定模型的多變數、層次、時間窗口、網格、單位、權重與容量需求，再準備合格輸入 |
 
-完整流程 B64 的兩輪基線加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。後續[重用與節奏實驗](physicsnemo_reuse_zh.md)顯示 B64 重用已開資料集可把 GPU 請求由約 44–47 ms 降到約 29–30 ms；條件式輸入快取還可改善，但不是任意新資料的讀取到寫檔速度。[可選 CPU／eager／graph 完整流程](physicsnemo_graph_pipeline_zh.md)也已完成：真實 A/B 輸入逐次讀取、完整回傳並寫檔，當時 B64 open_once 的 graph P50 約 30.88–32.99 ms，配對 eager/graph 比值約 1.014–1.033×，收益有限，reopen 還有較慢結果。接著的[精確 frame 選取實驗](physicsnemo_reader_zh.md)確認陣列雖縮小，仍讀相同 chunks 且速度較慢，未採為預設。不同協定的歷史數字不能直接當精確分段比較。下一步比較連續 slice＋gather／chunk 分組，再評估 chunk layout、非同步重疊或精度取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
+完整流程 B64 的兩輪基線加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。後續[重用與節奏實驗](physicsnemo_reuse_zh.md)顯示 B64 重用已開資料集可把 GPU 請求由約 44–47 ms 降到約 29–30 ms；條件式輸入快取還可改善，但不是任意新資料的讀取到寫檔速度。[可選 CPU／eager／graph 完整流程](physicsnemo_graph_pipeline_zh.md)也已完成：真實 A/B 輸入逐次讀取、完整回傳並寫檔，當時 B64 open_once 的 graph P50 約 30.88–32.99 ms，配對 eager/graph 比值約 1.014–1.033×，收益有限，reopen 還有較慢結果。接著的[精確 frame 選取實驗](physicsnemo_reader_zh.md)確認陣列雖縮小，仍讀相同 chunks 且速度較慢，未採為預設。不同協定的歷史數字不能直接當精確分段比較。
+
+[Slice＋gather 與真實 Nsight 診斷](physicsnemo_gather_nsight_zh.md)現已完成：gather 接近原版，未取得穩定整體收益；Nsight 核對實際 kernels、完整傳輸與 graph dispatch，也顯示 CPU return 會等待前面的 GPU 工作。本輪維持 bounding 預設並收尾，成果整理成[英文案例](performance_case_study.md)。Chunk layout、非同步重疊或精度取捨保留為未來有明確需求時的獨立實驗。若之後接 Earth2Studio，現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
 
 參考：[官方 FNO API](https://docs.nvidia.com/physicsnemo/latest/physicsnemo/api/models/fnos.html)、[PhysicsNeMo 套件](https://pypi.org/project/nvidia-physicsnemo/)、[NVIDIA Warp CUDA wheel 說明](https://github.com/NVIDIA/warp/blob/main/README.md)、[Earth2Studio](https://nvidia.github.io/earth2studio/main/)。版本數字以本次安裝與保存 lock 為準。

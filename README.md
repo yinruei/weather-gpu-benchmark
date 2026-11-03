@@ -1,5 +1,7 @@
 # Weather GPU Benchmark
 
+Start with the [short performance case study](docs/performance_case_study.md): architecture, primary reader comparison, real Nsight timeline, and engineering decisions. [Chinese explanation](docs/physicsnemo_gather_nsight_zh.md).
+
 Measure the cost of verifying weather forecasts with NumPy CPU, PyTorch CPU and CUDA: **Bias, MAE and RMSE**. Synthetic FP32 and precision benchmarks are complemented by real NetCDF and Zarr cases, including NOAA GFS and ECMWF IFS ENS control forecasts. This learning portfolio focuses on reproducible timing, numerical agreement and the difference between GPU compute speed and complete workflow speed.
 
 **Current scope: performance engineering of weather-data processing and metric computation.** Evaluate CPU/GPU latency, throughput, memory, data movement, storage/chunk access, batching, reuse and numerical precision. Bias/MAE/RMSE provide representative calculations and correctness checks against a numerical reference. Forecast quality, model skill/ranking, ensemble-skill assessment and validation against independent observations are outside this task. Dataset changes must serve a stated performance or numerical-correctness experiment.
@@ -504,9 +506,13 @@ Two sessions retain 640 read-only observations and 1,440 full-file primary reque
 
 ![Exact-frame materialization, Store bytes and complete workflow](results/rtx3050_physics_reader_comparison/physicsnemo_reader.png)
 
-[Full tables and reproduction](results/rtx3050_physics_reader_comparison/analysis.md), [Chinese plot interpretation and next experiment](docs/physicsnemo_reader_zh.md). Run `python physicsnemo_reader_benchmark.py --output results/my_reader01` for CPU read-only measurements, or explicitly add `--readers open_once exact_once reopen exact_reopen` to the full pipeline comparison. Store diagnostics support both Zarr 3 and the original Zarr 2 environment. Run measurements separately with new output paths. CPU CI reconciles saved GPU evidence, Store key/byte records, source selections, seeded pairing and quantiles; existing archived two-reader results remain supported. No rechunking, remote acquisition, training or forecast-quality evaluation is included. The next proposed candidate is contiguous slice selection followed by NumPy gathering, with chunk grouping/layout experiments measured separately.
+[Full tables and reproduction](results/rtx3050_physics_reader_comparison/analysis.md), [Chinese plot interpretation](docs/physicsnemo_reader_zh.md). Run `python physicsnemo_reader_benchmark.py --output results/my_reader01` for CPU read-only measurements, or explicitly add `--readers open_once exact_once reopen exact_reopen` to the full pipeline comparison. Store diagnostics support both Zarr 3 and the original Zarr 2 environment. Run measurements separately with new output paths. CPU CI reconciles saved GPU evidence, Store key/byte records, source selections, seeded pairing and quantiles; existing archived two-reader results remain supported. No rechunking, remote acquisition, training or forecast-quality evaluation is included. The subsequent slice-plus-gather experiment and real Nsight diagnosis are complete below.
 
 ## Reproduce the reports and figures
+
+The bounded slice-plus-NumPy-gather experiment is complete. Two sessions retain 960 read-only observations and 2,160 complete-file requests. B64 reused-handle read-only P50 is 4.65–4.84 ms for gather, close to bounding's 4.63–5.11 ms and below vectorized exact's 38.54–39.49 ms. All still fetch four forecast chunks. Complete-workflow paired gains are inconsistent (B64 graph bounding/gather median ratios 0.972x and 1.038x), and gathering adds an output copy. Bounding remains the default. [Full results and reproduction](results/rtx3050_physics_gather_comparison/analysis.md).
+
+Independent real Nsight Systems CUDA/NVTX captures retain 36 file requests per attempt. The first two are explicitly partial; a temporary, restored WSL timestamp setting recovers actual device activity in the third: 2,376 kernels, complete 1 MiB HtoD/DtoH per GPU request, real graph dispatch and zero CUDA work for CPU roots. CPU return ranges overlap GPU work; diagnostic times are not primary P50 or occupancy. Raw reports stay local, while selected event SQLite tables, provenance, checked outputs and [the timeline report](results/rtx3050_physics_nsight_comparison/analysis.md) are available for CPU CI validation. [Chinese methods and plot interpretation](docs/physicsnemo_gather_nsight_zh.md).
 
 ```bash
 python scripts/analyze_run.py results/rtx3050_run01

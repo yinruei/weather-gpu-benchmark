@@ -1,0 +1,949 @@
+{
+  "scope": "Separate Nsight Systems diagnostic; NVTX annotations, not primary performance measurements",
+  "python": "3.12.16",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "source_sha256": "94fcbd8622cea68e9ce68ae59a2ca66edce4ede582c0aec15efa7e4abaa32f1b",
+  "model_state_sha256": "281522cf2a5ca5bbccf4c7fe455f272fa5b1c67e1a83c52fbdd0f2836a671b97",
+  "weights_sha256": "be8c77821f6be25869f9cf773f4a4f49330d336a7d790cc15e403752f4ee52f4",
+  "reference_run": "rtx3050_physics_graph_run01",
+  "reference_path": "b64_s64_reference.npz",
+  "reference_sha256": "f71166a071cd9f8fc466515065d8a6a1bc92658c140caee9d1c2151ad7a173c5",
+  "case": {
+    "case": "b64_s64",
+    "batch": 64,
+    "side": 64
+  },
+  "engines": [
+    "cpu",
+    "eager",
+    "graph"
+  ],
+  "readers": [
+    "open_once",
+    "exact_once",
+    "gather_once"
+  ],
+  "repeats": 4,
+  "seed": 20261117,
+  "threads": 6,
+  "capture": true,
+  "tf32": false,
+  "deterministic_algorithms": true,
+  "identities": [
+    {
+      "frames": [
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 0,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 1,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 2,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 3,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 4,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 5,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 6,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 7,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 8,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 9,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 10,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 11,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 12,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 13,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 14,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 15,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 16,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 17,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 18,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 19,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 20,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 21,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 22,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 23,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 24,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 25,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 26,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 27,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 28,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 29,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 30,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 31,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 32,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 33,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 34,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 35,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 36,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 37,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 38,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 39,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 40,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 41,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 42,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 43,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 44,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 45,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 46,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 47,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 48,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 49,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 24,
+          "member": 50,
+          "valid_time": "2024-05-07T00:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 0,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 1,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 2,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 3,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 4,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 5,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 6,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 7,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 8,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 9,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 10,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 11,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 12,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        }
+      ],
+      "latitude": [
+        18.25,
+        34.0
+      ],
+      "longitude": [
+        116.0,
+        131.75
+      ],
+      "source_units": "degree_Celsius",
+      "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+    },
+    {
+      "frames": [
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 13,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 14,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 15,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 16,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 17,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 18,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 19,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 20,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 21,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 22,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 23,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 24,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 25,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 26,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 27,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 28,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 29,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 30,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 31,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 32,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 33,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 34,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 35,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 36,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 37,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 38,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 39,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 40,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 41,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 42,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 43,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 44,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 45,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 46,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 47,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 48,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 49,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 30,
+          "member": 50,
+          "valid_time": "2024-05-07T06:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 0,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 1,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 2,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 3,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 4,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 5,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 6,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 7,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 8,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 9,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 10,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 11,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 12,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 13,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 14,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 15,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 16,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 17,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 18,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 19,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 20,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 21,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 22,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 23,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 24,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        },
+        {
+          "initialization": "2024-05-06T00:00:00.000000000",
+          "lead_hours": 36,
+          "member": 25,
+          "valid_time": "2024-05-07T12:00:00.000000000"
+        }
+      ],
+      "latitude": [
+        18.25,
+        34.0
+      ],
+      "longitude": [
+        116.0,
+        131.75
+      ],
+      "source_units": "degree_Celsius",
+      "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+    }
+  ],
+  "outputs": {
+    "0_cpu_open_once": {
+      "path": "outputs/0_cpu_open_once.npz",
+      "sha256": "0633d1812075e8eff92b26b3c662fcfdda7052cd7822ae06614f84afeb4a1120",
+      "bytes": 1056404,
+      "payload_sha256": "5e597b0e071bc05e87e9889996f1c3e5480d7d76796d22b62e98c2907cfb1069"
+    },
+    "0_eager_gather_once": {
+      "path": "outputs/0_eager_gather_once.npz",
+      "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+      "bytes": 1056404,
+      "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+    },
+    "0_graph_open_once": {
+      "path": "outputs/0_graph_open_once.npz",
+      "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+      "bytes": 1056404,
+      "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+    },
+    "0_graph_gather_once": {
+      "path": "outputs/0_graph_gather_once.npz",
+      "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+      "bytes": 1056404,
+      "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+    },
+    "0_eager_exact_once": {
+      "path": "outputs/0_eager_exact_once.npz",
+      "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+      "bytes": 1056404,
+      "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+    },
+    "0_eager_open_once": {
+      "path": "outputs/0_eager_open_once.npz",
+      "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+      "bytes": 1056404,
+      "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+    },
+    "0_graph_exact_once": {
+      "path": "outputs/0_graph_exact_once.npz",
+      "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+      "bytes": 1056404,
+      "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+    },
+    "0_cpu_exact_once": {
+      "path": "outputs/0_cpu_exact_once.npz",
+      "sha256": "0633d1812075e8eff92b26b3c662fcfdda7052cd7822ae06614f84afeb4a1120",
+      "bytes": 1056404,
+      "payload_sha256": "5e597b0e071bc05e87e9889996f1c3e5480d7d76796d22b62e98c2907cfb1069"
+    },
+    "0_cpu_gather_once": {
+      "path": "outputs/0_cpu_gather_once.npz",
+      "sha256": "0633d1812075e8eff92b26b3c662fcfdda7052cd7822ae06614f84afeb4a1120",
+      "bytes": 1056404,
+      "payload_sha256": "5e597b0e071bc05e87e9889996f1c3e5480d7d76796d22b62e98c2907cfb1069"
+    },
+    "1_cpu_exact_once": {
+      "path": "outputs/1_cpu_exact_once.npz",
+      "sha256": "1df241786215168681c4fb035ab0f55ea63bf0a3343e8365a9182cb3ed0352a8",
+      "bytes": 1056404,
+      "payload_sha256": "60f96dffc51bd5fb4c8509706fc23432d3aac4a9212ac4373cd18d5fcd8a8227"
+    },
+    "1_graph_exact_once": {
+      "path": "outputs/1_graph_exact_once.npz",
+      "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+      "bytes": 1056404,
+      "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+    },
+    "1_cpu_open_once": {
+      "path": "outputs/1_cpu_open_once.npz",
+      "sha256": "1df241786215168681c4fb035ab0f55ea63bf0a3343e8365a9182cb3ed0352a8",
+      "bytes": 1056404,
+      "payload_sha256": "60f96dffc51bd5fb4c8509706fc23432d3aac4a9212ac4373cd18d5fcd8a8227"
+    },
+    "1_graph_open_once": {
+      "path": "outputs/1_graph_open_once.npz",
+      "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+      "bytes": 1056404,
+      "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+    },
+    "1_eager_open_once": {
+      "path": "outputs/1_eager_open_once.npz",
+      "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+      "bytes": 1056404,
+      "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+    },
+    "1_eager_exact_once": {
+      "path": "outputs/1_eager_exact_once.npz",
+      "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+      "bytes": 1056404,
+      "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+    },
+    "1_graph_gather_once": {
+      "path": "outputs/1_graph_gather_once.npz",
+      "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+      "bytes": 1056404,
+      "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+    },
+    "1_cpu_gather_once": {
+      "path": "outputs/1_cpu_gather_once.npz",
+      "sha256": "1df241786215168681c4fb035ab0f55ea63bf0a3343e8365a9182cb3ed0352a8",
+      "bytes": 1056404,
+      "payload_sha256": "60f96dffc51bd5fb4c8509706fc23432d3aac4a9212ac4373cd18d5fcd8a8227"
+    },
+    "1_eager_gather_once": {
+      "path": "outputs/1_eager_gather_once.npz",
+      "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+      "bytes": 1056404,
+      "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+    }
+  },
+  "graph_setup_seconds": {
+    "buffer_clone": 0.0001894000160973519,
+    "side_stream_warmup": 0.031314305000705644,
+    "capture_instantiate": 0.008774300978984684,
+    "first_replay": 0.009265601984225214,
+    "total": 0.05193740900722332
+  },
+  "limits": "One B64 graph and shared source handle; resource/shape/cadence state differs from primary benchmark. NVTX ranges cover actual read through NPZ close; validation/hash/cleanup/sync outside request ranges. File readback must agree with pinned CPU FP64. No torch.profiler/CUPTI collector runs inside Nsight. NVTX CPU stages and GPU activity overlap; not occupancy or an additive decomposition of primary P50."
+}

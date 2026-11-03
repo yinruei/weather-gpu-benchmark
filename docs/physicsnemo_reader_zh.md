@@ -97,6 +97,6 @@ python physicsnemo_graph_pipeline.py --engines graph --readers exact_once --outp
 
 ## 下一個實作方向
 
-先比較「連續 slice 讀取小區塊，再以 NumPy gather 取需要的 frames」，避免把高成本的逐點索引一路交給 backend；必要時依 chunk 分組，核對是否重複解碼。之後才以獨立資料副本測試較小的 lead／member chunks，保留相同來源值與原版對照，另記重分塊成本、檔案數、壓縮大小與實際 Store bytes。這些尚未實作，也不保證更快；下一輪仍以完整流程 P50／P95、數值一致性與讀取證據決定是否採用。
+後續已完成[連續 slice＋NumPy gather 與 Nsight 診斷](physicsnemo_gather_nsight_zh.md)：gather 避開 exact 的大幅變慢，但與原版沒有穩定整體優勢，且需額外複製，維持原版預設，本輪 reader 實驗收尾。[英文案例](performance_case_study.md) 已整理實驗方法與取捨。Chunk 分組及獨立副本重分塊未實作，之後依具體需求再評估。
 
 [完整數據、配對表與驗證邊界](../results/rtx3050_physics_reader_comparison/analysis.md)

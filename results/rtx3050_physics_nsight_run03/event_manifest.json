@@ -1,0 +1,13 @@
+{
+  "source_sqlite_sha256": "2c4d431ea568bd9193d714a6eed95dbe7779109ea44aa9c21fca23bf8589445b",
+  "events_sha256": "f6afb50a04135c1665e6f46e626a0944030bc98ffb3a487fc6f64d2cc0e9ca3e",
+  "counts": {
+    "NVTX_EVENTS": 240,
+    "CUPTI_ACTIVITY_KIND_RUNTIME": 1418,
+    "CUPTI_ACTIVITY_KIND_KERNEL": 2376,
+    "CUPTI_ACTIVITY_KIND_MEMCPY": 120,
+    "ENUM_CUDA_MEMCPY_OPER": 14,
+    "StringIds": 55
+  },
+  "scope": "Only NVTX workflow labels, CUDA runtime/kernel/copy events, memcpy enum and referenced API/kernel strings. Process/environment/system metadata and unreferenced strings omitted. Original raw report/export remains local."
+}

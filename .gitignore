@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .venv/
 results/latest/
+# Raw Nsight reports can contain process environment metadata; publish selected tables only.
+results/*nsight*/capture.nsys-rep
+results/*nsight*/trace.sqlite

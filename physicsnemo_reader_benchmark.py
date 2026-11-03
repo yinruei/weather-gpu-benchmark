@@ -27,7 +27,7 @@ def main():
     parser.add_argument('--data', type=Path, default=Path('data/ecmwf_batch_case/batch.zarr'))
     parser.add_argument('--reference-run', type=Path, default=Path('results/rtx3050_physics_graph_run01'))
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--readers', nargs='+', choices=READERS, default=READERS)
+    parser.add_argument('--readers', nargs='+', choices=READERS, default=['open_once', 'reopen', 'exact_once', 'exact_reopen'])
     parser.add_argument('--repeats', type=int, default=40)
     parser.add_argument('--warmup', type=int, default=3)
     parser.add_argument('--seed', type=int, default=20261113)
