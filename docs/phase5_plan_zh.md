@@ -82,9 +82,9 @@ python scripts/analyze_physicsnemo.py results/my_physicsnemo01 results/my_physic
 | 子階段 | 現況與後續 |
 |---|---|
 | 5A. 環境與最小 forward | 已完成 |
-| 5B. 模型推論 benchmark | FP32 forward、完整流程、B16 對照、配對重用／節奏、shape 排程／trace 與 CUDA Graph 對照已完成；下一步是可選 graph engine 的完整讀取到寫檔驗收 |
+| 5B. 模型推論 benchmark | FP32 forward、完整流程、B16 對照、配對重用／節奏、shape 排程／trace、CUDA Graph 與可選引擎的完整讀取到寫檔驗收已完成；下一步改善 reader 的 frame／chunk 讀取覆蓋 |
 | 5C. Earth2Studio 流程 | 尚未實作；先確認指定模型的多變數、層次、時間窗口、網格、單位、權重與容量需求，再準備合格輸入 |
 
-完整流程 B64 的兩輪基線加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。後續[重用與節奏實驗](physicsnemo_reuse_zh.md)顯示 B64 重用已開資料集可把 GPU 請求由約 44–47 ms 降到約 29–30 ms；條件式輸入快取還可改善，但不是任意新資料的讀取到寫檔速度。先控制剩餘效能變動，再評估 AMP/FP16 的算子支援與誤差／效能取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
+完整流程 B64 的兩輪基線加速約 2.53–2.58×，小 case 幾乎無優勢，B16 則呈現依執行情境而異的延遲。後續[重用與節奏實驗](physicsnemo_reuse_zh.md)顯示 B64 重用已開資料集可把 GPU 請求由約 44–47 ms 降到約 29–30 ms；條件式輸入快取還可改善，但不是任意新資料的讀取到寫檔速度。[可選 CPU／eager／graph 完整流程](physicsnemo_graph_pipeline_zh.md)現在也已完成：真實 A/B 輸入逐次讀取、完整回傳並寫檔，B64 open_once 的 graph P50 約 30.88–32.99 ms；配對 eager/graph 比值約 1.014–1.033×，收益有限，reopen 還有較慢的結果。不同協定的歷史數字不能直接當精確分段比較。下一步先以同輪對照改善 reader 的 frame／chunk 覆蓋，再評估非同步重疊或精度取捨。之後才接 Earth2Studio；現有單一 2-m 溫度區域子集不能直接當成全球預訓練模型的完整輸入。
 
 參考：[官方 FNO API](https://docs.nvidia.com/physicsnemo/latest/physicsnemo/api/models/fnos.html)、[PhysicsNeMo 套件](https://pypi.org/project/nvidia-physicsnemo/)、[NVIDIA Warp CUDA wheel 說明](https://github.com/NVIDIA/warp/blob/main/README.md)、[Earth2Studio](https://nvidia.github.io/earth2studio/main/)。版本數字以本次安裝與保存 lock 為準。

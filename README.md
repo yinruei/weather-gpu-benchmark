@@ -462,9 +462,30 @@ Graph setup (buffer clone, side-stream warmup, capture/instantiate, first replay
 
 Independent traces verify real `cudaGraphLaunch`, full output DtoH and the required new-input copies. Capture changes internal copy implementation (`memcpy128` device kernels versus eager DtoD events here), so launch/copy-category changes are not proof of reduced mathematical work or exclusive CPU causality. CPU/GPU intervals overlap, and profile timing does not replace primary timing.
 
-Both sessions retain 720 primary calls, 12 A/B/A checks, 24 memory probes, 48 trace calls and complete inputs/references/outputs/state. All outputs pass CPU FP64 checks; references were independently recomputed from archived weights. [Full results and costs](results/rtx3050_physics_graph_comparison/analysis.md), [Chinese interpretation and commands](docs/physicsnemo_graph_zh.md). CPU CI independently reconciles archived evidence; the optional analyzer flag `--recompute-reference` requires the isolated PhysicsNeMo environment. Eager remains the existing workflow default; full Zarr-to-file graph integration is future work.
+Both sessions retain 720 primary calls, 12 A/B/A checks, 24 memory probes, 48 trace calls and complete inputs/references/outputs/state. All outputs pass CPU FP64 checks; references were independently recomputed from archived weights. [Full results and costs](results/rtx3050_physics_graph_comparison/analysis.md), [Chinese interpretation and commands](docs/physicsnemo_graph_zh.md). CPU CI independently reconciles archived evidence; the optional analyzer flag `--recompute-reference` requires the isolated PhysicsNeMo environment. Eager remains available; selectable complete-file engines are implemented below.
 
 ![CUDA Graph latency, setup persistence and estimated amortization](results/rtx3050_physics_graph_comparison/physicsnemo_graph.png)
+
+## Phase 5B: selectable CPU/eager/graph complete file pipeline
+
+`FnoFilePipeline` now executes genuine local Zarr read/decode/check -> FP32 packing -> new input upload -> CPU/eager/graph FNO -> full host return -> uncompressed NPZ write/close. Models remain resident. Choose `open_once` to reuse a dataset handle or `reopen` to open it for every request; both reread and prepare actual alternating, disjoint ECMWF A/B frames. Eager and graph include copying into the same fixed GPU input buffer. There is no prepared-input/output cache or silent engine fallback.
+
+| Batch | Reader | CPU P50 ms | Eager P50 ms | Graph P50 ms | Median paired eager/graph, sessions 1 / 2 |
+|---|---|---:|---:|---:|---:|
+| B16 | open_once | 20.30–21.19 | 14.19–15.29 | 12.69–14.10 | 1.108x / 1.064x |
+| B16 | reopen | 37.13–37.34 | 29.50–31.86 | 28.64–30.62 | 1.024x / 1.027x |
+| B64 | open_once | 91.37–95.59 | 31.66–34.31 | 30.88–32.99 | 1.014x / 1.033x |
+| B64 | reopen | 108.68–112.19 | 46.23–51.97 | 47.51–50.55 | 0.991x / 1.048x |
+
+Two shuffled 30-repeat sessions total 720 complete-file primary requests, 144 independent stage profiles, 48 real full-file traces and 16 runtime memory probes. Graph has a modest complete-flow benefit for B16 open-once; B64 reopen regresses in session 1 and has a higher maximum in session 2. All tails/regressions and raw ordering remain. Ratios are descriptive paired medians with the same repeat/input variant, not significance tests. CPU/graph P50 ratios are about 2.90–2.96x for B64 open-once; this is distinct from the smaller additional benefit over GPU eager.
+
+Per-shape graph setup after eager warmup costs 22.86–23.27 ms (B16) or 51.97–52.39 ms (B64), with net allocated increases of 32.5/34 MiB while resources coexist. These are not cold-process startup or total/standalone VRAM. Setup and validation are excluded from primary timing; setup/positive-mean-saving amortization is an estimate only. Stage profiles are separate synchronized observations, not an exact decomposition of primary P50. OS/library caches are uncontrolled; close does not request fsync or prove durable storage.
+
+Every trial file is read back and checked for all arrays, coordinates/time/member identities, metadata and elementwise FP64 agreement; both A/B references were independently recomputed. Each session retains 24 actual primary files. Full-file traces prove new-input HtoD, complete output DtoH and actual graph replay, with zero CUDA work for CPU calls. [Full tables, costs and reproduction](results/rtx3050_physics_graph_pipeline_comparison/analysis.md), [Chinese plot explanation and next step](docs/physicsnemo_graph_pipeline_zh.md). CI validates saved GPU evidence with CPU dependencies.
+
+![Complete-file engines and independent stage profiles](results/rtx3050_physics_graph_pipeline_comparison/physicsnemo_graph_pipeline.png)
+
+In the isolated environment, run `python physicsnemo_graph_pipeline.py --output results/my_graph_pipeline01`. Use `--engines graph --readers open_once` for graph alone, or `--engines cpu --readers reopen` for CPU alone. All output paths must be new. Then run `python scripts/analyze_physicsnemo_graph_pipeline.py results/my_graph_pipeline01 --output results/my_graph_pipeline_report`; add `--recompute-reference` in the PhysicsNeMo environment for an independent FP64 rebuild. The existing eager scripts remain available. The next proposed optimization is reducing actual frame/chunk read coverage with the current reader retained as a paired control.
 
 ## Reproduce the reports and figures
 

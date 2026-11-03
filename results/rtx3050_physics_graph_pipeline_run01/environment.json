@@ -1,0 +1,1523 @@
+{
+  "captured_utc": "2026-11-03T11:06:36.116026+00:00",
+  "scope": "Complete local Zarr-to-file CPU/eager/graph inference performance; untrained FNO",
+  "python": "3.12.16",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "nvidia-physicsnemo": "2.2.2",
+    "numpy": "2.2.6",
+    "xarray": "2026.9.0",
+    "zarr": "3.4.2"
+  },
+  "hardware": {
+    "captured_at_utc": "2026-11-03T11:06:36.119819+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 40, 15.64 W, 1 %"
+  },
+  "cuda_runtime": "12.6",
+  "source_sha256": "94fcbd8622cea68e9ce68ae59a2ca66edce4ede582c0aec15efa7e4abaa32f1b",
+  "source_manifest": {
+    "case_kind": "ecmwf_ens_batch_vs_gfs_analysis",
+    "sources": [
+      {
+        "dataset": "ecmwf-ifs-ens-forecast-15-day-0-25-degree",
+        "catalog": "https://stac.dynamical.org/ecmwf-ifs-ens-forecast-15-day-0-25-degree/collection.json",
+        "asset": "https://dynamical-ecmwf-ifs-ens.s3.us-west-2.amazonaws.com/ecmwf-ifs-ens-forecast-15-day-0-25-degree/v0.1.0.icechunk",
+        "snapshot_id": "G76A041BF9PWGCNRBFVG",
+        "catalog_sha256": "cca3c25e775ebeba4e046e8c34dc72679856180e1dbdbf09d5754df42d3ac447",
+        "metadata_open_seconds": 3.9049622993916273,
+        "read_budget": {
+          "chunk_shape": [
+            1,
+            85,
+            51,
+            32,
+            32
+          ],
+          "chunks": 16,
+          "nominal_uncompressed_bytes": 284098560,
+          "selected_logical_bytes": 26738688
+        },
+        "selected_materialization_seconds": 12.674146300181746
+      },
+      {
+        "dataset": "noaa-gfs-forecast",
+        "catalog": "https://stac.dynamical.org/noaa-gfs-forecast/collection.json",
+        "asset": "https://dynamical-noaa-gfs.s3.us-west-2.amazonaws.com/noaa-gfs-forecast/v0.2.7.icechunk",
+        "snapshot_id": "7FB36MTVTBHMA65ETQB0",
+        "catalog_sha256": "54829bc58c726029429fe897e1131a04b109b357f545c8e15ff967980a3831e2",
+        "metadata_open_seconds": 4.588635600171983,
+        "read_budget": {
+          "chunk_shape": [
+            1,
+            105,
+            121,
+            121
+          ],
+          "chunks": 80,
+          "nominal_uncompressed_bytes": 491937600,
+          "selected_logical_bytes": 327680
+        },
+        "selected_materialization_seconds": 33.82189199980348
+      }
+    ],
+    "shape": [
+      4,
+      8,
+      51,
+      64,
+      64
+    ],
+    "initializations": [
+      "2024-05-06T00:00:00.000000000",
+      "2024-05-07T00:00:00.000000000",
+      "2024-05-08T00:00:00.000000000",
+      "2024-05-09T00:00:00.000000000"
+    ],
+    "lead_hours": [
+      24,
+      30,
+      36,
+      42,
+      48,
+      54,
+      60,
+      66
+    ],
+    "ensemble_members": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "valid_times": [
+      [
+        "2024-05-07T00:00:00.000000000",
+        "2024-05-07T06:00:00.000000000",
+        "2024-05-07T12:00:00.000000000",
+        "2024-05-07T18:00:00.000000000",
+        "2024-05-08T00:00:00.000000000",
+        "2024-05-08T06:00:00.000000000",
+        "2024-05-08T12:00:00.000000000",
+        "2024-05-08T18:00:00.000000000"
+      ],
+      [
+        "2024-05-08T00:00:00.000000000",
+        "2024-05-08T06:00:00.000000000",
+        "2024-05-08T12:00:00.000000000",
+        "2024-05-08T18:00:00.000000000",
+        "2024-05-09T00:00:00.000000000",
+        "2024-05-09T06:00:00.000000000",
+        "2024-05-09T12:00:00.000000000",
+        "2024-05-09T18:00:00.000000000"
+      ],
+      [
+        "2024-05-09T00:00:00.000000000",
+        "2024-05-09T06:00:00.000000000",
+        "2024-05-09T12:00:00.000000000",
+        "2024-05-09T18:00:00.000000000",
+        "2024-05-10T00:00:00.000000000",
+        "2024-05-10T06:00:00.000000000",
+        "2024-05-10T12:00:00.000000000",
+        "2024-05-10T18:00:00.000000000"
+      ],
+      [
+        "2024-05-10T00:00:00.000000000",
+        "2024-05-10T06:00:00.000000000",
+        "2024-05-10T12:00:00.000000000",
+        "2024-05-10T18:00:00.000000000",
+        "2024-05-11T00:00:00.000000000",
+        "2024-05-11T06:00:00.000000000",
+        "2024-05-11T12:00:00.000000000",
+        "2024-05-11T18:00:00.000000000"
+      ]
+    ],
+    "latitude_bounds": [
+      18.25,
+      34.0
+    ],
+    "longitude_bounds": [
+      116.0,
+      131.75
+    ],
+    "forecast_points": 6684672,
+    "unique_reference_times": 20,
+    "transformations": "Exact source selections; no tiling, artificial perturbations or regridding. Reference indexed by exact valid time and shared across members.",
+    "provider_processing": "dynamical.org converts native GRIB to Celsius Zarr and rounds floating-point bits; not bitwise native GRIB.",
+    "license": "CC BY 4.0 for provider archives; ECMWF Terms of Use also apply to ECMWF-derived data.",
+    "attribution": "ECMWF IFS ENS forecast and NOAA NWS NCEP GFS data processed by dynamical.org from their open-data archives.",
+    "interpretation": "Separate per-initialization/lead/member spatial metrics; descriptive pooled errors are not ensemble-mean forecast skill. Reference is GFS analysis, not independent truth. Overlapping valid times and related members are not independent samples.",
+    "acquisition_python": "3.13.3",
+    "acquisition_versions": {
+      "icechunk": "2.3.1",
+      "zarr": "3.4.2",
+      "xarray": "2026.9.0",
+      "numpy": "2.5.4"
+    },
+    "files": {
+      "batch.zarr": "94fcbd8622cea68e9ce68ae59a2ca66edce4ede582c0aec15efa7e4abaa32f1b"
+    }
+  },
+  "model_config": {
+    "in_channels": 1,
+    "out_channels": 1,
+    "dimension": 2,
+    "latent_channels": 16,
+    "num_fno_layers": 2,
+    "num_fno_modes": 8,
+    "padding": 0,
+    "coord_features": true,
+    "decoder_layers": 2,
+    "decoder_layer_size": 16,
+    "activation_fn": "gelu",
+    "decoder_activation_fn": "silu"
+  },
+  "model_state_sha256": "281522cf2a5ca5bbccf4c7fe455f272fa5b1c67e1a83c52fbdd0f2836a671b97",
+  "weights_sha256": "be8c77821f6be25869f9cf773f4a4f49330d336a7d790cc15e403752f4ee52f4",
+  "reference_run": "rtx3050_physics_graph_run01",
+  "cases": [
+    {
+      "case": "b16_s64",
+      "batch": 16,
+      "side": 64
+    },
+    {
+      "case": "b64_s64",
+      "batch": 64,
+      "side": 64
+    }
+  ],
+  "engines": [
+    "cpu",
+    "eager",
+    "graph"
+  ],
+  "readers": [
+    "open_once",
+    "reopen"
+  ],
+  "methods": [
+    "cpu_open_once",
+    "eager_open_once",
+    "graph_open_once",
+    "cpu_reopen",
+    "eager_reopen",
+    "graph_reopen"
+  ],
+  "stages": [
+    "read_decode",
+    "prepare",
+    "upload",
+    "forward",
+    "return",
+    "write_close"
+  ],
+  "repeats": 30,
+  "profile_repeats": 6,
+  "trace_repeats": 2,
+  "warmup": 3,
+  "threads": 6,
+  "interop_threads": 1,
+  "seed": 20261111,
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "tf32": false,
+  "deterministic_algorithms": true,
+  "model_setup_seconds": 4.426507297001081,
+  "shared_reader_setup_seconds": 0.2944592999992892,
+  "timing": "Direct wall time includes genuine variant read/decode/coordinate validation, FP32 scaling/packing, output metadata, host tensor, upload/copy to fixed GPU input (GPU engines), FNO, full host return, uncompressed NPZ write/close. Models remain resident. Open-once reuses one shared dataset handle; reopen opens each request. No prepared input/output cache. Primary has no profiler/events/stage synchronization. Readback/hash/FP64 validation/cleanup outside timers.",
+  "setup": "Common imports/source-hash/model loading and shared reader opening are recorded separately. Graph setup includes clone, side-stream warmup, capture/instantiate and first replay; net allocator changes observed after eager warmup. All graphs/source handles coexist even during eager/CPU timings. Setup is excluded from primary; estimated amortization is not measured cold startup.",
+  "variants": "Same two disjoint real windows as pinned reference run: A first B frames, B next B frames. Variant alternates by repeat for all matched engine/reader cases. Each request actually rereads and prepares its requested variant.",
+  "limits": "OS/library caches uncontrolled and warmed by setup/reference/readback. File close is not fsync/durable media persistence. No async overlap, remote retrieval, precision change, training or forecast assessment. Stage profiles and traces are separate later observations and may differ from primary times. GPU allocator probes are not total VRAM or standalone eager memory.",
+  "case_metadata": {
+    "b16_s64": {
+      "identities": [
+        {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        }
+      ],
+      "input_hashes": [
+        "b5328a473548062e9bd5bab3cdadc69007201e71497e09652ca16e4f42761f9e",
+        "c5148ced67e29025297e272d5ce2d21020fa7df952a2a94b910dc8ed157d4f9d"
+      ],
+      "input_bytes": 262144,
+      "reference_path": "b16_s64_reference.npz",
+      "reference_sha256": "b3ce03dcee325c28a729ecafb5f66898cf5ca552aa0f2abc7fcd6b35f216212b",
+      "graph_setup_seconds": {
+        "buffer_clone": 0.00018820000695995986,
+        "side_stream_warmup": 0.011380700016161427,
+        "capture_instantiate": 0.005295400012983009,
+        "first_replay": 0.003501200000755489,
+        "total": 0.023269400000572205
+      },
+      "graph_setup_memory": {
+        "before_allocated_bytes": 34350080,
+        "after_allocated_bytes": 68428800,
+        "extra_allocated_bytes": 34078720,
+        "before_reserved_bytes": 79691776,
+        "after_reserved_bytes": 113246208,
+        "extra_reserved_bytes": 33554432,
+        "peak_allocated_bytes": 98837504,
+        "peak_reserved_bytes": 159383552
+      },
+      "outputs": {
+        "0_eager_reopen": {
+          "path": "outputs/b16_s64_0_eager_reopen.npz",
+          "sha256": "3a8ade731894ca3e1b748c9bc8f93d2c4829677e0d13510f2a28b340bcbe2162",
+          "bytes": 268436,
+          "payload_sha256": "ffeb63ac62267ffdaa1474903674d8686f7b4261959c0ec5e0ea765ce51444b8"
+        },
+        "0_eager_open_once": {
+          "path": "outputs/b16_s64_0_eager_open_once.npz",
+          "sha256": "3a8ade731894ca3e1b748c9bc8f93d2c4829677e0d13510f2a28b340bcbe2162",
+          "bytes": 268436,
+          "payload_sha256": "ffeb63ac62267ffdaa1474903674d8686f7b4261959c0ec5e0ea765ce51444b8"
+        },
+        "0_graph_open_once": {
+          "path": "outputs/b16_s64_0_graph_open_once.npz",
+          "sha256": "3a8ade731894ca3e1b748c9bc8f93d2c4829677e0d13510f2a28b340bcbe2162",
+          "bytes": 268436,
+          "payload_sha256": "ffeb63ac62267ffdaa1474903674d8686f7b4261959c0ec5e0ea765ce51444b8"
+        },
+        "0_cpu_open_once": {
+          "path": "outputs/b16_s64_0_cpu_open_once.npz",
+          "sha256": "45b24c6863ac810ef870dc7d5e69fe33336e367fb279ffc2ede4be6826e5d3d0",
+          "bytes": 268436,
+          "payload_sha256": "30749c291a1e1d143ac5958fc3f71678489872cd5275a81d8d6338cec3613780"
+        },
+        "0_graph_reopen": {
+          "path": "outputs/b16_s64_0_graph_reopen.npz",
+          "sha256": "3a8ade731894ca3e1b748c9bc8f93d2c4829677e0d13510f2a28b340bcbe2162",
+          "bytes": 268436,
+          "payload_sha256": "ffeb63ac62267ffdaa1474903674d8686f7b4261959c0ec5e0ea765ce51444b8"
+        },
+        "0_cpu_reopen": {
+          "path": "outputs/b16_s64_0_cpu_reopen.npz",
+          "sha256": "45b24c6863ac810ef870dc7d5e69fe33336e367fb279ffc2ede4be6826e5d3d0",
+          "bytes": 268436,
+          "payload_sha256": "30749c291a1e1d143ac5958fc3f71678489872cd5275a81d8d6338cec3613780"
+        },
+        "1_eager_open_once": {
+          "path": "outputs/b16_s64_1_eager_open_once.npz",
+          "sha256": "3ae8a083d0a732c5939cf28f00f8a15454b827a284e313886f4a03bb660bbf94",
+          "bytes": 268436,
+          "payload_sha256": "97affe5e39b11f973290314a166f45794802eec403bb03dddc2f2e782224a42a"
+        },
+        "1_graph_open_once": {
+          "path": "outputs/b16_s64_1_graph_open_once.npz",
+          "sha256": "3ae8a083d0a732c5939cf28f00f8a15454b827a284e313886f4a03bb660bbf94",
+          "bytes": 268436,
+          "payload_sha256": "97affe5e39b11f973290314a166f45794802eec403bb03dddc2f2e782224a42a"
+        },
+        "1_cpu_reopen": {
+          "path": "outputs/b16_s64_1_cpu_reopen.npz",
+          "sha256": "ce4904d437d75892915e96797e34da50c95d395514211791ad4dbdddd940ec95",
+          "bytes": 268436,
+          "payload_sha256": "04bd076a4c6843a8bc0627348f11a11dfe604448c6206eb1db9e61911a95106b"
+        },
+        "1_graph_reopen": {
+          "path": "outputs/b16_s64_1_graph_reopen.npz",
+          "sha256": "3ae8a083d0a732c5939cf28f00f8a15454b827a284e313886f4a03bb660bbf94",
+          "bytes": 268436,
+          "payload_sha256": "97affe5e39b11f973290314a166f45794802eec403bb03dddc2f2e782224a42a"
+        },
+        "1_cpu_open_once": {
+          "path": "outputs/b16_s64_1_cpu_open_once.npz",
+          "sha256": "ce4904d437d75892915e96797e34da50c95d395514211791ad4dbdddd940ec95",
+          "bytes": 268436,
+          "payload_sha256": "04bd076a4c6843a8bc0627348f11a11dfe604448c6206eb1db9e61911a95106b"
+        },
+        "1_eager_reopen": {
+          "path": "outputs/b16_s64_1_eager_reopen.npz",
+          "sha256": "3ae8a083d0a732c5939cf28f00f8a15454b827a284e313886f4a03bb660bbf94",
+          "bytes": 268436,
+          "payload_sha256": "97affe5e39b11f973290314a166f45794802eec403bb03dddc2f2e782224a42a"
+        }
+      }
+    },
+    "b64_s64": {
+      "identities": [
+        {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 0,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 1,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 2,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 3,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 4,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 5,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 6,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 7,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 8,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 9,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 10,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 11,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 12,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 13,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 14,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 15,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 16,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 17,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 18,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 19,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 20,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 21,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 22,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 23,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 24,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 25,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 26,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 27,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 28,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 29,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 30,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 31,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 32,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 33,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 34,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 35,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 36,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 37,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 38,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 39,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 40,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 41,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 42,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 43,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 44,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 45,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 46,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 47,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 48,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 49,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 24,
+              "member": 50,
+              "valid_time": "2024-05-07T00:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 0,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 1,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 2,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 3,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 4,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 5,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 6,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 7,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 8,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 9,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 10,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 11,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 12,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        },
+        {
+          "frames": [
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 13,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 14,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 15,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 16,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 17,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 18,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 19,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 20,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 21,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 22,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 23,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 24,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 25,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 26,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 27,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 28,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 29,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 30,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 31,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 32,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 33,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 34,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 35,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 36,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 37,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 38,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 39,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 40,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 41,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 42,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 43,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 44,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 45,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 46,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 47,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 48,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 49,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 30,
+              "member": 50,
+              "valid_time": "2024-05-07T06:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 0,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 1,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 2,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 3,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 4,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 5,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 6,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 7,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 8,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 9,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 10,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 11,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 12,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 13,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 14,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 15,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 16,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 17,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 18,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 19,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 20,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 21,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 22,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 23,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 24,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            },
+            {
+              "initialization": "2024-05-06T00:00:00.000000000",
+              "lead_hours": 36,
+              "member": 25,
+              "valid_time": "2024-05-07T12:00:00.000000000"
+            }
+          ],
+          "latitude": [
+            18.25,
+            34.0
+          ],
+          "longitude": [
+            116.0,
+            131.75
+          ],
+          "source_units": "degree_Celsius",
+          "transform": "(Celsius - 20.0) / 20.0 in FP64, then FP32; fixed benchmark scaling, not trained-model normalization"
+        }
+      ],
+      "input_hashes": [
+        "6d325aeb1094fb5b20d0ba182473c98653a859a363bda72f67a21d09c19467a4",
+        "194585dcbff09e6b57bff9d8f4b7aecb081ee14c3395fcfaea15acbe78862f78"
+      ],
+      "input_bytes": 1048576,
+      "reference_path": "b64_s64_reference.npz",
+      "reference_sha256": "f71166a071cd9f8fc466515065d8a6a1bc92658c140caee9d1c2151ad7a173c5",
+      "graph_setup_seconds": {
+        "buffer_clone": 0.000288500013994053,
+        "side_stream_warmup": 0.034086700004991144,
+        "capture_instantiate": 0.0089326000015717,
+        "first_replay": 0.008945599984144792,
+        "total": 0.052385899994987994
+      },
+      "graph_setup_memory": {
+        "before_allocated_bytes": 69477376,
+        "after_allocated_bytes": 105128960,
+        "extra_allocated_bytes": 35651584,
+        "before_reserved_bytes": 270532608,
+        "after_reserved_bytes": 287309824,
+        "extra_reserved_bytes": 16777216,
+        "peak_allocated_bytes": 226763776,
+        "peak_reserved_bytes": 461373440
+      },
+      "outputs": {
+        "0_graph_open_once": {
+          "path": "outputs/b64_s64_0_graph_open_once.npz",
+          "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+          "bytes": 1056404,
+          "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+        },
+        "0_graph_reopen": {
+          "path": "outputs/b64_s64_0_graph_reopen.npz",
+          "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+          "bytes": 1056404,
+          "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+        },
+        "0_eager_reopen": {
+          "path": "outputs/b64_s64_0_eager_reopen.npz",
+          "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+          "bytes": 1056404,
+          "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+        },
+        "0_cpu_reopen": {
+          "path": "outputs/b64_s64_0_cpu_reopen.npz",
+          "sha256": "0633d1812075e8eff92b26b3c662fcfdda7052cd7822ae06614f84afeb4a1120",
+          "bytes": 1056404,
+          "payload_sha256": "5e597b0e071bc05e87e9889996f1c3e5480d7d76796d22b62e98c2907cfb1069"
+        },
+        "0_eager_open_once": {
+          "path": "outputs/b64_s64_0_eager_open_once.npz",
+          "sha256": "18d71598a06f74f998a8cb01f9a767077119ddcfbcb7b7816fd71fb56e234ca5",
+          "bytes": 1056404,
+          "payload_sha256": "74361b3cc9503fd426a599eabd5508b29b06f364027f243dc883c799ad98c02a"
+        },
+        "0_cpu_open_once": {
+          "path": "outputs/b64_s64_0_cpu_open_once.npz",
+          "sha256": "0633d1812075e8eff92b26b3c662fcfdda7052cd7822ae06614f84afeb4a1120",
+          "bytes": 1056404,
+          "payload_sha256": "5e597b0e071bc05e87e9889996f1c3e5480d7d76796d22b62e98c2907cfb1069"
+        },
+        "1_eager_open_once": {
+          "path": "outputs/b64_s64_1_eager_open_once.npz",
+          "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+          "bytes": 1056404,
+          "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+        },
+        "1_cpu_open_once": {
+          "path": "outputs/b64_s64_1_cpu_open_once.npz",
+          "sha256": "1df241786215168681c4fb035ab0f55ea63bf0a3343e8365a9182cb3ed0352a8",
+          "bytes": 1056404,
+          "payload_sha256": "60f96dffc51bd5fb4c8509706fc23432d3aac4a9212ac4373cd18d5fcd8a8227"
+        },
+        "1_cpu_reopen": {
+          "path": "outputs/b64_s64_1_cpu_reopen.npz",
+          "sha256": "1df241786215168681c4fb035ab0f55ea63bf0a3343e8365a9182cb3ed0352a8",
+          "bytes": 1056404,
+          "payload_sha256": "60f96dffc51bd5fb4c8509706fc23432d3aac4a9212ac4373cd18d5fcd8a8227"
+        },
+        "1_graph_reopen": {
+          "path": "outputs/b64_s64_1_graph_reopen.npz",
+          "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+          "bytes": 1056404,
+          "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+        },
+        "1_eager_reopen": {
+          "path": "outputs/b64_s64_1_eager_reopen.npz",
+          "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+          "bytes": 1056404,
+          "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+        },
+        "1_graph_open_once": {
+          "path": "outputs/b64_s64_1_graph_open_once.npz",
+          "sha256": "0e6d85853999cd284d4c7ec332ef782b2341c552233ba4d1dee764ec175a065e",
+          "bytes": 1056404,
+          "payload_sha256": "2d6cde325c5c8be5b131716b06852c6ff16164180e294d223579a44f38f226e2"
+        }
+      }
+    }
+  },
+  "trace_sha256": "3cff3b0c34279b742365cfe3724488cc00c0d029ada6df8ed0c6af1f5fac5e5e",
+  "hardware_after": {
+    "captured_at_utc": "2026-11-03T11:07:01.982315+00:00",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "logical_cpus": 12,
+    "gpu": "NVIDIA GeForce RTX 3050",
+    "gpu_total_memory_bytes": 8589410304,
+    "compute_capability": [
+      8,
+      6
+    ],
+    "nvidia_smi": "name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], utilization.gpu [%]\nNVIDIA GeForce RTX 3050, 560.94, 8192 MiB, 40, 19.02 W, 2 %"
+  }
+}

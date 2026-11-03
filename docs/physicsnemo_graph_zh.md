@@ -91,4 +91,4 @@ python scripts/analyze_physicsnemo_graph.py results/my_physics_graph01 results/m
 
 使用新路徑。省略 `--recompute-reference` 後，CPU 分析依賴即可重新核對保存的輸入／輸出、更新、pointer、配對、統計、記憶體加總及真實 graph-launch／copy trace；CI 不宣稱重新跑過 GPU。[完整原始表、估計攤提與方法](../results/rtx3050_physics_graph_comparison/analysis.md)
 
-目前 eager 仍保留，沒有把所有工作預設改成 graph。下一步應把可選 graph engine 接回「重用已開資料集 → 新輸入更新 → 模型 → 完整回傳 → 寫檔」，直接量整體改善、啟動攤提與額外記憶體；單步少 0.5–0.8 ms 不等於完整流程也有相同比例收益。模型／輸入多變數相容性的 5C Earth2Studio 與預報品質評估沒有混入本階段。
+目前 eager 仍保留，沒有把所有工作預設改成 graph。後續已完成[可選 CPU／eager／graph 的完整讀取到寫檔驗收](physicsnemo_graph_pipeline_zh.md)：每次讀取真實 A/B 新輸入、完整取回並寫檔，另記 setup 與 allocator 淨變化。完整流程收益較小，也有 graph 較慢的情境；單步少 0.5–0.8 ms 不等於完整流程有相同比例收益。模型／輸入多變數相容性的 5C Earth2Studio 與預報品質評估沒有混入本階段。
